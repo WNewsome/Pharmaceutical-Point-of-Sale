@@ -30,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
+    updateDrug = new changedrugwindow(this);
 }
 
 
@@ -47,5 +49,12 @@ void MainWindow::on_search_button_clicked()
     QNetworkRequest request(url);
     //qDebug() << url.toString();
     man->get(request);
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    //looks up name
+    //brings up screen to update drug
+    updateDrug->show();
 }
 
