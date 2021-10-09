@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include "changedrugwindow.h"
 #include <QListWidgetItem>
+#include "changedrugwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,13 +48,12 @@ private:
     Ui::MainWindow *ui;
     // Web API used to obtain drug, patients, and inventory data
     QString web_API = "https://wnewsome.com/POS/search.php";
-    ChangeDrugWindow *updateDrug;
+    changedrugwindow *updateDrug;
 
 private slots:
-    void downloadFinished(QNetworkReply*);
-    void on_pushButton_5_clicked();
     void searchDrug(QNetworkReply*);                            // Function that calls the API to obtain data
     void on_search_button_clicked();                            // Main search button in sales tab
+    void on_pushButton_5_clicked();
     void on_items_dropdown_itemClicked(QListWidgetItem *item);  // Select an item from search results
 };
 

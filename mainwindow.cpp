@@ -39,11 +39,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
-    updateDrug = new ChangeDrugWindow(this);
-
-    // Set search drug to invisible
+    updateDrug = new changedrugwindow(this);
+    // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
-	
 }
 
 
@@ -66,12 +64,12 @@ void MainWindow::on_search_button_clicked()
     man->get(request);
 }
 
-
 void MainWindow::on_pushButton_5_clicked()
 {
     //looks up name
     //brings up screen to update drug
     updateDrug->show();
+}
 
 void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)
 {
@@ -88,4 +86,3 @@ void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)
     // Update current total
     ui->total->setText("$ "+QString::number(currentAccount.get_total()));
 }
-
