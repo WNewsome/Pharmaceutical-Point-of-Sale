@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include "changedrugwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,10 +21,12 @@ public:
 private:
     Ui::MainWindow *ui;
     QString web_API = "https://wnewsome.com/POS/search.php";
+    ChangeDrugWindow *updateDrug;
 
 private slots:
     void downloadFinished(QNetworkReply*);
     void on_search_button_clicked();
+    void on_pushButton_5_clicked();
 };
 
 #endif // MAINWINDOW_H
