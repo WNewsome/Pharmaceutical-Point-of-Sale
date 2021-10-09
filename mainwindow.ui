@@ -33,7 +33,7 @@
      <enum>QTabWidget::West</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -142,7 +142,7 @@
        <string>Pharmacy Name</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="total">
       <property name="geometry">
        <rect>
         <x>620</x>
@@ -157,7 +157,22 @@
        </font>
       </property>
       <property name="text">
-       <string>$9.99</string>
+       <string>$ 0.00</string>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="items_dropdown">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>130</y>
+        <width>271</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
       </property>
      </widget>
     </widget>
