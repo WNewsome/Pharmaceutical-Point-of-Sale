@@ -84,7 +84,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QListWidget" name="items_list">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -93,24 +93,13 @@
       <height>451</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>90</y>
-      <width>291</width>
-      <height>50</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>300</width>
-      <height>100</height>
-     </size>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="search_button">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -201,186 +190,19 @@
      <string>123 Main St. City, VA</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>200</y>
-      <width>701</width>
-      <height>71</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="listWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>270</y>
-      <width>701</width>
-      <height>71</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>220</y>
-      <width>261</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Tylenol</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>290</y>
-      <width>261</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Aspirin</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>290</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>$4.00</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>220</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>$5.99</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>500</x>
-      <y>290</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>1</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>500</x>
-      <y>220</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>2</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_11">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>150</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>22</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Item</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_12">
+   <widget class="QLineEdit" name="search_lineEdit">
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>150</y>
-      <width>121</width>
+      <y>90</y>
+      <width>271</width>
       <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>22</pointsize>
+      <pointsize>13</pointsize>
      </font>
-    </property>
-    <property name="text">
-     <string>Quantity</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>730</x>
-      <y>150</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>22</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Total</string>
     </property>
    </widget>
   </widget>

@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +19,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QString web_API = "https://wnewsome.com/POS/search.php";
+
+private slots:
+    void downloadFinished(QNetworkReply*);
+    void on_search_button_clicked();
 };
+
 #endif // MAINWINDOW_H
