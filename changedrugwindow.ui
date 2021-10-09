@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ChangeDrugWindow</class>
- <widget class="QMainWindow" name="ChangeDrugWindow">
+ <class>changedrugwindow</class>
+ <widget class="QMainWindow" name="changedrugwindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>520</height>
+    <width>437</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>10</y>
       <width>380</width>
       <height>441</height>
      </rect>
@@ -108,7 +108,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>406</width>
+     <width>437</width>
      <height>26</height>
     </rect>
    </property>

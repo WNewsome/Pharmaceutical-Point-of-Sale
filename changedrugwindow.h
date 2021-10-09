@@ -4,22 +4,22 @@
 #include <QMainWindow>
 
 namespace Ui {
-class ChangeDrugWindow;
+class changedrugwindow;
 }
 
-class ChangeDrugWindow : public QMainWindow
+class changedrugwindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ChangeDrugWindow(QWidget *parent = nullptr);
-    ~ChangeDrugWindow();
+    explicit changedrugwindow(QWidget *parent = nullptr);
+    ~changedrugwindow();
 
 private slots:
     void on_pushButton_clicked();
 
 private:
-    Ui::ChangeDrugWindow *ui;
+    Ui::changedrugwindow *ui;
 };
 
 #endif // CHANGEDRUGWINDOW_H
