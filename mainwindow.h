@@ -6,6 +6,7 @@
 #include <QNetworkReply>
 #include <QListWidgetItem>
 #include "changedrugwindow.h"
+#include "datastorage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,6 +49,7 @@ private:
     Ui::MainWindow *ui;
     // Web API used to obtain drug, patients, and inventory data
     QString web_API = "https://wnewsome.com/POS/search.php";
+    DataStorage *API;
     changedrugwindow *updateDrug;
 
 private slots:

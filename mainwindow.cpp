@@ -5,8 +5,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QDebug>
 
 void MainWindow::searchDrug(QNetworkReply *reply){
+    // TODO: I will remove this function to use datastorage class instead!
     // Reply from server received
     // Convert all values to JSON format
     QString strReply = (QString)reply->readAll();
@@ -42,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent)
     updateDrug = new changedrugwindow(this);
     // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
+    // TODO: remove this simple test
+    drug_t drug = API->search_one_drug("NyQuil");
+    qDebug() << QString::fromStdString(drug.name);
 }
 
 

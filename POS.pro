@@ -10,11 +10,13 @@ CONFIG += c++11
 
 SOURCES += \
     changedrugwindow.cpp \
+    datastorage.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     changedrugwindow.h \
+    datastorage.h \
     mainwindow.h
 
 FORMS += \
