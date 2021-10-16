@@ -48,14 +48,23 @@ MainWindow::MainWindow(QWidget *parent)
     API = new DataStorage();
 
     // TODO: remove these tests
-    // Search for one drug matching word "Asp*"
-    drug_t drug = API->search_one_drug("Ty");
-    qDebug() << "Drug Name: "+ drug.name + " UPC: "+ drug.UPC; // Should print "Drug Name: Tylenol UPC: 986654321"
+    // Search for one drug matching word "Tyle*"
+    drug_t drug = API->search_one_drug("tyle");
+    if(drug.valid){
+        qDebug() << "Drug Name: "+ drug.name +" Price: "+QString::number(drug.price);
+    }
 
-    std::vector<drug_t> drugs = API->search_drugs("Aspirin");
+    // Show results of searching for "Asp*"
+    std::vector<drug_t> drugs = API->search_drugs("Asp");
 
     for(size_t i = 0; i < drugs.size(); i++){
-         qDebug() << "Drug Name: "+ drugs[i].name + " UPC: "+ drugs[i].UPC;
+         qDebug() << "Drug Name: "+ drugs[i].name+" Price: "+QString::number(drugs[i].price);
+    }
+    // Search for one patient by first name
+    patient_t patient = API->search_one_patient("James");
+    if(patient.valid){
+        qDebug() << patient.first_name + " " + patient.last_name;
+        qDebug() << patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state;
     }
 }
 

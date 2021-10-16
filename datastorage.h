@@ -10,10 +10,10 @@
 
 struct address_t{
     // Address data type
-    std::string street_number;
-    std::string city;
-    std::string state;
-    std::string zip_code;
+    QString street_number;
+    QString city;
+    QString state;
+    QString zip_code;
 };
 
 struct date_t{
@@ -36,17 +36,21 @@ struct drug_t {
     QString DEA;    // 2 letters, 6 numbers, and 1 check digit
     QString GPI;    // 14-character hierarchical classification
     QString NDC;    // 10-digit or 11-digit, 3-segment number
+
+    bool valid = false;
 };
 
 struct patient_t{
     // Patient data type
-    std::string first_name;
-    std::string middle_name;
-    std::string last_name;
+    QString     first_name;
+    QString     middle_name;
+    QString     last_name;
     address_t   address;
-    std::string phone;
-    std::string SSN;
+    QString     phone;
+    QString     SSN;
     date_t      DOB;
+
+    bool valid = false;
 };
 
 class DataStorage : public QObject
@@ -70,7 +74,7 @@ public:
     bool patient_new_address(patient_t patient, address_t new_address); // Update the address of an existing patient
 
 private:
-    QString host_API = "https://wnewsome.com/POS/search.php";
+    QString host_API = "https://wnewsome.com/POS";
     QNetworkAccessManager *manager;
 };
 
