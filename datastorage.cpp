@@ -21,7 +21,7 @@ patient_t DataStorage::search_one_patient(std::string name){
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
 
-    // Wait until we receive a response
+    // Wait until we received a response
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
@@ -62,7 +62,7 @@ drug_t DataStorage::search_one_drug(std::string name){
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
 
-    // Wait until we receive a response
+    // Wait until we received a response
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
@@ -104,7 +104,7 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
 
-    // Wait until we receive a response
+    // Wait until we received a response
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
@@ -145,7 +145,7 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
 
-    // Wait until we receive a response
+    // Wait until we received a response
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
