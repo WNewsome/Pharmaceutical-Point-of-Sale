@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
                             patients[i].address.city+ ", "+
                             patients[i].address.state + " - "+
                             patients[i].phone);
-        ui->patientsListView->insertItem(i, newItem);
+        ui->patientsListView->insertItem((int)i, newItem);
     }
 }
 
