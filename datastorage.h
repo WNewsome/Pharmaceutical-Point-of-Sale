@@ -2,6 +2,11 @@
 #define DATASTORAGE_H
 #include <string>
 #include <vector>
+#include <QString>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QObject>
+#include <QMainWindow>
 
 struct address_t{
     // Address data type
@@ -20,17 +25,17 @@ struct date_t{
 
 struct drug_t {
     // Drug data type
-    std::string name;
-    std::string brand;
-    double      cost;
-    double      price;
-    std::string control_status;
-    std::string picture_url;
+    QString name;
+    QString brand;
+    double  cost;
+    double  price;
+    QString control_status;
+    QString picture_url;
     // Codes
-    std::string UPC;    // 12 numeric digits
-    std::string DEA;    // 2 letters, 6 numbers, and 1 check digit
-    std::string GPI;    // 14-character hierarchical classification
-    std::string NDC;    // 10-digit or 11-digit, 3-segment number
+    QString UPC;    // 12 numeric digits
+    QString DEA;    // 2 letters, 6 numbers, and 1 check digit
+    QString GPI;    // 14-character hierarchical classification
+    QString NDC;    // 10-digit or 11-digit, 3-segment number
 };
 
 struct patient_t{
@@ -44,7 +49,7 @@ struct patient_t{
     date_t      DOB;
 };
 
-class DataStorage
+class DataStorage : public QObject
 {
 public:
     DataStorage();
@@ -64,6 +69,9 @@ public:
     bool add_inventory(drug_t drug, uint16_t n); // Add 'n' of 'drug' to DB (add more to current inventory)
     bool patient_new_address(patient_t patient, address_t new_address); // Update the address of an existing patient
 
+private:
+    QString host_API = "https://wnewsome.com/POS/search.php";
+    QNetworkAccessManager *manager;
 };
 
 #endif // DATASTORAGE_H

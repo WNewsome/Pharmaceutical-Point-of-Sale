@@ -44,9 +44,19 @@ MainWindow::MainWindow(QWidget *parent)
     updateDrug = new changedrugwindow(this);
     // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
-    // TODO: remove this simple test
-    drug_t drug = API->search_one_drug("NyQuil");
-    qDebug() << QString::fromStdString(drug.name);
+    // Init API
+    API = new DataStorage();
+
+    // TODO: remove these tests
+    // Search for one drug matching word "Asp*"
+    drug_t drug = API->search_one_drug("Ty");
+    qDebug() << "Drug Name: "+ drug.name + " UPC: "+ drug.UPC; // Should print "Drug Name: Tylenol UPC: 986654321"
+
+    std::vector<drug_t> drugs = API->search_drugs("Aspirin");
+
+    for(size_t i = 0; i < drugs.size(); i++){
+         qDebug() << "Drug Name: "+ drugs[i].name + " UPC: "+ drugs[i].UPC;
+    }
 }
 
 
