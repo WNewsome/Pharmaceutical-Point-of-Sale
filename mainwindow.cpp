@@ -66,6 +66,19 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << patient.first_name + " " + patient.last_name;
         qDebug() << patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state;
     }
+
+    // Add all patients in DB to patients list in patients tab
+    std::vector<patient_t> patients = API->search_patients("");
+    for(size_t i = 0; i < patients.size(); i++){
+        QListWidgetItem *newItem = new QListWidgetItem;
+        newItem->setText(   patients[i].first_name+" "+
+                            patients[i].last_name+" - "+
+                            patients[i].address.street_number+", "+
+                            patients[i].address.city+ ", "+
+                            patients[i].address.state + " - "+
+                            patients[i].phone);
+        ui->patientsListView->insertItem(i, newItem);
+    }
 }
 
 
