@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDebug>
+DataStorage* DataStorage::instance;
 
 void MainWindow::searchDrug(QNetworkReply *reply){
     // TODO: I will remove this function to use datastorage class instead!
@@ -45,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
     // Init API
-    API = new DataStorage();
+    API = DataStorage::getInstance();
 
     // TODO: remove these tests
     // Search for one drug matching word "Tyle*"

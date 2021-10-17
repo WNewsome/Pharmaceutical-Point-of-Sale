@@ -7,9 +7,14 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-DataStorage::DataStorage()
-{
+DataStorage::DataStorage(){
     manager = new QNetworkAccessManager(this);
+}
+
+DataStorage* DataStorage::getInstance(){
+    if(NULL == instance)
+        instance = new DataStorage();
+    return instance;
 }
 
 patient_t DataStorage::search_one_patient(std::string name){

@@ -55,8 +55,10 @@ struct patient_t{
 
 class DataStorage : public QObject
 {
-public:
+protected:
     DataStorage();
+public:
+    static DataStorage* getInstance();
     // TODO: will add more as required
 
     // Search functions:
@@ -74,6 +76,7 @@ public:
     bool patient_new_address(patient_t patient, address_t new_address); // Update the address of an existing patient
 
 private:
+    static DataStorage* instance;
     QString host_API = "https://wnewsome.com/POS";
     QNetworkAccessManager *manager;
 };
