@@ -41,12 +41,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
+    connect(ui->search_button_2, SIGNAL(clicked()), this, SLOT(on_search_button_p_clicked()));
     updateDrug = new changedrugwindow(this);
     // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
     // TODO: remove this simple test
     drug_t drug = API->search_one_drug("NyQuil");
     qDebug() << QString::fromStdString(drug.name);
+    secuared=false;
 }
 
 
@@ -90,4 +92,55 @@ void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)
     ui->items_dropdown->clear();
     // Update current total
     ui->total->setText("$ "+QString::number(currentAccount.get_total()));
+}
+
+void  MainWindow::on_search_button_p_clicked(){
+    std::string search_buffer=ui->search_lineEdit_2->text().toStdString();
+    std::vector<patient_t> patientList;
+    if(search_buffer.find(' ')!=-1){
+        std::vector<std::pair<int,std::string>> searchList;
+        int pos=search_buffer.find(' ');
+        while (pos>-1) {
+            std::string token=search_buffer.substr(0,pos);
+            search_buffer=search_buffer.substr(pos+1);
+            std::string filed=token.substr(0,token.find(':'));
+            if(filed=="name")
+                searchList.push_back(std::pair<int,std::string>(0,token.substr(token.find(':')+1)));
+            else if(filed=="id")
+                searchList.push_back(std::pair<int,std::string>(1,token.substr(token.find(':')+1)));
+            else if(filed=="ssn"){
+                secuared=true;
+                searchList.push_back(std::pair<int,std::string>(2,token.substr(token.find(':')+1)));
+            }
+            else if(filed=="phone")
+                searchList.push_back(std::pair<int,std::string>(3,token.substr(token.find(':')+1)));
+            pos=search_buffer.find(' ');
+        }
+        patientList=std::vector<patient_t>();
+    }
+    else{
+        patientList=API->search_patients(search_buffer);
+    }
+    ui->tableWidget->setRowCount(patientList.size());
+    for(size_t i=0;i<patientList.size();i++){
+        patient_t patient=patientList[i];
+        std::string SSN = patient.SSN;
+        if(!secuared){
+            SSN[0]='*';
+            SSN[1]='*';
+            SSN[2]='*';
+            SSN[3]='*';
+            SSN[4]='*';
+        }
+        QTableWidgetItem *num = new QTableWidgetItem(QString::fromStdString(std::to_string(i+1)));
+        QTableWidgetItem *name = new QTableWidgetItem(QString::fromStdString(patient.first_name));
+        QTableWidgetItem *id = new QTableWidgetItem(QString::fromStdString(std::to_string(patient.DOB.year)+'/'+std::to_string(patient.DOB.month)+'/'+std::to_string(patient.DOB.day)));
+        QTableWidgetItem *ssn = new QTableWidgetItem(QString::fromStdString(SSN));
+        QTableWidgetItem *phone = new QTableWidgetItem(QString::fromStdString(patient.phone));
+        ui->tableWidget->setItem(i,0,num);
+        ui->tableWidget->setItem(i,1,name);
+        ui->tableWidget->setItem(i,2,id);
+        ui->tableWidget->setItem(i,3,ssn);
+        ui->tableWidget->setItem(i,4,phone);
+    }
 }

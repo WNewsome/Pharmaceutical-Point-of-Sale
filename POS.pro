@@ -11,16 +11,19 @@ CONFIG += c++11
 SOURCES += \
     changedrugwindow.cpp \
     datastorage.cpp \
+    dialog.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     changedrugwindow.h \
     datastorage.h \
+    dialog.h \
     mainwindow.h
 
 FORMS += \
     changedrugwindow.ui \
+    dialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.

@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QListWidgetItem>
+#include <QTabWidget>
 #include "changedrugwindow.h"
 #include "datastorage.h"
 
@@ -51,12 +52,14 @@ private:
     QString web_API = "https://wnewsome.com/POS/search.php";
     DataStorage *API;
     changedrugwindow *updateDrug;
+    bool secuared;
 
 private slots:
     void searchDrug(QNetworkReply*);                            // Function that calls the API to obtain data
     void on_search_button_clicked();                            // Main search button in sales tab
     void on_pushButton_5_clicked();
     void on_items_dropdown_itemClicked(QListWidgetItem *item);  // Select an item from search results
+    void on_search_button_p_clicked();                            // Main search button in patient tab
 };
 
 #endif // MAINWINDOW_H
