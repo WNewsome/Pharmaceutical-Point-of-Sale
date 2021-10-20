@@ -64,7 +64,7 @@ void MainWindow::on_search_button_clicked()
     man->get(request);
 }
 
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::on_drugeditsearch_clicked()
 {
     //looks up name
     // Connect to web API
@@ -96,3 +96,5 @@ void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)
     // Update current total
     ui->total->setText("$ "+QString::number(currentAccount.get_total()));
 }
+
+

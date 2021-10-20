@@ -53,8 +53,8 @@ private:
 private slots:
     void searchDrug(QNetworkReply*);                            // Function that calls the API to obtain data
     void on_search_button_clicked();                            // Main search button in sales tab
-    void on_pushButton_5_clicked();
     void on_items_dropdown_itemClicked(QListWidgetItem *item);  // Select an item from search results
+    void on_drugeditsearch_clicked();
 };
 
 #endif // MAINWINDOW_H

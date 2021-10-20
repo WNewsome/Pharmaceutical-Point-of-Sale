@@ -296,7 +296,7 @@
            <widget class="QLineEdit" name="searchdrugname"/>
           </item>
           <item row="1" column="2">
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="drugeditsearch">
             <property name="text">
              <string>Search</string>
             </property>
