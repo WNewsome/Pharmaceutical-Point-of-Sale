@@ -68,7 +68,7 @@ public:
     std::vector<drug_t> search_drugs(std::string name); // returns a vector of drugs of the resulting search by name
 
     // Create functions:
-    bool create_new_drug(drug_t drug);
+    bool create_new_drug(drug_t drug, int quantity);
     bool create_new_patient(patient_t patient);
 
     // Update functions:

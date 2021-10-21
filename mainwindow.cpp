@@ -80,6 +80,20 @@ MainWindow::MainWindow(QWidget *parent)
                             patients[i].phone);
         ui->patientsListView->insertItem((int)i, newItem);
     }
+    // Create a new drug and 32 units in inventory
+    drug_t new_drug;
+    new_drug.name = "this is a new drug";
+    new_drug.brand = "This is its brand";
+    new_drug.cost = 8;
+    new_drug.price = 12;
+    new_drug.control_status = "AWEF";
+    new_drug.picture_url = "the_url";
+    new_drug.UPC = "12345";
+    new_drug.DEA = "123444";
+    new_drug.GPI = "123456777";
+    new_drug.NDC = "12jj";
+    API->create_new_drug(new_drug, 10);
+
 }
 
 
