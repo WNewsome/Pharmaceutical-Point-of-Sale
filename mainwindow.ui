@@ -185,26 +185,44 @@
        <rect>
         <x>30</x>
         <y>70</y>
-        <width>801</width>
-        <height>581</height>
+        <width>701</width>
+        <height>531</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_id">
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_name">
          <property name="text">
-          <string>ID:</string>
+          <string>Name:</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="idEdit"/>
-       </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="phoneEdit"/>
+       <item row="0" column="0" rowspan="7">
+        <widget class="QTableWidget" name="tableWidget">
+         <property name="columnCount">
+          <number>5</number>
+         </property>
+         <attribute name="horizontalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>72</number>
+         </attribute>
+         <attribute name="horizontalHeaderHighlightSections">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="verticalHeaderVisible">
+          <bool>false</bool>
+         </attribute>
+         <column/>
+         <column/>
+         <column/>
+         <column/>
+         <column/>
+        </widget>
        </item>
        <item row="2" column="1">
         <widget class="QLabel" name="label_phone">
@@ -226,12 +244,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="nameEdit"/>
-       </item>
-       <item row="4" column="2">
-        <widget class="QPlainTextEdit" name="addressEdit"/>
-       </item>
        <item row="5" column="1">
         <widget class="QLabel" name="label_prescription">
          <property name="text">
@@ -239,8 +251,22 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="2">
-        <widget class="QPlainTextEdit" name="prescriptionEdit"/>
+       <item row="6" column="2">
+        <widget class="QPushButton" name="addNewButton">
+         <property name="text">
+          <string>Add New</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_id">
+         <property name="text">
+          <string>ID:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
        <item row="3" column="1">
         <widget class="QLabel" name="label_ssn">
@@ -252,33 +278,30 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item row="6" column="3">
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="text">
+          <string>Update</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2" colspan="2">
+        <widget class="QPlainTextEdit" name="prescriptionEdit"/>
+       </item>
+       <item row="4" column="2" colspan="2">
+        <widget class="QPlainTextEdit" name="addressEdit"/>
+       </item>
+       <item row="3" column="2" colspan="2">
         <widget class="QLineEdit" name="ssnEdit"/>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_name">
-         <property name="text">
-          <string>Name:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
+       <item row="2" column="2" colspan="2">
+        <widget class="QLineEdit" name="phoneEdit"/>
        </item>
-       <item row="0" column="0" rowspan="6">
-        <widget class="QTableWidget" name="tableWidget">
-         <property name="columnCount">
-          <number>5</number>
-         </property>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>72</number>
-         </attribute>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
-        </widget>
+       <item row="1" column="2" colspan="2">
+        <widget class="QLineEdit" name="idEdit"/>
+       </item>
+       <item row="0" column="2" colspan="2">
+        <widget class="QLineEdit" name="nameEdit"/>
        </item>
       </layout>
      </widget>
@@ -287,7 +310,7 @@
        <rect>
         <x>30</x>
         <y>20</y>
-        <width>711</width>
+        <width>431</width>
         <height>31</height>
        </rect>
       </property>
@@ -295,7 +318,7 @@
      <widget class="QPushButton" name="search_button_2">
       <property name="geometry">
        <rect>
-        <x>750</x>
+        <x>480</x>
         <y>20</y>
         <width>81</width>
         <height>31</height>
@@ -303,6 +326,22 @@
       </property>
       <property name="text">
        <string>Search</string>
+      </property>
+      <property name="shortcut">
+       <string>Return</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="clear_button">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>20</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Clear</string>
       </property>
      </widget>
     </widget>

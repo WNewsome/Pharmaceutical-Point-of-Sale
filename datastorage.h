@@ -2,6 +2,7 @@
 #define DATASTORAGE_H
 #include <string>
 #include <vector>
+#include <qdebug.h>
 
 struct address_t{
     // Address data type
@@ -9,6 +10,7 @@ struct address_t{
     std::string city;
     std::string state;
     std::string zip_code;
+    std::string toString();
 };
 
 struct date_t{
@@ -33,6 +35,14 @@ struct drug_t {
     std::string NDC;    // 10-digit or 11-digit, 3-segment number
 };
 
+struct prescription_t{
+    std::string name;
+    std::string UPC;//or any unique id
+    int         amount;
+    int         period;//in weeks or days
+    date_t      last_time;
+};
+
 struct patient_t{
     // Patient data type
     std::string first_name;
@@ -42,6 +52,7 @@ struct patient_t{
     std::string phone;
     std::string SSN;
     date_t      DOB;
+    //vector<prescription_t> prescription
 };
 
 class DataStorage

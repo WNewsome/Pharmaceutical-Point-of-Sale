@@ -61,6 +61,8 @@ bool DataStorage::create_new_drug(drug_t drug){
 bool DataStorage::create_new_patient(patient_t patient){
     // TODO: save new patient in DB
     // return true if successfully saved in DB
+    qDebug() << "new patient name" ;
+    qDebug()<<patient.first_name.c_str();
     return true;
 }
 
@@ -72,5 +74,8 @@ bool DataStorage::add_inventory(drug_t drug, uint16_t n){
 bool DataStorage::patient_new_address(patient_t patient, address_t new_address){
     // TODO: update the address of patient to be new_address
     return true;
+}
+std::string address_t::toString(){
+    return street_number+"\n"+city+","+state+","+zip_code;
 }
 

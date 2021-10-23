@@ -42,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
     connect(ui->search_button_2, SIGNAL(clicked()), this, SLOT(on_search_button_p_clicked()));
+    connect(ui->clear_button, SIGNAL(clicked()), this, SLOT(on_clear_p_clicked()));
+    connect(ui->addNewButton, SIGNAL(clicked()), this, SLOT(on_new_p_clicked()));
+    connect(ui->tableWidget,SIGNAL(cellClicked(int,int)),this,SLOT(on_search_table_p_clicked(int,int)));
     updateDrug = new changedrugwindow(this);
     // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
@@ -95,8 +98,9 @@ void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)
 }
 
 void  MainWindow::on_search_button_p_clicked(){
+    ui->tableWidget->setRowCount(0);
+    patientList.clear();
     std::string search_buffer=ui->search_lineEdit_2->text().toStdString();
-    std::vector<patient_t> patientList;
     if(search_buffer.find(' ')!=-1){
         std::vector<std::pair<int,std::string>> searchList;
         int pos=search_buffer.find(' ');
@@ -143,4 +147,36 @@ void  MainWindow::on_search_button_p_clicked(){
         ui->tableWidget->setItem(i,3,ssn);
         ui->tableWidget->setItem(i,4,phone);
     }
+}
+
+void MainWindow::on_search_table_p_clicked(int row,int colum){
+    Dialog *dialog=new Dialog(patientList[row],this);
+    dialog->setWindowFlag(Qt::SubWindow);
+    dialog->show();
+    connect(dialog,SIGNAL(correct_ssn(patient_t)),this,SLOT(on_correct_ssn(patient_t)));
+}
+
+void MainWindow::on_correct_ssn(patient_t patient){
+    ui->nameEdit->setText(QString::fromStdString(patient.first_name+" "+patient.last_name));
+    ui->phoneEdit->setText(QString::fromStdString(patient.phone));
+    ui->ssnEdit->setText(QString::fromStdString(patient.SSN));
+    ui->addressEdit->setPlainText(QString::fromStdString(patient.address.toString()));
+}
+
+void MainWindow::on_clear_p_clicked(){
+    ui->tableWidget->setRowCount(0);
+    ui->search_lineEdit_2->clear();
+    ui->nameEdit->clear();
+    ui->phoneEdit->clear();
+    ui->ssnEdit->clear();
+    ui->addressEdit->clear();
+    ui->prescriptionEdit->clear();
+}
+
+void MainWindow::on_new_p_clicked(){
+    patient_t newPatient;
+    newPatient.first_name=ui->nameEdit->text().toStdString();
+    newPatient.phone=ui->phoneEdit->text().toStdString();
+    newPatient.SSN=ui->ssnEdit->text().toStdString();
+    API->create_new_patient(newPatient);
 }
