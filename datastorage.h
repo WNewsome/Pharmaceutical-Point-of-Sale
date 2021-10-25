@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <qdebug.h>
+#include <time.h>
 
 struct address_t{
     // Address data type
@@ -33,6 +34,7 @@ struct drug_t {
     std::string DEA;    // 2 letters, 6 numbers, and 1 check digit
     std::string GPI;    // 14-character hierarchical classification
     std::string NDC;    // 10-digit or 11-digit, 3-segment number
+    int amount;
 };
 
 struct prescription_t{
@@ -40,7 +42,8 @@ struct prescription_t{
     std::string UPC;//or any unique id
     int         amount;
     int         period;//in weeks or days
-    date_t      last_time;
+    time_t      last_time;
+    bool getValid();
 };
 
 struct patient_t{
@@ -52,7 +55,7 @@ struct patient_t{
     std::string phone;
     std::string SSN;
     date_t      DOB;
-    //vector<prescription_t> prescription
+    std::vector<prescription_t> prescription;
 };
 
 class DataStorage

@@ -14,7 +14,20 @@ patient_t DataStorage::search_one_patient(std::string name){
     patient.address     = {"1725 Slough Avenue", "Scranton", "PA", "18540"};
     patient.SSN         = "123456890";
     patient.phone       = "1234567890";
-
+    prescription_t prescription;
+    prescription.UPC="323900038158";
+    prescription.amount=2;
+    prescription.name="NyQuil";
+    tm lastTime = {0,0,0,24,5,120};
+    prescription.last_time=std::mktime(&lastTime);
+    prescription.period=5;
+    patient.prescription.push_back(prescription);
+    prescription.UPC="323900038158";
+    prescription.amount=2;
+    prescription.name="NyQuil";
+    prescription.last_time=time(0);
+    prescription.period=5;
+    patient.prescription.push_back(prescription);
     return patient;
 }
 
@@ -31,7 +44,7 @@ drug_t DataStorage::search_one_drug(std::string name){
     drug.DEA = "AB1234560";
     drug.GPI = "ABCDEFGHIJKLMN";
     drug.NDC = "3700051812";
-
+    drug.amount = 10;
     return drug;
 }
 
@@ -77,5 +90,11 @@ bool DataStorage::patient_new_address(patient_t patient, address_t new_address){
 }
 std::string address_t::toString(){
     return street_number+"\n"+city+","+state+","+zip_code;
+}
+
+bool prescription_t::getValid(){
+    std::time_t x=time(0);
+    int diff=std::difftime(x,last_time)/(3600*24);
+    return diff>period;
 }
 
