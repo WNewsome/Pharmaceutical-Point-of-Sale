@@ -400,7 +400,6 @@
       <property name="text">
        <string>Clear</string>
       </property>
-
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
@@ -828,6 +827,22 @@
      </widget>
     </widget>
    </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>895</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuCheckout">
+    <property name="title">
+     <string>Checkout</string>
+    </property>
+   </widget>
+   <addaction name="menuCheckout"/>
   </widget>
  </widget>
  <resources/>

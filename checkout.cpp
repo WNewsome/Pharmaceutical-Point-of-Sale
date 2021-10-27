@@ -28,10 +28,42 @@ Checkout::Checkout(CheckoutAccount accout,QWidget *parent ): QMainWindow(parent)
     ui->listWidget->addItem(QString::fromStdString("Subtotal:\t$"+std::to_string(accout.get_total())));
     ui->listWidget->addItem(QString::fromStdString("Tax:\t$"+std::to_string(accout.get_total()*0.15)));
     ui->listWidget->addItem(QString::fromStdString("Total:\t$"+std::to_string(accout.get_total()*1.15)));
-    total*=accout.get_total()*1.15;
+    connect(ui->buttonBox,SIGNAL(accepted()),this,SLOT(on_accept()));
+    total=accout.get_total()*1.15;
+    ui->textEdit->setAlignment(Qt::AlignRight);
+    ui->label_4->setStyleSheet("QLabel { background-color : white; color : red; }");
+    ui->label_4->setText("-1.00");
+    buffer="";
 }
 
 Checkout::~Checkout()
 {
     delete ui;
+}
+void Checkout::keyPressEvent(QKeyEvent *e){
+    if(!(e->key()==Qt::Key_Backspace)&&!(e->key()==Qt::Key_Return)){
+        bool isint;
+        e->text().toInt(&isint);
+        if(isint){
+            buffer+=e->text();
+            QString temp=buffer;
+            while(temp.length()<3){
+                temp="0"+temp;
+            }
+            temp.insert(temp.length()-2,'.');
+            ui->textEdit->clear();
+            ui->textEdit->setText(temp);
+            if((temp.toDouble()-total)>-0.01){
+                ui->label_4->setStyleSheet("QLabel { background-color : white; color : black; }");
+                ui->label_4->setText(QString::fromStdString(std::to_string(temp.toDouble()-total)));
+            }
+        }
+    }
+}
+
+void Checkout::on_accept(){
+    if((ui->textEdit->toPlainText().toDouble()-total)>-0.01){
+        this->close();
+        clearCart();
+    }
 }
