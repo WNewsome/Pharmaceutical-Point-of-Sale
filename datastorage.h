@@ -2,18 +2,18 @@
 #define DATASTORAGE_H
 #include <string>
 #include <vector>
-#include <QString>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QObject>
-#include <QMainWindow>
+
+#include <qdebug.h>
+#include <time.h>
 
 struct address_t{
     // Address data type
-    QString street_number;
-    QString city;
-    QString state;
-    QString zip_code;
+    std::string street_number;
+    std::string city;
+    std::string state;
+    std::string zip_code;
+    std::string toString();
+
 };
 
 struct date_t{
@@ -32,12 +32,22 @@ struct drug_t {
     QString control_status;
     QString picture_url;
     // Codes
-    QString UPC;    // 12 numeric digits
-    QString DEA;    // 2 letters, 6 numbers, and 1 check digit
-    QString GPI;    // 14-character hierarchical classification
-    QString NDC;    // 10-digit or 11-digit, 3-segment number
 
-    bool valid = false;
+    std::string UPC;    // 12 numeric digits
+    std::string DEA;    // 2 letters, 6 numbers, and 1 check digit
+    std::string GPI;    // 14-character hierarchical classification
+    std::string NDC;    // 10-digit or 11-digit, 3-segment number
+    int amount;
+};
+
+struct prescription_t{
+    std::string name;
+    std::string UPC;//or any unique id
+    int         amount;
+    int         period;//in weeks or days
+    time_t      last_time;
+    bool getValid();
+
 };
 
 struct patient_t{
@@ -49,7 +59,7 @@ struct patient_t{
     QString     phone;
     QString     SSN;
     date_t      DOB;
-
+    std::vector<prescription_t> prescription;
     bool valid = false;
 };
 

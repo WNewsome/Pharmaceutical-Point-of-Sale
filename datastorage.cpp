@@ -39,6 +39,7 @@ patient_t DataStorage::search_one_patient(std::string name){
 
     patient_t patient;
 
+
     foreach (const QJsonValue & value, jsonArray) {
         QJsonObject obj     = value.toObject();
         patient.first_name  = obj["first_name"].toString();
@@ -54,7 +55,6 @@ patient_t DataStorage::search_one_patient(std::string name){
         // Return first result only
         return patient;
     }
-    return patient;
 }
 
 drug_t DataStorage::search_one_drug(std::string name){
@@ -191,6 +191,8 @@ bool DataStorage::create_new_drug(drug_t drug){
 bool DataStorage::create_new_patient(patient_t patient){
     // TODO: save new patient in DB
     // return true if successfully saved in DB
+    qDebug() << "new patient name" ;
+    qDebug()<<patient.first_name.c_str();
     return true;
 }
 
@@ -202,5 +204,14 @@ bool DataStorage::add_inventory(drug_t drug, uint16_t n){
 bool DataStorage::patient_new_address(patient_t patient, address_t new_address){
     // TODO: update the address of patient to be new_address
     return true;
+}
+std::string address_t::toString(){
+    return street_number+"\n"+city+","+state+","+zip_code;
+}
+
+bool prescription_t::getValid(){
+    std::time_t x=time(0);
+    int diff=std::difftime(x,last_time)/(3600*24);
+    return diff>period;
 }
 
