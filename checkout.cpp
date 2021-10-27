@@ -16,7 +16,7 @@ Checkout::Checkout(CheckoutAccount accout,QWidget *parent ): QMainWindow(parent)
     for(size_t i=0;i<drugList.size();i++){
         drug_t drug=drugList[i];
         QTableWidgetItem *price = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.price)));
-        QTableWidgetItem *name = new QTableWidgetItem(QString::fromStdString(drug.name));
+        QTableWidgetItem *name = new QTableWidgetItem(drug.name);
         QTableWidgetItem *totalPrice = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.price*drug.amount)));
         QTableWidgetItem *amount = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.amount)));
         total+=drug.price*drug.amount;

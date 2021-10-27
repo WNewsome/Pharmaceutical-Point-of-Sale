@@ -2,7 +2,7 @@
 #define DATASTORAGE_H
 #include <string>
 #include <vector>
-
+#include <QNetworkAccessManager>
 #include <qdebug.h>
 #include <time.h>
 
@@ -38,6 +38,7 @@ struct drug_t {
     std::string GPI;    // 14-character hierarchical classification
     std::string NDC;    // 10-digit or 11-digit, 3-segment number
     int amount;
+    bool valid;
 };
 
 struct prescription_t{
@@ -52,12 +53,12 @@ struct prescription_t{
 
 struct patient_t{
     // Patient data type
-    QString     first_name;
-    QString     middle_name;
-    QString     last_name;
+    std::string     first_name;
+    std::string     middle_name;
+    std::string     last_name;
     address_t   address;
-    QString     phone;
-    QString     SSN;
+    std::string     phone;
+    std::string     SSN;
     date_t      DOB;
     std::vector<prescription_t> prescription;
     bool valid = false;
