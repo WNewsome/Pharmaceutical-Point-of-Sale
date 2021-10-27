@@ -2,6 +2,7 @@
 #define DATASTORAGE_H
 #include <string>
 #include <vector>
+
 #include <qdebug.h>
 #include <time.h>
 
@@ -12,6 +13,7 @@ struct address_t{
     std::string state;
     std::string zip_code;
     std::string toString();
+
 };
 
 struct date_t{
@@ -23,13 +25,14 @@ struct date_t{
 
 struct drug_t {
     // Drug data type
-    std::string name;
-    std::string brand;
-    double      cost;
-    double      price;
-    std::string control_status;
-    std::string picture_url;
+    QString name;
+    QString brand;
+    double  cost;
+    double  price;
+    QString control_status;
+    QString picture_url;
     // Codes
+
     std::string UPC;    // 12 numeric digits
     std::string DEA;    // 2 letters, 6 numbers, and 1 check digit
     std::string GPI;    // 14-character hierarchical classification
@@ -44,24 +47,28 @@ struct prescription_t{
     int         period;//in weeks or days
     time_t      last_time;
     bool getValid();
+
 };
 
 struct patient_t{
     // Patient data type
-    std::string first_name;
-    std::string middle_name;
-    std::string last_name;
+    QString     first_name;
+    QString     middle_name;
+    QString     last_name;
     address_t   address;
-    std::string phone;
-    std::string SSN;
+    QString     phone;
+    QString     SSN;
     date_t      DOB;
     std::vector<prescription_t> prescription;
+    bool valid = false;
 };
 
-class DataStorage
+class DataStorage : public QObject
 {
-public:
+protected:
     DataStorage();
+public:
+    static DataStorage* getInstance();
     // TODO: will add more as required
 
     // Search functions:
@@ -78,6 +85,10 @@ public:
     bool add_inventory(drug_t drug, uint16_t n); // Add 'n' of 'drug' to DB (add more to current inventory)
     bool patient_new_address(patient_t patient, address_t new_address); // Update the address of an existing patient
 
+private:
+    static DataStorage* instance;
+    QString host_API = "https://wnewsome.com/POS";
+    QNetworkAccessManager *manager;
 };
 
 #endif // DATASTORAGE_H

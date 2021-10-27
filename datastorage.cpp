@@ -1,67 +1,184 @@
 #include "datastorage.h"
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
+#include <QObject>
+#include <QEventLoop>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
-DataStorage::DataStorage()
-{
+DataStorage::DataStorage(){
+    manager = new QNetworkAccessManager(this);
+}
 
+DataStorage* DataStorage::getInstance(){
+    if(NULL == instance)
+        instance = new DataStorage();
+    return instance;
 }
 
 patient_t DataStorage::search_one_patient(std::string name){
-    // TODO: Returning a fake result for now
+
+    QString word_to_search = QString::fromStdString(name);
+    const QUrl url = QUrl(host_API+"/search_patient.php?name="+word_to_search);
+
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Convert to JSON
+    QString strReply = (QString)reply->readAll();
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+    QJsonArray jsonArray = jsonObject["results"].toArray();
+
     patient_t patient;
-    patient.first_name  = "Jim";
-    patient.last_name   = "Halpert";
-    patient.DOB         = {10, 1, 1978};
-    patient.address     = {"1725 Slough Avenue", "Scranton", "PA", "18540"};
-    patient.SSN         = "123456890";
-    patient.phone       = "1234567890";
-    prescription_t prescription;
-    prescription.UPC="323900038158";
-    prescription.amount=2;
-    prescription.name="NyQuil";
-    tm lastTime = {0,0,0,24,5,120};
-    prescription.last_time=std::mktime(&lastTime);
-    prescription.period=5;
-    patient.prescription.push_back(prescription);
-    prescription.UPC="323900038158";
-    prescription.amount=2;
-    prescription.name="NyQuil";
-    prescription.last_time=time(0);
-    prescription.period=5;
-    patient.prescription.push_back(prescription);
-    return patient;
+
+
+    foreach (const QJsonValue & value, jsonArray) {
+        QJsonObject obj     = value.toObject();
+        patient.first_name  = obj["first_name"].toString();
+        patient.middle_name = obj["middle_name"].toString();
+        patient.last_name   = obj["last_name"].toString();
+        patient.DOB         = { (uint8_t)obj["month"].toString().toInt(),
+                                (uint8_t)obj["day"].toString().toInt(),
+                                (uint16_t)obj["year"].toString().toInt()};
+        patient.address     = {obj["street"].toString(), obj["city"].toString(), obj["state"].toString(), obj["zip_code"].toString()};
+        patient.SSN         = obj["ssn"].toString();
+        patient.phone       = obj["phone"].toString();
+        patient.valid       = true;
+        // Return first result only
+        return patient;
+    }
 }
 
 drug_t DataStorage::search_one_drug(std::string name){
-    // TODO: simulates a result for now
+    // Search one drug by name
+
+    QString word_to_search = QString::fromStdString(name);
+    const QUrl url = QUrl(host_API+"/search.php?name="+word_to_search);
+
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Convert to JSON
+    QString strReply = (QString)reply->readAll();
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+    QJsonArray jsonArray = jsonObject["results"].toArray();
+
     drug_t drug;
-    drug.name = "NyQuil SEVERE Cough Cold and Flu Nighttime Relief Berry Flavor Liquid";
-    drug.brand = "Vicks";
-    drug.cost = 8.99;
-    drug.price = 13.49;
-    drug.control_status = "";
-    drug.picture_url = "https://www.cvs.com/bizcontent/merchandising/productimages/large/323900038141.jpg";
-    drug.UPC = "323900038158";
-    drug.DEA = "AB1234560";
-    drug.GPI = "ABCDEFGHIJKLMN";
-    drug.NDC = "3700051812";
-    drug.amount = 10;
+
+    foreach (const QJsonValue & value, jsonArray) {
+        QJsonObject obj = value.toObject();
+        drug.name = obj["name"].toString();
+        drug.brand = obj["brand"].toString();
+        drug.cost = obj["cost"].toString().toDouble();
+        drug.price = obj["price"].toString().toDouble();
+        drug.control_status = obj["control_status"].toString();
+        drug.picture_url = obj["picture_url"].toString();
+        drug.UPC = obj["UPC"].toString();
+        drug.DEA = obj["DEA"].toString();
+        drug.GPI = obj["GPI"].toString();
+        drug.NDC = obj["NDC"].toString();
+        drug.valid = true;
+        // Return first result only
+        return drug;
+    }
+
     return drug;
 }
 
 std::vector<patient_t> DataStorage::search_patients(std::string name){
-    // TODO: returns 2 fake results for now
     std::vector<patient_t> result;
-    result.push_back(search_one_patient(""));
-    result.push_back(search_one_patient(""));
+    QString word_to_search = QString::fromStdString(name);
+    const QUrl url = QUrl(host_API+"/search_patient.php?name="+word_to_search);
+
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Convert to JSON
+    QString strReply = (QString)reply->readAll();
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+    QJsonArray jsonArray = jsonObject["results"].toArray();
+
+    foreach (const QJsonValue & value, jsonArray) {
+        patient_t patient;
+        QJsonObject obj     = value.toObject();
+        patient.first_name  = obj["first_name"].toString();
+        patient.middle_name = obj["middle_name"].toString();
+        patient.last_name   = obj["last_name"].toString();
+        patient.DOB         = { (uint8_t)obj["month"].toString().toInt(),
+                                (uint8_t)obj["day"].toString().toInt(),
+                                (uint16_t)obj["year"].toString().toInt()};
+        patient.address     = {obj["street"].toString(), obj["city"].toString(), obj["state"].toString(), obj["zip_code"].toString()};
+        patient.SSN         = obj["ssn"].toString();
+        patient.phone       = obj["phone"].toString();
+        patient.valid       = true;
+        // Return first result only
+        result.push_back(patient);
+    }
     return result;
 }
 
 std::vector<drug_t> DataStorage::search_drugs(std::string name){
-    // TODO: returns 3 fake results for now
+    // Search drugs by name
+
     std::vector<drug_t> result;
-    result.push_back(search_one_drug(""));
-    result.push_back(search_one_drug(""));
-    result.push_back(search_one_drug(""));
+    QString word_to_search = QString::fromStdString(name);
+    const QUrl url = QUrl(host_API+"/search.php?name="+word_to_search);
+
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Convert to JSON
+    QString strReply = (QString)reply->readAll();
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+    QJsonArray jsonArray = jsonObject["results"].toArray();
+
+    foreach (const QJsonValue & value, jsonArray) {
+        drug_t drug;
+        QJsonObject obj = value.toObject();
+        drug.name = obj["name"].toString();
+        drug.brand = obj["brand"].toString();
+        drug.cost = obj["cost"].toString().toDouble();
+        drug.price = obj["price"].toString().toDouble();
+        drug.control_status = obj["control_status"].toString();
+        drug.picture_url = obj["picture_url"].toString();
+        drug.UPC = obj["UPC"].toString();
+        drug.DEA = obj["DEA"].toString();
+        drug.GPI = obj["GPI"].toString();
+        drug.NDC = obj["NDC"].toString();
+        drug.valid = true;
+        // Add result to vector
+        result.push_back(drug);
+    }
+
     return result;
 }
 

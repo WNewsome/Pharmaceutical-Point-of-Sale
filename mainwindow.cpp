@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDebug>
+DataStorage* DataStorage::instance;
 
 void MainWindow::searchDrug(QNetworkReply *reply){
     // TODO: I will remove this function to use datastorage class instead!
@@ -49,10 +50,42 @@ MainWindow::MainWindow(QWidget *parent)
     updateDrug = new changedrugwindow(this);
     // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
-    // TODO: remove this simple test
-    drug_t drug = API->search_one_drug("NyQuil");
-    qDebug() << QString::fromStdString(drug.name);
-    secuared=false;
+
+    // Init API
+    API = DataStorage::getInstance();
+
+    // TODO: remove these tests
+    // Search for one drug matching word "Tyle*"
+    drug_t drug = API->search_one_drug("tyle");
+    if(drug.valid){
+        qDebug() << "Drug Name: "+ drug.name +" Price: "+QString::number(drug.price);
+    }
+
+    // Show results of searching for "Asp*"
+    std::vector<drug_t> drugs = API->search_drugs("Asp");
+
+    for(size_t i = 0; i < drugs.size(); i++){
+         qDebug() << "Drug Name: "+ drugs[i].name+" Price: "+QString::number(drugs[i].price);
+    }
+    // Search for one patient by first name
+    patient_t patient = API->search_one_patient("James");
+    if(patient.valid){
+        qDebug() << patient.first_name + " " + patient.last_name;
+        qDebug() << patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state;
+    }
+
+    // Add all patients in DB to patients list in patients tab
+    std::vector<patient_t> patients = API->search_patients("");
+    for(size_t i = 0; i < patients.size(); i++){
+        QListWidgetItem *newItem = new QListWidgetItem;
+        newItem->setText(   patients[i].first_name+" "+
+                            patients[i].last_name+" - "+
+                            patients[i].address.street_number+", "+
+                            patients[i].address.city+ ", "+
+                            patients[i].address.state + " - "+
+                            patients[i].phone);
+        ui->patientsListView->insertItem((int)i, newItem);
+    }
 }
 
 
