@@ -209,8 +209,28 @@ bool DataStorage::create_new_drug(drug_t drug, int quantity){
 }
 
 bool DataStorage::create_new_patient(patient_t patient){
-    // TODO: save new patient in DB
-    // return true if successfully saved in DB
+    // TODO: return true if successfully saved in DB
+    const QUrl url = QUrl(host_API+"/create_new_patient.php?first_name="+patient.first_name
+                          +"&middle_name="+patient.middle_name
+                          +"&last_name="+patient.last_name
+                          +"&street_number="+patient.address.street_number
+                          +"&city="+patient.address.city
+                          +"&state="+patient.address.state
+                          +"&zip_code="+patient.address.zip_code
+                          +"&phone="+patient.phone
+                          +"&SSN="+patient.SSN
+                          +"&month="+QString::number(patient.DOB.month)
+                          +"&day="+QString::number(patient.DOB.day)
+                          +"&year="+QString::number(patient.DOB.year));
+    qDebug() << url;
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
     return true;
 }
 

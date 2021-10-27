@@ -92,8 +92,25 @@ MainWindow::MainWindow(QWidget *parent)
     new_drug.DEA = "123444";
     new_drug.GPI = "123456777";
     new_drug.NDC = "12jj";
-    API->create_new_drug(new_drug, 10);
 
+    //API->create_new_drug(new_drug, 10);
+
+    // Test create a new patient into the DB
+    patient_t new_patient;
+    new_patient.first_name = "Willy";
+    new_patient.last_name = "Wonka";
+    new_patient.middle_name = "john";
+    new_patient.address.street_number = "111 Pensilvania Ave.";
+    new_patient.address.city = "Washington D.C.";
+    new_patient.address.state = "D.C.";
+    new_patient.address.zip_code = "23333";
+    new_patient.phone = "5404441122";
+    new_patient.SSN = "123654789";
+    new_patient.DOB.day = 12;
+    new_patient.DOB.month = 11;
+    new_patient.DOB.year = 1997;
+
+    //API->create_new_patient(new_patient);
 }
 
 
