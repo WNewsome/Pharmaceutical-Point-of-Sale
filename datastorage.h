@@ -37,6 +37,7 @@ struct drug_t {
     QString GPI;    // 14-character hierarchical classification
     QString NDC;    // 10-digit or 11-digit, 3-segment number
 
+    int amount;
     bool valid = false;
 };
 

@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     std::vector<drug_t> drugs = API->search_drugs("Asp");
 
     for(size_t i = 0; i < drugs.size(); i++){
-         qDebug() << "Drug Name: "+ drugs[i].name+" Price: "+QString::number(drugs[i].price);
+         qDebug() << "Drug Name: "+ drugs[i].name+" Quantity: "+QString::number(drugs[i].amount);
     }
     // Search for one patient by first name
     patient_t patient = API->search_one_patient("James");

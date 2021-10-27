@@ -92,6 +92,7 @@ drug_t DataStorage::search_one_drug(std::string name){
         drug.DEA = obj["DEA"].toString();
         drug.GPI = obj["GPI"].toString();
         drug.NDC = obj["NDC"].toString();
+        drug.amount = obj["quantity"].toString().toInt();
         drug.valid = true;
         // Return first result only
         return drug;
@@ -174,6 +175,7 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
         drug.DEA = obj["DEA"].toString();
         drug.GPI = obj["GPI"].toString();
         drug.NDC = obj["NDC"].toString();
+        drug.amount = obj["quantity"].toString().toInt();
         drug.valid = true;
         // Add result to vector
         result.push_back(drug);
