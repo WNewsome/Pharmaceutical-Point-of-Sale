@@ -70,21 +70,8 @@ MainWindow::MainWindow(QWidget *parent)
     // Search for one patient by first name
     patient_t patient = API->search_one_patient("James");
     if(patient.valid){
-        qDebug() << patient.first_name + " " + patient.last_name;
-        qDebug() << patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state;
-    }
-
-    // Add all patients in DB to patients list in patients tab
-    std::vector<patient_t> patients = API->search_patients("");
-    for(size_t i = 0; i < patients.size(); i++){
-        QListWidgetItem *newItem = new QListWidgetItem;
-        newItem->setText(   patients[i].first_name+" "+
-                            patients[i].last_name+" - "+
-                            patients[i].address.street_number+", "+
-                            patients[i].address.city+ ", "+
-                            patients[i].address.state + " - "+
-                            patients[i].phone);
-        ui->patientsListView->insertItem((int)i, newItem);
+        qDebug() << QString::fromStdString( patient.first_name + " " + patient.last_name);
+        qDebug() << QString::fromStdString(patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state);
     }
 }
 

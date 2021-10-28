@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "datastorage.h"
+#include <QKeyEvent>
+#include <QString>
 class CheckoutAccount{
 public:
     std::vector<drug_t> drugList;
@@ -39,9 +41,16 @@ public:
     explicit Checkout(CheckoutAccount,QWidget *parent = nullptr);
     ~Checkout();
 
+    void keyPressEvent(QKeyEvent *e);
+
 private:
     Ui::Checkout *ui;
     double total;
+    QString buffer;
+private slots:
+    void on_accept();
+signals:
+    void clearCart();
 };
 
 #endif // CHECKOUT_H

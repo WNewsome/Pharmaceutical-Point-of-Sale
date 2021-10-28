@@ -42,16 +42,19 @@ patient_t DataStorage::search_one_patient(std::string name){
 
     foreach (const QJsonValue & value, jsonArray) {
         QJsonObject obj     = value.toObject();
-        patient.first_name  = obj["first_name"].toString();
-        patient.middle_name = obj["middle_name"].toString();
-        patient.last_name   = obj["last_name"].toString();
+        patient.first_name  = obj["first_name"].toString().toStdString();
+        patient.middle_name = obj["middle_name"].toString().toStdString();
+        patient.last_name   = obj["last_name"].toString().toStdString();
         patient.DOB         = { (uint8_t)obj["month"].toString().toInt(),
                                 (uint8_t)obj["day"].toString().toInt(),
                                 (uint16_t)obj["year"].toString().toInt()};
-        patient.address     = {obj["street"].toString(), obj["city"].toString(), obj["state"].toString(), obj["zip_code"].toString()};
-        patient.SSN         = obj["ssn"].toString();
-        patient.phone       = obj["phone"].toString();
+        patient.address     = {obj["street"].toString().toStdString(), obj["city"].toString().toStdString(), obj["state"].toString().toStdString(), obj["zip_code"].toString().toStdString()};
+        patient.SSN         = obj["ssn"].toString().toStdString();
+        patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
+        //TODO: need real prescription return
+        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
+        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
         // Return first result only
         return patient;
     }
@@ -88,11 +91,13 @@ drug_t DataStorage::search_one_drug(std::string name){
         drug.price = obj["price"].toString().toDouble();
         drug.control_status = obj["control_status"].toString();
         drug.picture_url = obj["picture_url"].toString();
-        drug.UPC = obj["UPC"].toString();
-        drug.DEA = obj["DEA"].toString();
-        drug.GPI = obj["GPI"].toString();
-        drug.NDC = obj["NDC"].toString();
+        drug.UPC = obj["UPC"].toString().toStdString();
+        drug.DEA = obj["DEA"].toString().toStdString();
+        drug.GPI = obj["GPI"].toString().toStdString();
+        drug.NDC = obj["NDC"].toString().toStdString();
         drug.valid = true;
+        //TODO: need real amount return;
+        drug.amount=5;
         // Return first result only
         return drug;
     }
@@ -123,16 +128,19 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
     foreach (const QJsonValue & value, jsonArray) {
         patient_t patient;
         QJsonObject obj     = value.toObject();
-        patient.first_name  = obj["first_name"].toString();
-        patient.middle_name = obj["middle_name"].toString();
-        patient.last_name   = obj["last_name"].toString();
+        patient.first_name  = obj["first_name"].toString().toStdString();
+        patient.middle_name = obj["middle_name"].toString().toStdString();
+        patient.last_name   = obj["last_name"].toString().toStdString();
         patient.DOB         = { (uint8_t)obj["month"].toString().toInt(),
                                 (uint8_t)obj["day"].toString().toInt(),
                                 (uint16_t)obj["year"].toString().toInt()};
-        patient.address     = {obj["street"].toString(), obj["city"].toString(), obj["state"].toString(), obj["zip_code"].toString()};
-        patient.SSN         = obj["ssn"].toString();
-        patient.phone       = obj["phone"].toString();
+        patient.address     = {obj["street"].toString().toStdString(), obj["city"].toString().toStdString(), obj["state"].toString().toStdString(), obj["zip_code"].toString().toStdString()};
+        patient.SSN         = obj["ssn"].toString().toStdString();
+        patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
+        //TODO: need real prescription return
+        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
+        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
         // Return first result only
         result.push_back(patient);
     }
@@ -170,11 +178,13 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
         drug.price = obj["price"].toString().toDouble();
         drug.control_status = obj["control_status"].toString();
         drug.picture_url = obj["picture_url"].toString();
-        drug.UPC = obj["UPC"].toString();
-        drug.DEA = obj["DEA"].toString();
-        drug.GPI = obj["GPI"].toString();
-        drug.NDC = obj["NDC"].toString();
+        drug.UPC = obj["UPC"].toString().toStdString();
+        drug.DEA = obj["DEA"].toString().toStdString();
+        drug.GPI = obj["GPI"].toString().toStdString();
+        drug.NDC = obj["NDC"].toString().toStdString();
         drug.valid = true;
+        //TODO: need for real amount return
+        drug.amount=5;
         // Add result to vector
         result.push_back(drug);
     }
