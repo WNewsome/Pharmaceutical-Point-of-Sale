@@ -39,22 +39,25 @@ patient_t DataStorage::search_one_patient(std::string name){
 
     patient_t patient;
 
+
     foreach (const QJsonValue & value, jsonArray) {
         QJsonObject obj     = value.toObject();
-        patient.first_name  = obj["first_name"].toString();
-        patient.middle_name = obj["middle_name"].toString();
-        patient.last_name   = obj["last_name"].toString();
+        patient.first_name  = obj["first_name"].toString().toStdString();
+        patient.middle_name = obj["middle_name"].toString().toStdString();
+        patient.last_name   = obj["last_name"].toString().toStdString();
         patient.DOB         = { (uint8_t)obj["month"].toString().toInt(),
                                 (uint8_t)obj["day"].toString().toInt(),
                                 (uint16_t)obj["year"].toString().toInt()};
-        patient.address     = {obj["street"].toString(), obj["city"].toString(), obj["state"].toString(), obj["zip_code"].toString()};
-        patient.SSN         = obj["ssn"].toString();
-        patient.phone       = obj["phone"].toString();
+        patient.address     = {obj["street"].toString().toStdString(), obj["city"].toString().toStdString(), obj["state"].toString().toStdString(), obj["zip_code"].toString().toStdString()};
+        patient.SSN         = obj["ssn"].toString().toStdString();
+        patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
+        //TODO: need real prescription return
+        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
+        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
         // Return first result only
         return patient;
     }
-    return patient;
 }
 
 drug_t DataStorage::search_one_drug(std::string name){
@@ -88,12 +91,12 @@ drug_t DataStorage::search_one_drug(std::string name){
         drug.price = obj["price"].toString().toDouble();
         drug.control_status = obj["control_status"].toString();
         drug.picture_url = obj["picture_url"].toString();
-        drug.UPC = obj["UPC"].toString();
-        drug.DEA = obj["DEA"].toString();
-        drug.GPI = obj["GPI"].toString();
-        drug.NDC = obj["NDC"].toString();
-        drug.amount = obj["quantity"].toString().toInt();
+        drug.UPC = obj["UPC"].toString().toStdString();
+        drug.DEA = obj["DEA"].toString().toStdString();
+        drug.GPI = obj["GPI"].toString().toStdString();
+        drug.NDC = obj["NDC"].toString().toStdString();
         drug.valid = true;
+        drug.amount = obj["quantity"].toString().toInt();
         // Return first result only
         return drug;
     }
@@ -124,16 +127,19 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
     foreach (const QJsonValue & value, jsonArray) {
         patient_t patient;
         QJsonObject obj     = value.toObject();
-        patient.first_name  = obj["first_name"].toString();
-        patient.middle_name = obj["middle_name"].toString();
-        patient.last_name   = obj["last_name"].toString();
+        patient.first_name  = obj["first_name"].toString().toStdString();
+        patient.middle_name = obj["middle_name"].toString().toStdString();
+        patient.last_name   = obj["last_name"].toString().toStdString();
         patient.DOB         = { (uint8_t)obj["month"].toString().toInt(),
                                 (uint8_t)obj["day"].toString().toInt(),
                                 (uint16_t)obj["year"].toString().toInt()};
-        patient.address     = {obj["street"].toString(), obj["city"].toString(), obj["state"].toString(), obj["zip_code"].toString()};
-        patient.SSN         = obj["ssn"].toString();
-        patient.phone       = obj["phone"].toString();
+        patient.address     = {obj["street"].toString().toStdString(), obj["city"].toString().toStdString(), obj["state"].toString().toStdString(), obj["zip_code"].toString().toStdString()};
+        patient.SSN         = obj["ssn"].toString().toStdString();
+        patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
+        // TODO:*** need real prescription return
+        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
+        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
         // Return first result only
         result.push_back(patient);
     }
@@ -171,12 +177,14 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
         drug.price = obj["price"].toString().toDouble();
         drug.control_status = obj["control_status"].toString();
         drug.picture_url = obj["picture_url"].toString();
-        drug.UPC = obj["UPC"].toString();
-        drug.DEA = obj["DEA"].toString();
-        drug.GPI = obj["GPI"].toString();
-        drug.NDC = obj["NDC"].toString();
+
         drug.amount = obj["quantity"].toString().toInt();
+        drug.UPC = obj["UPC"].toString().toStdString();
+        drug.DEA = obj["DEA"].toString().toStdString();
+        drug.GPI = obj["GPI"].toString().toStdString();
+        drug.NDC = obj["NDC"].toString().toStdString();
         drug.valid = true;
+        drug.amount = obj["quantity"].toString().toInt();
         // Add result to vector
         result.push_back(drug);
     }
@@ -194,10 +202,10 @@ bool DataStorage::create_new_drug(drug_t drug, int quantity){
                           +"&control_status="+drug.control_status
                           +"&picture_url="+drug.picture_url
                           +"&quantity="+QString::number(quantity)
-                          +"&UPC="+drug.UPC
-                          +"&DEA="+drug.DEA
-                          +"&GPI="+drug.GPI
-                          +"&NDC="+drug.NDC);
+                          +"&UPC="+QString::fromStdString(drug.UPC)
+                          +"&DEA="+QString::fromStdString(drug.DEA)
+                          +"&GPI="+QString::fromStdString(drug.GPI)
+                          +"&NDC="+QString::fromStdString(drug.NDC));
     qDebug() << url;
     // Request url by GET
     QNetworkRequest request(url);
@@ -212,7 +220,7 @@ bool DataStorage::create_new_drug(drug_t drug, int quantity){
 
 bool DataStorage::create_new_patient(patient_t patient){
     // TODO: return true if successfully saved in DB
-    const QUrl url = QUrl(host_API+"/create_new_patient.php?first_name="+patient.first_name
+    const QUrl url = QUrl(host_API+QString::fromStdString("/create_new_patient.php?first_name="+patient.first_name
                           +"&middle_name="+patient.middle_name
                           +"&last_name="+patient.last_name
                           +"&street_number="+patient.address.street_number
@@ -220,7 +228,7 @@ bool DataStorage::create_new_patient(patient_t patient){
                           +"&state="+patient.address.state
                           +"&zip_code="+patient.address.zip_code
                           +"&phone="+patient.phone
-                          +"&SSN="+patient.SSN
+                          +"&SSN="+patient.SSN)
                           +"&month="+QString::number(patient.DOB.month)
                           +"&day="+QString::number(patient.DOB.day)
                           +"&year="+QString::number(patient.DOB.year));
@@ -241,8 +249,18 @@ bool DataStorage::add_inventory(drug_t drug, uint16_t n){
     return true;
 }
 
-bool DataStorage::patient_new_address(patient_t patient, address_t new_address){
-    // TODO: update the address of patient to be new_address
+bool DataStorage::update_patient(patient_t patient){
+    // TODO: update the patient
     return true;
+}
+std::string address_t::toString(){
+    return street_number+"\n"+city+","+state+","+zip_code;
+}
+
+bool prescription_t::getValid(){
+    // Validate that we can prescribe the drug to the patient
+    std::time_t x = time(0);
+    int diff = std::difftime(x,last_time)/(3600*24);
+    return diff > period;
 }
 
