@@ -96,8 +96,7 @@ drug_t DataStorage::search_one_drug(std::string name){
         drug.GPI = obj["GPI"].toString().toStdString();
         drug.NDC = obj["NDC"].toString().toStdString();
         drug.valid = true;
-        //TODO: need real amount return;
-        drug.amount=5;
+        drug.amount = obj["quantity"].toString().toInt();
         // Return first result only
         return drug;
     }
@@ -138,7 +137,7 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
         patient.SSN         = obj["ssn"].toString().toStdString();
         patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
-        //TODO: need real prescription return
+        // TODO:*** need real prescription return
         patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
         patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
         // Return first result only
@@ -178,13 +177,14 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
         drug.price = obj["price"].toString().toDouble();
         drug.control_status = obj["control_status"].toString();
         drug.picture_url = obj["picture_url"].toString();
+
+        drug.amount = obj["quantity"].toString().toInt();
         drug.UPC = obj["UPC"].toString().toStdString();
         drug.DEA = obj["DEA"].toString().toStdString();
         drug.GPI = obj["GPI"].toString().toStdString();
         drug.NDC = obj["NDC"].toString().toStdString();
         drug.valid = true;
-        //TODO: need for real amount return
-        drug.amount=5;
+        drug.amount = obj["quantity"].toString().toInt();
         // Add result to vector
         result.push_back(drug);
     }
@@ -192,17 +192,55 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
     return result;
 }
 
-bool DataStorage::create_new_drug(drug_t drug){
-    // TODO: save new drug in DB
-    // return true if successfully saved in DB
+bool DataStorage::create_new_drug(drug_t drug, int quantity){
+    // Save new drug in DB
+    // TODO: return true if successfully saved in DB
+    const QUrl url = QUrl(host_API+"/create_new_drug.php?name="+drug.name
+                          +"&brand="+drug.brand
+                          +"&cost="+QString::number(drug.cost)
+                          +"&price="+QString::number(drug.price)
+                          +"&control_status="+drug.control_status
+                          +"&picture_url="+drug.picture_url
+                          +"&quantity="+QString::number(quantity)
+                          +"&UPC="+QString::fromStdString(drug.UPC)
+                          +"&DEA="+QString::fromStdString(drug.DEA)
+                          +"&GPI="+QString::fromStdString(drug.GPI)
+                          +"&NDC="+QString::fromStdString(drug.NDC));
+    qDebug() << url;
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
     return true;
 }
 
 bool DataStorage::create_new_patient(patient_t patient){
-    // TODO: save new patient in DB
-    // return true if successfully saved in DB
-    qDebug() << "new patient name" ;
-    qDebug()<<patient.first_name.c_str();
+    // TODO: return true if successfully saved in DB
+    const QUrl url = QUrl(host_API+QString::fromStdString("/create_new_patient.php?first_name="+patient.first_name
+                          +"&middle_name="+patient.middle_name
+                          +"&last_name="+patient.last_name
+                          +"&street_number="+patient.address.street_number
+                          +"&city="+patient.address.city
+                          +"&state="+patient.address.state
+                          +"&zip_code="+patient.address.zip_code
+                          +"&phone="+patient.phone
+                          +"&SSN="+patient.SSN)
+                          +"&month="+QString::number(patient.DOB.month)
+                          +"&day="+QString::number(patient.DOB.day)
+                          +"&year="+QString::number(patient.DOB.year));
+    qDebug() << url;
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
     return true;
 }
 
@@ -211,8 +249,8 @@ bool DataStorage::add_inventory(drug_t drug, uint16_t n){
     return true;
 }
 
-bool DataStorage::patient_new_address(patient_t patient, address_t new_address){
-    // TODO: update the address of patient to be new_address
+bool DataStorage::update_patient(patient_t patient){
+    // TODO: update the patient
     return true;
 }
 std::string address_t::toString(){
@@ -220,8 +258,9 @@ std::string address_t::toString(){
 }
 
 bool prescription_t::getValid(){
-    std::time_t x=time(0);
-    int diff=std::difftime(x,last_time)/(3600*24);
-    return diff>period;
+    // Validate that we can prescribe the drug to the patient
+    std::time_t x = time(0);
+    int diff = std::difftime(x,last_time)/(3600*24);
+    return diff > period;
 }
 

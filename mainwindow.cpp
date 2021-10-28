@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     std::vector<drug_t> drugs = API->search_drugs("Asp");
 
     for(size_t i = 0; i < drugs.size(); i++){
-         qDebug() << "Drug Name: "+ drugs[i].name+" Price: "+QString::number(drugs[i].price);
+         qDebug() << "Drug Name: "+ drugs[i].name+" Quantity: "+QString::number(drugs[i].amount);
     }
     // Search for one patient by first name
     patient_t patient = API->search_one_patient("James");
@@ -73,6 +73,37 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << QString::fromStdString( patient.first_name + " " + patient.last_name);
         qDebug() << QString::fromStdString(patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state);
     }
+    // Create a new drug and 32 units in inventory
+    drug_t new_drug;
+    new_drug.name = "this is a new drug";
+    new_drug.brand = "This is its brand";
+    new_drug.cost = 8;
+    new_drug.price = 12;
+    new_drug.control_status = "AWEF";
+    new_drug.picture_url = "the_url";
+    new_drug.UPC = "12345";
+    new_drug.DEA = "123444";
+    new_drug.GPI = "123456777";
+    new_drug.NDC = "12jj";
+
+    //API->create_new_drug(new_drug, 10);
+
+    // Test create a new patient into the DB
+    patient_t new_patient;
+    new_patient.first_name = "Willy";
+    new_patient.last_name = "Wonka";
+    new_patient.middle_name = "john";
+    new_patient.address.street_number = "111 Pensilvania Ave.";
+    new_patient.address.city = "Washington D.C.";
+    new_patient.address.state = "D.C.";
+    new_patient.address.zip_code = "23333";
+    new_patient.phone = "5404441122";
+    new_patient.SSN = "123654789";
+    new_patient.DOB.day = 12;
+    new_patient.DOB.month = 11;
+    new_patient.DOB.year = 1997;
+
+    //API->create_new_patient(new_patient);
 }
 
 
