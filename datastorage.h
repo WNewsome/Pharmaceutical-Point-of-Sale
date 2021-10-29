@@ -42,7 +42,7 @@ struct drug_t {
 };
 
 struct prescription_t{
-    std::string name;
+    std::string name;       // Drug name
     std::string UPC;        //or any unique id
     int         amount;
     int         period;     //in weeks or days

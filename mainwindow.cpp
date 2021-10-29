@@ -104,6 +104,9 @@ MainWindow::MainWindow(QWidget *parent)
     new_patient.DOB.year = 1997;
 
     //API->create_new_patient(new_patient);
+    patient = API->search_one_patient("Berth");
+    patient.first_name = "Berthoooo";
+    API->update_patient(patient);
 }
 
 

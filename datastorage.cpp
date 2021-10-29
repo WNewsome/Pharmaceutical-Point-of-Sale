@@ -52,6 +52,7 @@ patient_t DataStorage::search_one_patient(std::string name){
         patient.SSN         = obj["ssn"].toString().toStdString();
         patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
+        patient.id          = (uint8_t)obj["id"].toString().toInt();
         //TODO: need real prescription return
         patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
         patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
@@ -137,6 +138,7 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
         patient.SSN         = obj["ssn"].toString().toStdString();
         patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
+        patient.id          = (uint8_t)obj["id"].toString().toInt();
         // TODO:*** need real prescription return
         patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
         patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
@@ -250,7 +252,29 @@ bool DataStorage::add_inventory(drug_t drug, uint16_t n){
 }
 
 bool DataStorage::update_patient(patient_t patient){
-    // TODO: update the patient
+    // TODO: return true if successfully saved in DB
+    const QUrl url = QUrl(host_API+QString::fromStdString("/update_patient.php?first_name="+patient.first_name
+                          +"&middle_name="+patient.middle_name
+                          +"&last_name="+patient.last_name
+                          +"&street_number="+patient.address.street_number
+                          +"&city="+patient.address.city
+                          +"&state="+patient.address.state
+                          +"&zip_code="+patient.address.zip_code
+                          +"&phone="+patient.phone
+                          +"&SSN="+patient.SSN)
+                          +"&month="+QString::number(patient.DOB.month)
+                          +"&day="+QString::number(patient.DOB.day)
+                          +"&year="+QString::number(patient.DOB.year)
+                          +"&id="+QString::number(patient.id));
+    qDebug() << url;
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
     return true;
 }
 std::string address_t::toString(){
