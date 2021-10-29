@@ -126,10 +126,20 @@ void MainWindow::on_search_button_clicked()
     man->get(request);
 }
 
-void MainWindow::on_pushButton_5_clicked()
+void MainWindow::on_drugeditsearch_clicked()
 {
     //looks up name
+    // Connect to web API
+    QNetworkAccessManager *man = new QNetworkAccessManager(this);
+    // Add name of drug as a parameter
+    QString searchdrug = ui->searchdrugname->text();
+    // Once a response is received it will call searchDrug()
+    connect(man, &QNetworkAccessManager::finished, this, &MainWindow::searchDrug);
+    const QUrl url = QUrl(web_API+"?name="+searchdrug);
+    QNetworkRequest request(url);
+    man->get(request);
     //brings up screen to update drug
+    updateDrug->changename(searchdrug);
     updateDrug->show();
 }
 
