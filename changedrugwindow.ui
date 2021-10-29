@@ -60,7 +60,7 @@
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QLabel" name="labelname">
+         <widget class="QLabel" name="label">
           <property name="text">
            <string>Drug name</string>
           </property>
@@ -74,7 +74,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLabel" name="drugname">
+         <widget class="QLabel" name="label_5">
           <property name="text">
            <string>Name</string>
           </property>
