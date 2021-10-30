@@ -8,6 +8,7 @@
 #include <QDebug>
 
 #include "managementscreen.h"
+#include "settingsscreen.h"
 
 DataStorage* DataStorage::instance;
 
@@ -46,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
     ui->tabWidget->addTab(new Managementscreen(), QString("Management").arg(ui->tabWidget->count() +1));
+    ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
     connect(ui->search_button_2, SIGNAL(clicked()), this, SLOT(on_search_button_p_clicked()));
     connect(ui->clear_button, SIGNAL(clicked()), this, SLOT(on_clear_p_clicked()));
     connect(ui->addNewButton, SIGNAL(clicked()), this, SLOT(on_new_p_clicked()));

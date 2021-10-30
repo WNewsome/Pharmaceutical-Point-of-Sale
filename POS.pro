@@ -15,7 +15,8 @@ SOURCES += \
     dialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    managementscreen.cpp
+    managementscreen.cpp \
+    settingsscreen.cpp
 
 HEADERS += \
     changedrugwindow.h \
@@ -23,14 +24,16 @@ HEADERS += \
     datastorage.h \
     dialog.h \
     mainwindow.h \
-    managementscreen.h
+    managementscreen.h \
+    settingsscreen.h
 
 FORMS += \
     changedrugwindow.ui \
     checkout.ui \
     dialog.ui \
     mainwindow.ui \
-    managementscreen.ui
+    managementscreen.ui \
+    settingsscreen.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
