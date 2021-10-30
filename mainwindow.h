@@ -6,7 +6,6 @@
 #include <QNetworkReply>
 #include <QListWidgetItem>
 #include <QTabWidget>
-#include "changedrugwindow.h"
 #include "datastorage.h"
 #include "dialog.h"
 #include "checkout.h"
@@ -32,7 +31,6 @@ private:
     // Web API used to obtain drug, patients, and inventory data
     QString web_API = "https://wnewsome.com/POS/search.php";
     DataStorage *API;
-    changedrugwindow *updateDrug;
     bool secuared;
     std::vector<patient_t> patientList;
     patient_t curPatient;
@@ -40,7 +38,6 @@ private:
 private slots:
     void searchDrug(QNetworkReply*);                            // Function that calls the API to obtain data
     void on_search_button_clicked();                            // Main search button in sales tab
-    void on_pushButton_5_clicked();
     void on_items_dropdown_itemClicked(QListWidgetItem *item);  // Select an item from search results
     void on_search_button_p_clicked();                            // Main search button in patient tab
     void on_search_table_p_clicked(int,int);
