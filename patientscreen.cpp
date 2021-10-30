@@ -149,11 +149,9 @@ void PatientScreen::on_checkout_p_clicked(){
     if(slotcount)
         return;
     slotcount++;
-    qDebug()<<"enter";
     if(curPatient.prescription.size()>0){
         for(size_t i=0;i<curPatient.prescription.size();i++){
             if(curPatient.prescription[i].getValid()&&(!curPatient.prescription[i].inCart)){
-                qDebug()<<"add";
                 drug_t drug=API->search_one_drug(curPatient.prescription[i].name);
                 drug.amount=curPatient.prescription[i].amount;
                 currentAccount->add_item(drug);
@@ -161,7 +159,6 @@ void PatientScreen::on_checkout_p_clicked(){
             }
         }
     }
-    qDebug()<<"leave";
     slotcount--;
 }
 
