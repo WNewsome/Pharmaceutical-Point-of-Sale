@@ -53,8 +53,8 @@ patient_t DataStorage::search_one_patient(std::string name){
         patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
         //TODO: need real prescription return
-        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
-        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
+        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15),false});
+        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0),false});
         // Return first result only
         return patient;
     }
@@ -138,8 +138,8 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
         patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
         // TODO:*** need real prescription return
-        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
-        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
+        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15),false});
+        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0),false});
         // Return first result only
         result.push_back(patient);
     }

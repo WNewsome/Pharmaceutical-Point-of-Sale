@@ -15,6 +15,18 @@ public:
         drugList = std::vector<drug_t>();
     }
 
+    static CheckoutAccount* getInstance(){
+        if(NULL==instance){
+            instance = new CheckoutAccount();
+        }
+        return instance;
+    }
+
+    void clear(){
+        total = 0;
+        drugList.clear();
+    }
+
     void add_item(drug_t drug){
         // Just update total for now
         total += drug.price*drug.amount;
@@ -27,6 +39,7 @@ public:
 
 private:
     double total;
+    static CheckoutAccount* instance;
 };
 namespace Ui {
 class Checkout;
@@ -38,7 +51,6 @@ class Checkout : public QMainWindow
 
 public:
     explicit Checkout(QWidget *parent = nullptr);
-    explicit Checkout(CheckoutAccount,QWidget *parent = nullptr);
     ~Checkout();
 
     void keyPressEvent(QKeyEvent *e);
