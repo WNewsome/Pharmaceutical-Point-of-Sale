@@ -283,8 +283,8 @@ std::string address_t::toString(){
 
 bool prescription_t::getValid(){
     // Validate that we can prescribe the drug to the patient
-    std::time_t x = time(0);
-    int diff = std::difftime(x,last_time)/(3600*24);
-    return diff > period;
+    //std::time_t x = time(0);
+    //int diff = std::difftime(x,last_time)/(3600*24);
+    return true;
 }
 

@@ -15,7 +15,10 @@ SOURCES += \
     dialog.cpp \
     main.cpp \
     mainwindow.cpp \
+    managementscreen.cpp \
+    settingsscreen.cpp \
     patientscreen.cpp
+
 
 HEADERS += \
     changedrugwindow.h \
@@ -23,6 +26,8 @@ HEADERS += \
     datastorage.h \
     dialog.h \
     mainwindow.h \
+    managementscreen.h \
+    settingsscreen.h \
     patientscreen.h
 
 FORMS += \
@@ -30,6 +35,8 @@ FORMS += \
     checkout.ui \
     dialog.ui \
     mainwindow.ui \
+    managementscreen.ui \
+    settingsscreen.ui \
     patientscreen.ui
 
 # Default rules for deployment.

@@ -5,6 +5,10 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QDebug>
+
+#include "managementscreen.h"
+#include "settingsscreen.h"
+
 DataStorage* DataStorage::instance;
 
 void MainWindow::searchDrug(QNetworkReply *reply){
@@ -43,10 +47,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     patientScreen=new PatientScreen();
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
-    ui->tabWidget->addTab(patientScreen,QString("Patient Screen").arg(ui->tabWidget->count()+1));
+    ui->tabWidget->addTab(patientScreen,QString("Patient").arg(ui->tabWidget->count()+1));
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
-    updateDrug = new changedrugwindow(this);
+    ui->tabWidget->addTab(new Managementscreen(), QString("Management").arg(ui->tabWidget->count() +1));
+    ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
+      
     // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
     currentAccount->getInstance();
@@ -126,13 +132,6 @@ void MainWindow::on_search_button_clicked()
     const QUrl url = QUrl(web_API+"?name="+word_to_search);
     QNetworkRequest request(url);
     man->get(request);
-}
-
-void MainWindow::on_pushButton_5_clicked()
-{
-    //looks up name
-    //brings up screen to update drug
-    updateDrug->show();
 }
 
 void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)

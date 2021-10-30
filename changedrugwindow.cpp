@@ -13,6 +13,12 @@ changedrugwindow::~changedrugwindow()
     delete ui;
 }
 
+void changedrugwindow::changename(QString name){
+
+    drugname = name;
+    ui->drugname->setText(drugname);
+}
+
 void changedrugwindow::on_pushButton_clicked()
 {
     //when clicked, the system is updated and the window closes
