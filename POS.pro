@@ -16,7 +16,9 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     managementscreen.cpp \
-    settingsscreen.cpp
+    settingsscreen.cpp \
+    patientscreen.cpp
+
 
 HEADERS += \
     changedrugwindow.h \
@@ -25,7 +27,8 @@ HEADERS += \
     dialog.h \
     mainwindow.h \
     managementscreen.h \
-    settingsscreen.h
+    settingsscreen.h \
+    patientscreen.h
 
 FORMS += \
     changedrugwindow.ui \
@@ -33,7 +36,8 @@ FORMS += \
     dialog.ui \
     mainwindow.ui \
     managementscreen.ui \
-    settingsscreen.ui
+    settingsscreen.ui \
+    patientscreen.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
