@@ -47,6 +47,7 @@ struct prescription_t{
     int         amount;
     int         period;     //in weeks or days
     time_t      last_time;
+    bool        inCart ;
     bool getValid();
 };
 

@@ -14,20 +14,23 @@ SOURCES += \
     datastorage.cpp \
     dialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    patientscreen.cpp
 
 HEADERS += \
     changedrugwindow.h \
     checkout.h \
     datastorage.h \
     dialog.h \
-    mainwindow.h
+    mainwindow.h \
+    patientscreen.h
 
 FORMS += \
     changedrugwindow.ui \
     checkout.ui \
     dialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    patientscreen.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

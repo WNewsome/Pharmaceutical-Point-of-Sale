@@ -176,232 +176,6 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Patients</string>
-     </attribute>
-     <widget class="QWidget" name="gridLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>70</y>
-        <width>701</width>
-        <height>531</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="3" column="2" colspan="2">
-        <widget class="QLineEdit" name="ssnEdit"/>
-       </item>
-       <item row="0" column="2" colspan="2">
-        <widget class="QLineEdit" name="nameEdit"/>
-       </item>
-       <item row="5" column="2" colspan="2">
-        <widget class="QTableWidget" name="prescriptionTable">
-         <property name="columnCount">
-          <number>5</number>
-         </property>
-         <attribute name="horizontalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
-        </widget>
-       </item>
-       <item row="2" column="2" colspan="2">
-        <widget class="QLineEdit" name="phoneEdit"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_phone">
-         <property name="text">
-          <string>Phone number:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="label_ssn">
-         <property name="text">
-          <string>SSN:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_id">
-         <property name="text">
-          <string>ID:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="label_address">
-         <property name="text">
-          <string>Address:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2" colspan="2">
-        <widget class="QPlainTextEdit" name="addressEdit"/>
-       </item>
-       <item row="7" column="2">
-        <widget class="QPushButton" name="addNewButton">
-         <property name="text">
-          <string>Add New</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_name">
-         <property name="text">
-          <string>Name:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="3">
-        <widget class="QPushButton" name="update_pButton">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Update</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2" colspan="2">
-        <widget class="QLineEdit" name="idEdit"/>
-       </item>
-       <item row="0" column="0" rowspan="8">
-        <widget class="QTableWidget" name="tableWidget">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="rowCount">
-          <number>1</number>
-         </property>
-         <property name="columnCount">
-          <number>5</number>
-         </property>
-         <attribute name="horizontalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>72</number>
-         </attribute>
-         <attribute name="horizontalHeaderHighlightSections">
-          <bool>true</bool>
-         </attribute>
-         <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <row/>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
-         <item row="0" column="0">
-          <property name="text">
-           <string>Num</string>
-          </property>
-         </item>
-         <item row="0" column="1">
-          <property name="text">
-           <string>Name</string>
-          </property>
-         </item>
-         <item row="0" column="2">
-          <property name="text">
-           <string>DOB</string>
-          </property>
-         </item>
-         <item row="0" column="3">
-          <property name="text">
-           <string>SSN</string>
-          </property>
-         </item>
-         <item row="0" column="4">
-          <property name="text">
-           <string>Phone</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="5" column="1" rowspan="2">
-        <widget class="QLabel" name="label_prescription">
-         <property name="text">
-          <string>Prescription:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="3">
-        <widget class="QPushButton" name="checkout_button">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>CheckOut</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QLineEdit" name="search_lineEdit_2">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>20</y>
-        <width>431</width>
-        <height>31</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="search_button_2">
-      <property name="geometry">
-       <rect>
-        <x>480</x>
-        <y>20</y>
-        <width>81</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Search</string>
-      </property>
-      <property name="shortcut">
-       <string>Return</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="clear_button">
-      <property name="geometry">
-       <rect>
-        <x>610</x>
-        <y>20</y>
-        <width>81</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Clear</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
       <string>Management</string>
@@ -841,9 +615,21 @@
     <property name="title">
      <string>Checkout</string>
     </property>
+    <addaction name="actionCheckout"/>
+    <addaction name="actionClear_cart"/>
    </widget>
    <addaction name="menuCheckout"/>
   </widget>
+  <action name="actionCheckout">
+   <property name="text">
+    <string>Checkout</string>
+   </property>
+  </action>
+  <action name="actionClear_cart">
+   <property name="text">
+    <string>Clear cart</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -1,17 +1,12 @@
 #include "checkout.h"
 #include "ui_checkout.h"
 
-Checkout::Checkout(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Checkout)
-{
-    ui->setupUi(this);
-}
 
-Checkout::Checkout(CheckoutAccount accout,QWidget *parent ): QMainWindow(parent),
+Checkout::Checkout(QWidget *parent ): QMainWindow(parent),
     ui(new Ui::Checkout){
     ui->setupUi(this);
-    std::vector<drug_t> drugList=accout.drugList;
+    CheckoutAccount* account=CheckoutAccount::getInstance();
+    std::vector<drug_t> drugList=account->drugList;
     ui->tableWidget->setRowCount(drugList.size());
     for(size_t i=0;i<drugList.size();i++){
         drug_t drug=drugList[i];
@@ -25,11 +20,11 @@ Checkout::Checkout(CheckoutAccount accout,QWidget *parent ): QMainWindow(parent)
         ui->tableWidget->setItem(i,2,amount);
         ui->tableWidget->setItem(i,3,totalPrice);
     }
-    ui->listWidget->addItem(QString::fromStdString("Subtotal:\t$"+std::to_string(accout.get_total())));
-    ui->listWidget->addItem(QString::fromStdString("Tax:\t$"+std::to_string(accout.get_total()*0.15)));
-    ui->listWidget->addItem(QString::fromStdString("Total:\t$"+std::to_string(accout.get_total()*1.15)));
+    ui->listWidget->addItem(QString::fromStdString("Subtotal:\t$"+std::to_string(account->get_total())));
+    ui->listWidget->addItem(QString::fromStdString("Tax:\t$"+std::to_string(account->get_total()*0.15)));
+    ui->listWidget->addItem(QString::fromStdString("Total:\t$"+std::to_string(account->get_total()*1.15)));
     connect(ui->buttonBox,SIGNAL(accepted()),this,SLOT(on_accept()));
-    total=accout.get_total()*1.15;
+    total=account->get_total()*1.15;
     ui->textEdit->setAlignment(Qt::AlignRight);
     ui->label_4->setStyleSheet("QLabel { background-color : white; color : red; }");
     ui->label_4->setText("-1.00");
