@@ -2,6 +2,7 @@
 #define MANAGEMENTSCREEN_H
 
 #include <QWidget>
+#include "datastorage.h"
 #include "changedrugwindow.h"
 
 namespace Ui {
@@ -23,7 +24,11 @@ private slots:
 
 private:
     Ui::Managementscreen *ui;
+    DataStorage *API;
     changedrugwindow *updateDrug;
+    std::vector<drug_t> drugList;
+    bool secured;
+    drug_t curDrug;
 };
 
 #endif // MANAGEMENTSCREEN_H
