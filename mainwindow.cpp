@@ -48,11 +48,14 @@ MainWindow::MainWindow(QWidget *parent)
     managementScreen=new Managementscreen();
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
 
-    ui->tabWidget->addTab(patientScreen,QString("Patient Screen").arg(ui->tabWidget->count()+1));
+    ui->tabWidget->addTab(patientScreen,QString("Patient").arg(ui->tabWidget->count()+1));
     ui->tabWidget->addTab(managementScreen, QString("Management").arg(ui->tabWidget->count() +1));
     ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
+
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
+    ui->tabWidget->addTab(new Managementscreen(), QString("Management").arg(ui->tabWidget->count() +1));
+    ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
       
     // Set search drug dropdown to invisible
     ui->items_dropdown->setVisible(false);
