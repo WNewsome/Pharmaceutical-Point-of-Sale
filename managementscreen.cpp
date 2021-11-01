@@ -72,18 +72,18 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
     drug_t drug = drugList[row-1];
     ui->addnewdrugclicked->setEnabled(true);
     ui->storesearch->setEnabled(true);
-    ui->drugname->setText(drug.name);
-    ui->DEA->setText(QString::fromStdString(drug.DEA));
-    ui->GPI->setText(QString::fromStdString(drug.GPI));
-    ui->NPC->setText(QString::fromStdString(drug.NDC));
-    ui->UPC->setText(QString::fromStdString(drug.UPC));
-    ui->brand->setText(drug.brand);
-    ui->control->setText(drug.control_status);
-    ui->Cost->setText(QString::number(drug.cost));
+    ui->drugnames->setText(drug.name);
+    ui->DEA_5->setText(QString::fromStdString(drug.DEA));
+    ui->GPI_5->setText(QString::fromStdString(drug.GPI));
+    ui->NPCs->setText(QString::fromStdString(drug.NDC));
+    ui->UPCs->setText(QString::fromStdString(drug.UPC));
+    ui->brands->setText(drug.brand);
+    ui->controls->setText(drug.control_status);
+    ui->Cost_5->setText(QString::number(drug.cost));
     //this->drug.picture_url =
 
-    ui->quanity->setText(QString::number(drug.amount));
-    ui->price->setText(QString::number(drug.price));
+    ui->quantity->setText(QString::number(drug.amount));
+    ui->prices->setText(QString::number(drug.price));
 }
 
 
