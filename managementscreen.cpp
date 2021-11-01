@@ -7,6 +7,7 @@ Managementscreen::Managementscreen(QWidget *parent) :
 {
     ui->setupUi(this);
     updateDrug = new changedrugwindow(this);
+    addDrug = new addgrug(newDrug, this);
 }
 
 Managementscreen::~Managementscreen()
@@ -17,8 +18,8 @@ Managementscreen::~Managementscreen()
 void Managementscreen::on_changedruginfoclick_clicked()
 {
     drugList.clear();
-    std::string search_buffer=ui->editdrug->text().toStdString();
-    if(search_buffer.find(' ')!=-1){
+   /* std::string search_buffer=ui->editdrug->text().toStdString();
+   if(search_buffer.find(' ')!=-1){
         std::vector<std::pair<int,std::string>> searchList;
         int pos=search_buffer.find(' ');
         while (pos>-1) {
@@ -33,8 +34,8 @@ void Managementscreen::on_changedruginfoclick_clicked()
     else{
         drugList = API->search_drugs(search_buffer);
     }
-
-  /*  for(size_t i=0;i<drugList.size();i++){
+*/
+   /* for(size_t i=0;i<drugList.size();i++){
         drug_t drug = drugList[i];
         QTableWidgetItem *num = new QTableWidgetItem(QString::fromStdString(std::to_string(i+1)));
         QTableWidgetItem *name = new QTableWidgetItem(QString::fromStdString(patient.first_name));
@@ -60,14 +61,11 @@ void Managementscreen::on_changedruginfoclick_clicked()
 void Managementscreen::on_addnewdrugclicked_clicked()
 {
     //search for drug first
-    std::string search_buffer=ui->editdrug->text().toStdString();
+    std::string search_buffer=ui->adddrugtext->text().toStdString();
     //ask if they meant ??? drug (antoehr pop up)
+
     //if no, move on to creation
-
-    drugList = std::vector<drug_t>();
-
-    //ui->quantiyvalue to int
-
-    API->create_new_drug(drugList.at(0),1);
+    addDrug->newDrugname(ui->adddrugtext->text());
+    addDrug->show();
 }
 
