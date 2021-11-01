@@ -17,7 +17,6 @@ class Managementscreen : public QWidget
 public:
     explicit Managementscreen(QWidget *parent = nullptr);
     ~Managementscreen();
-    void searchdrugs();
 
 private slots:
     void on_changedruginfoclick_clicked();

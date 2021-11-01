@@ -1,6 +1,8 @@
 #include "managementscreen.h"
 #include "ui_managementscreen.h"
 
+//TODO: Drug url
+
 Managementscreen::Managementscreen(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Managementscreen)
@@ -16,11 +18,6 @@ Managementscreen::Managementscreen(QWidget *parent) :
 Managementscreen::~Managementscreen()
 {
     delete ui;
-}
-
-void Managementscreen::searchdrugs(){
-
-
 }
 
 void Managementscreen::on_changedruginfoclick_clicked()
@@ -60,40 +57,32 @@ void Managementscreen::on_changedruginfoclick_clicked()
         ui->tableWidget->setItem(i+1,4,price);
     }
 
-    //brings up different drugs
-    //seperate page to select drug?
-    //the final info goes to updatedrug window
-
-   // updateDrug->changename(ui->editdrug->text());
-   // updateDrug->show();
 }
 
 void Managementscreen::on_tableWidget_cellClicked(int row,int column){
-    drug_t drug = drugList[row-1];
-    ui->addnewdrugclicked->setEnabled(true);
-    ui->storesearch->setEnabled(true);
-    ui->drugnames->setText(drug.name);
-    ui->DEA_5->setText(QString::fromStdString(drug.DEA));
-    ui->GPI_5->setText(QString::fromStdString(drug.GPI));
-    ui->NPCs->setText(QString::fromStdString(drug.NDC));
-    ui->UPCs->setText(QString::fromStdString(drug.UPC));
-    ui->brands->setText(drug.brand);
-    ui->controls->setText(drug.control_status);
-    ui->Cost_5->setText(QString::number(drug.cost));
-    //this->drug.picture_url =
+    if (row != 0){
+        drug_t drug = drugList[row-1];
+        ui->addnewdrugclicked->setEnabled(true);
+        ui->storesearch->setEnabled(true);
+        ui->drugnames->setText(drug.name);
+        ui->DEA_5->setText(QString::fromStdString(drug.DEA));
+        ui->GPI_5->setText(QString::fromStdString(drug.GPI));
+        ui->NPCs->setText(QString::fromStdString(drug.NDC));
+        ui->UPCs->setText(QString::fromStdString(drug.UPC));
+        ui->brands->setText(drug.brand);
+        ui->controls->setText(drug.control_status);
+        ui->Cost_5->setText(QString::number(drug.cost));
+        //this->drug.picture_url =
 
-    ui->quantity->setText(QString::number(drug.amount));
-    ui->prices->setText(QString::number(drug.price));
+        ui->quantity->setText(QString::number(drug.amount));
+        ui->prices->setText(QString::number(drug.price));
+    }
 }
 
 
 
 void Managementscreen::on_addnewdrugclicked_clicked()
 {
-    //search for drug first
-    std::string search_buffer=ui->editdrug->text().toStdString();
-    //ask if they meant ??? drug (antoehr pop up)
-
     //if no, move on to creation
     addDrug->newDrugname(ui->editdrug->text());
     addDrug->show();
