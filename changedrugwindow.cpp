@@ -19,7 +19,12 @@ void changedrugwindow::changename(QString name){
     ui->drugname->setText(drugname);
 }
 
-void changedrugwindow::on_pushButton_clicked()
+void changedrugwindow::on_confirm_clicked()
 {
-    //when clicked, the system is updated and the window closes
+    //check if valid numbers
+    //APIchange price???
+    //API->add_inventory(drug,amount)
+
+    this->close();
 }
+

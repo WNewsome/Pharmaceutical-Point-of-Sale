@@ -9,6 +9,7 @@
 #include "datastorage.h"
 #include "changedrugwindow.h"
 #include "patientscreen.h"
+#include "managementscreen.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,6 +33,7 @@ private:
     QString web_API = "https://wnewsome.com/POS/search.php";
     DataStorage *API;
     PatientScreen* patientScreen;
+    Managementscreen* managementScreen;
 
 private slots:
     void searchDrug(QNetworkReply*);                            // Function that calls the API to obtain data
