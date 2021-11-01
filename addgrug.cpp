@@ -1,14 +1,12 @@
 #include "addgrug.h"
 #include "ui_addgrug.h"
 
-addgrug::addgrug(drug_t drug, QWidget *parent) :
+addgrug::addgrug(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::addgrug)
 {
     ui->setupUi(this);
-    this->drug = drug;
     API = DataStorage::getInstance();
-    connect(ui->confirm,SIGNAL(clicked()),this,SLOT(on_confirm_clicked()));
 }
 
 addgrug::~addgrug()
@@ -17,36 +15,27 @@ addgrug::~addgrug()
 }
 
 void addgrug::newDrugname(QString drugname){
-    drug.name = drugname;
-    ui->drugname->setText(drug.name);
+    newDrug.name = drugname;
+    ui->drugname->setText(newDrug.name);
 }
 
 void addgrug::on_confirm_clicked()
 {
     //check if everything is filled in and display error??
-
     //put drug stuff from lines in
-    this->drug.brand = this->ui->brandname->text();
-    this->drug.cost = this->ui->Cost->text().toInt();
-    this->drug.price = this->ui->Price->text().toInt();
-    this->drug.UPC = this->ui->upc->text().toStdString();
-    this->drug.DEA = this->ui->DEA->text().toStdString();
-    this->drug.GPI = this->ui->gpi->text().toStdString();
-    this->drug.NDC = this->ui->NDC->text().toStdString();
-    this->drug.amount = this->ui->invintory->text().toInt();
-    this->drug.control_status = this->ui->control->text();
-    /*this->drug.brand = "This is its brand";
-    this->drug.cost = 8;
-    this->drug.price = 12;
-    this->drug.control_status = "AWEF";
-    this->drug.UPC = "12345";
-    this->drug.DEA = "123444";
-    this->drug.GPI = "123456777";
-    this->drug.NDC = "12jj";*/
-    this->drug.picture_url = "the_url";
-    int quaintity = this->drug.amount;
+    newDrug.brand = ui->brandname->text();
+    newDrug.cost = ui->Cost->text().toInt();
+    newDrug.price = ui->Price->text().toInt();
+    newDrug.UPC = ui->upc->text().toStdString();
+    newDrug.DEA = ui->DEA->text().toStdString();
+    newDrug.GPI = ui->gpi->text().toStdString();
+    newDrug.NDC = ui->NDC->text().toStdString();
+    newDrug.amount = ui->invintory->text().toInt();
+    newDrug.control_status = ui->control->text();
+    newDrug.picture_url = "the_url";
+    int quaintity = newDrug.amount;
 
-    API->create_new_drug(drug,quaintity);
+    API->create_new_drug(newDrug,quaintity);
 
     this->close();
 }

@@ -10,7 +10,7 @@ Managementscreen::Managementscreen(QWidget *parent) :
     ui->setupUi(this);
     API = DataStorage::getInstance();
     updateDrug = new changedrugwindow(this);
-    addDrug = new addgrug(newDrug, this);
+    addDrug = new addgrug(this);
     connect(ui->changedruginfoclick, SIGNAL(clicked()), this, SLOT(on_changedruginfoclick_clicked()));
     connect(ui->tableWidget,SIGNAL(cellClicked(int,int)),this,SLOT(on_tableWidget_cellClicked(int,int)));
 }

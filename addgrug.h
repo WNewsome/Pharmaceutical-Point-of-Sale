@@ -11,9 +11,8 @@ class addgrug;
 class addgrug : public QMainWindow
 {
     Q_OBJECT
-    drug_t drug;
 public:
-    explicit addgrug(drug_t drug, QWidget *parent = nullptr);
+    explicit addgrug(QWidget *parent = nullptr);
     ~addgrug();
     void newDrugname(QString drugname);
 
@@ -23,6 +22,7 @@ private slots:
 private:
     Ui::addgrug *ui;
     DataStorage *API;
+    drug_t newDrug;
 };
 
 #endif // ADDGRUG_H
