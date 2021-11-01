@@ -6,6 +6,7 @@ Managementscreen::Managementscreen(QWidget *parent) :
     ui(new Ui::Managementscreen)
 {
     ui->setupUi(this);
+    API = DataStorage::getInstance();
     updateDrug = new changedrugwindow(this);
     addDrug = new addgrug(newDrug, this);
 }

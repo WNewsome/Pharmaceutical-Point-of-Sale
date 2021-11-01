@@ -7,6 +7,7 @@ addgrug::addgrug(drug_t drug, QWidget *parent) :
 {
     ui->setupUi(this);
     this->drug = drug;
+    API = DataStorage::getInstance();
     connect(ui->confirm,SIGNAL(clicked()),this,SLOT(on_confirm_clicked()));
 }
 
@@ -34,7 +35,7 @@ void addgrug::on_confirm_clicked()
     this->drug.control_status = this->ui->control->text();
     this->drug.cost = this->ui->Cost->text().toInt();
     this->drug.price = this->ui->Price->text().toInt();
-   // this->drug.picture_url = this->ui->DEA->text().toStdString();
+    this->drug.picture_url = "https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.drugs.com%2Fimages%2Fpills%2Ffio%2FSHR01050%2Fvyvanse.JPG&imgrefurl=https%3A%2F%2Fwww.drugs.com%2Fimprints%2Fnrp104-50-mg-9792.html&tbnid=KTN9mp_BQGiKAM&vet=10CAsQxiAoAWoXChMIiJKN3cP28wIVAAAAAB0AAAAAEAc..i&docid=P5cr3v69gpFpZM&w=288&h=216&itg=1&q=vyvanse&ved=0CAsQxiAoAWoXChMIiJKN3cP28wIVAAAAAB0AAAAAEAc";
 
     API->create_new_drug(drug,this->drug.amount);
 

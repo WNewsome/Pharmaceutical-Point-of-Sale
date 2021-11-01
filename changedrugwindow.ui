@@ -44,7 +44,7 @@
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="confirm">
         <property name="text">
          <string>Confirm these changes</string>
         </property>
@@ -60,7 +60,7 @@
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="price">
           <property name="text">
            <string>Current Price</string>
           </property>
@@ -81,7 +81,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLabel" name="label_12">
+         <widget class="QLabel" name="brand">
           <property name="text">
            <string>Brand name</string>
           </property>
@@ -95,7 +95,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="quanity">
           <property name="text">
            <string>Current Quantity</string>
           </property>
@@ -116,7 +116,7 @@
          </widget>
         </item>
         <item row="6" column="1">
-         <widget class="QLabel" name="label_14">
+         <widget class="QLabel" name="UPC">
           <property name="text">
            <string>UPC</string>
           </property>
@@ -130,14 +130,14 @@
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="QLabel" name="label_13">
+         <widget class="QLabel" name="control">
           <property name="text">
            <string>Control Status</string>
           </property>
          </widget>
         </item>
         <item row="8" column="1">
-         <widget class="QLabel" name="label_16">
+         <widget class="QLabel" name="GPI">
           <property name="text">
            <string>GPI</string>
           </property>
@@ -151,14 +151,14 @@
          </widget>
         </item>
         <item row="7" column="1">
-         <widget class="QLabel" name="label_15">
+         <widget class="QLabel" name="DEA">
           <property name="text">
            <string>DEA</string>
           </property>
          </widget>
         </item>
         <item row="9" column="1">
-         <widget class="QLabel" name="label_17">
+         <widget class="QLabel" name="NPC">
           <property name="text">
            <string>NDC</string>
           </property>
@@ -186,7 +186,7 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLabel" name="label_19">
+         <widget class="QLabel" name="Cost">
           <property name="text">
            <string>Cost</string>
           </property>
