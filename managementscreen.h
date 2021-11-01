@@ -17,11 +17,14 @@ class Managementscreen : public QWidget
 public:
     explicit Managementscreen(QWidget *parent = nullptr);
     ~Managementscreen();
+    void searchdrugs();
 
 private slots:
     void on_changedruginfoclick_clicked();
 
     void on_addnewdrugclicked_clicked();
+
+    void on_tableWidget_cellClicked(int row, int column);
 
 private:
     Ui::Managementscreen *ui;
