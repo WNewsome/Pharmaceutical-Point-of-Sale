@@ -53,9 +53,21 @@ patient_t DataStorage::search_one_patient(std::string name){
         patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
         patient.id          = (uint8_t)obj["id"].toString().toInt();
-        //TODO: need real prescription return
-        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
-        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
+
+        // Prescription
+        QString str= obj["prescription"].toString();
+        QJsonDocument doc=QJsonDocument::fromJson(str.toUtf8());
+        QJsonObject obj2 = doc.object();
+        QJsonArray arr= obj2["prescription"].toArray();
+        foreach (const QJsonValue & value, arr) {
+            // Go over every prescription and add it to the patient
+            QJsonObject obj2     = value.toObject();
+            std::string med_name = obj2["name"].toString().toStdString();
+            std::string med_UPC = obj2["UPC"].toString().toStdString();
+            int med_amount = obj2["amount"].toString().toInt();
+            int med_period = obj2["period"].toString().toInt();
+            patient.prescription.push_back({med_name,med_UPC,med_amount,med_period,(time(0)-3600*24*15)});
+        }
         // Return first result only
         return patient;
     }
@@ -139,9 +151,23 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
         patient.phone       = obj["phone"].toString().toStdString();
         patient.valid       = true;
         patient.id          = (uint8_t)obj["id"].toString().toInt();
-        // TODO:*** need real prescription return
-        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15)});
-        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0)});
+        // Prescription
+        //QString str= "{\"firstname\":\"James\",\"middlename\":\"\",\"lastname\":\"Smith\",\"prescription\":[{\"name\":\"ssasprin\"},{\"name\":\"sbad asprin\"}]}";
+        QString str = obj["prescription"].toString();
+        qDebug() << "here";
+        qDebug() << str;
+        QJsonDocument doc=QJsonDocument::fromJson(str.toUtf8());
+        QJsonObject obj2 = doc.object();
+        QJsonArray arr= obj2["prescription"].toArray();
+        foreach (const QJsonValue & value, arr) {
+            // Go over every prescription and add it to the patient
+            QJsonObject obj2     = value.toObject();
+            std::string med_name = obj2["name"].toString().toStdString();
+            std::string med_UPC = obj2["UPC"].toString().toStdString();
+            int med_amount = obj2["amount"].toString().toInt();
+            int med_period = obj2["period"].toString().toInt();
+            patient.prescription.push_back({med_name,med_UPC,med_amount,med_period,(time(0)-3600*24*15)});
+        }
         // Return first result only
         result.push_back(patient);
     }
