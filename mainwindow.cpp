@@ -11,34 +11,6 @@
 
 DataStorage* DataStorage::instance;
 
-void MainWindow::searchDrug(QNetworkReply *reply){
-    // TODO: I will remove this function to use datastorage class instead!
-    // Reply from server received
-    // Convert all values to JSON format
-    QString strReply = (QString)reply->readAll();
-    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
-    QJsonObject jsonObject = jsonResponse.object();
-    QJsonArray jsonArray = jsonObject["results"].toArray();
-    int i = 0;
-
-    // Set dropdown list to visible and delete any older items
-    ui->items_dropdown->setVisible(true);
-    ui->items_dropdown->clear();
-    // Display every json object
-    foreach (const QJsonValue & value, jsonArray) {
-        QJsonObject obj = value.toObject();
-        QString name = obj["name"].toString();
-        QString price = obj["price"].toString();
-        QString cost = price;
-        QListWidgetItem *newItem = new QListWidgetItem;
-        newItem->setData(1, cost.toDouble());
-        newItem->setText(name+" $"+price);
-        ui->items_dropdown->insertItem(i, newItem);
-        i++;
-        // Adapt the height of the list menu according to number of items found
-        ui->items_dropdown->setFixedHeight(33*i);
-    }
-}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -46,15 +18,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     patientScreen=new PatientScreen();
+    saleScreen = new SaleScreen();
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
+    ui->tabWidget->addTab(saleScreen,QString("Sale").arg(ui->tabWidget->count()+1));
     ui->tabWidget->addTab(patientScreen,QString("Patient").arg(ui->tabWidget->count()+1));
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
     ui->tabWidget->addTab(new Managementscreen(), QString("Management").arg(ui->tabWidget->count() +1));
     ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
-      
+    ui->tabWidget->setCurrentIndex(0);
     // Set search drug dropdown to invisible
-    ui->items_dropdown->setVisible(false);
     currentAccount->getInstance();
     // Init API
     API = DataStorage::getInstance();
@@ -67,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // Show results of searching for "Asp*"
-    std::vector<drug_t> drugs = API->search_drugs("Asp");
+    std::vector<drug_t> drugs = API->search_drugs("A");
 
     for(size_t i = 0; i < drugs.size(); i++){
          qDebug() << "Drug Name: "+ drugs[i].name+" Quantity: "+QString::number(drugs[i].amount);
@@ -120,7 +93,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_search_button_clicked()
+/*void MainWindow::on_search_button_clicked()
 {
     // Search requested
     // Connect to web API
@@ -148,12 +121,13 @@ void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)
     ui->items_dropdown->clear();
     // Update current total
     ui->total->setText("$ "+QString::number(currentAccount->get_total()));
-}
+}*/
 
 void MainWindow::on_checout_action(){
     Checkout* checkout=new Checkout(this);
     checkout->setWindowFlag(Qt::SubWindow);
     connect(checkout,SIGNAL(clearCart()),patientScreen,SLOT(on_accept_checkout()));
+    connect(checkout,SIGNAL(clearCart()),saleScreen,SLOT(on_clear()));
     checkout->show();
 }
 
