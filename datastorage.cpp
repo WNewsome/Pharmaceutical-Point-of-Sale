@@ -62,11 +62,13 @@ patient_t DataStorage::search_one_patient(std::string name){
         foreach (const QJsonValue & value, arr) {
             // Go over every prescription and add it to the patient
             QJsonObject obj2     = value.toObject();
-            std::string med_name = obj2["name"].toString().toStdString();
-            std::string med_UPC = obj2["UPC"].toString().toStdString();
-            int med_amount = obj2["amount"].toString().toInt();
-            int med_period = obj2["period"].toString().toInt();
-            patient.prescription.push_back({med_name,med_UPC,med_amount,med_period,(time(0)-3600*24*15)});
+            prescription_t prescription;
+            prescription.name = obj2["name"].toString().toStdString();
+            prescription.UPC = obj2["UPC"].toString().toStdString();
+            prescription.amount = obj2["amount"].toString().toInt();
+            prescription.period = obj2["period"].toString().toInt();
+            // TODO: add patient.last_time
+            patient.prescription.push_back(prescription);
         }
         // Return first result only
         return patient;
@@ -162,11 +164,13 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
         foreach (const QJsonValue & value, arr) {
             // Go over every prescription and add it to the patient
             QJsonObject obj2     = value.toObject();
-            std::string med_name = obj2["name"].toString().toStdString();
-            std::string med_UPC = obj2["UPC"].toString().toStdString();
-            int med_amount = obj2["amount"].toString().toInt();
-            int med_period = obj2["period"].toString().toInt();
-            patient.prescription.push_back({med_name,med_UPC,med_amount,med_period,(time(0)-3600*24*15)});
+            prescription_t prescription;
+            prescription.name = obj2["name"].toString().toStdString();
+            prescription.UPC = obj2["UPC"].toString().toStdString();
+            prescription.amount = obj2["amount"].toString().toInt();
+            prescription.period = obj2["period"].toString().toInt();
+            // TODO: add patient.last_time
+            patient.prescription.push_back(prescription);
         }
         // Return first result only
         result.push_back(patient);
