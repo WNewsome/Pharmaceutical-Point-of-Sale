@@ -12,8 +12,15 @@ PatientScreen::PatientScreen(QWidget *parent) :
     connect(ui->addNewButton, SIGNAL(clicked()), this, SLOT(on_new_p_clicked()));
     connect(ui->tableWidget,SIGNAL(cellClicked(int,int)),this,SLOT(on_search_table_p_clicked(int,int)));
     connect(ui->checkout_button,SIGNAL(clicked()), this, SLOT(on_checkout_p_clicked()));
+    connect(ui->nameEdit,SIGNAL(textEdited(QString)),this,SLOT(on_edit(QString)));
+    connect(ui->phoneEdit,SIGNAL(textEdited(QString)),this,SLOT(on_edit(QString)));
+    connect(ui->addressEdit,SIGNAL(textEdited(QString)),this,SLOT(on_edit(QString)));
+    connect(ui->ssnEdit,SIGNAL(textEdited(QString)),this,SLOT(on_edit(QString)));
+    connect(ui->dateEdit,SIGNAL(dateChanged(QDate)),this,SLOT(on_date(QDate)));
+    connect(ui->update_pButton, SIGNAL(clicked()), this, SLOT(on_update_p_clicked()));
     API = DataStorage::getInstance();
     currentAccount = CheckoutAccount::getInstance();
+    updateFlag=false;
 }
 
 PatientScreen::~PatientScreen()
@@ -87,14 +94,18 @@ void PatientScreen::on_search_table_p_clicked(int row,int colum){
 void PatientScreen::on_correct_ssn(patient_t patient){
     ui->prescriptionTable->setEnabled(true);
     ui->checkout_button->setEnabled(true);
-    ui->update_pButton->setEnabled(true);
+    updateFlag=true;
+    QDate dob;
     curPatient=patient;
     std::vector<prescription_t> prescriptionList = patient.prescription;
-    ui->nameEdit->setText(QString::fromStdString(patient.first_name+" "+patient.last_name));
+    ui->nameEdit->setText(QString::fromStdString((patient.middle_name.size()==0)?patient.first_name+" "+patient.last_name:patient.first_name+" "+patient.middle_name+" "+patient.last_name));
     ui->phoneEdit->setText(QString::fromStdString(patient.phone));
     ui->ssnEdit->setText(QString::fromStdString(patient.SSN));
     ui->addressEdit->setPlainText(QString::fromStdString(patient.address.toString()));
     ui->prescriptionTable->setRowCount(prescriptionList.size());
+    ui->idEdit->setText(QString::number(patient.id));
+    dob.setDate(patient.DOB.year,patient.DOB.month,patient.DOB.day);
+    ui->dateEdit->setDate(dob);
     for(size_t i=0;i<prescriptionList.size();i++){
         prescription_t prescription = prescriptionList[i];
         QTableWidgetItem *num = new QTableWidgetItem(QString::fromStdString(std::to_string(i+1)));
@@ -111,8 +122,7 @@ void PatientScreen::on_correct_ssn(patient_t patient){
             next->setBackground(Qt::green);
         }
         else{
-            time_t nextTime=prescription.last_time+60*60*24*prescription.period;
-            next=new QTableWidgetItem(QString::fromStdString(ctime(&nextTime)));
+            next=new QTableWidgetItem(prescription.last_time.addDays(prescription.period).toString());
             num->setBackground(Qt::red);
             name->setBackground(Qt::red);
             UPC->setBackground(Qt::red);
@@ -125,6 +135,7 @@ void PatientScreen::on_correct_ssn(patient_t patient){
         ui->prescriptionTable->setItem(i,3,amount);
         ui->prescriptionTable->setItem(i,4,next);
     }
+    ui->update_pButton->setEnabled(false);
 }
 
 void PatientScreen::on_clear_p_clicked(){
@@ -135,25 +146,59 @@ void PatientScreen::on_clear_p_clicked(){
     ui->ssnEdit->clear();
     ui->addressEdit->clear();
     ui->prescriptionTable->setRowCount(0);
+    curPatient=patient_t();
+    updateFlag=false;
+    ui->update_pButton->setEnabled(false);
+    ui->addNewButton->setEnabled(false);
+    ui->dateEdit->setDate(QDate());
 }
 
 void PatientScreen::on_new_p_clicked(){
     patient_t newPatient;
-    newPatient.first_name=ui->nameEdit->text().toStdString();
+    std::string name;
+    std::string address;
+    name=ui->nameEdit->text().toStdString();
+    int pos=name.find(' ');
+    newPatient.first_name=name.substr(0,pos);
+    name=name.substr(pos+1);
+    pos=name.find(' ');
+    if(pos==-1){
+        newPatient.last_name=name.substr(0,pos);
+    }
+    else{
+        newPatient.middle_name=name.substr(0,pos);
+        name=name.substr(pos+1);
+        pos=name.find(' ');
+        newPatient.last_name=name.substr(0,pos);
+    }
     newPatient.phone=ui->phoneEdit->text().toStdString();
     newPatient.SSN=ui->ssnEdit->text().toStdString();
+    address=ui->addressEdit->toPlainText().toStdString();
+    pos=address.find('\n');
+    newPatient.address.street_number=address.substr(0,pos);
+    address=address.substr(pos+1);
+    pos=address.find(',');
+    newPatient.address.city=address.substr(0,pos);
+    address=address.substr(pos+1);
+    pos=address.find(',');
+    newPatient.address.state=address.substr(0,pos);
+    address=address.substr(pos+1);
+    pos=address.find(',');
+    newPatient.address.zip_code=address.substr(0,pos);
+    newPatient.DOB.day=ui->dateEdit->date().day();
+    newPatient.DOB.month=ui->dateEdit->date().month();
+    newPatient.DOB.year=ui->dateEdit->date().year();
     API->create_new_patient(newPatient);
+    ui->addNewButton->setEnabled(false);
 }
 
 void PatientScreen::on_checkout_p_clicked(){
     if(slotcount)
         return;
     slotcount++;
-    qDebug()<<"enter";
     if(curPatient.prescription.size()>0){
         for(size_t i=0;i<curPatient.prescription.size();i++){
             if(curPatient.prescription[i].getValid()&&(!curPatient.prescription[i].inCart)){
-                qDebug()<<"add";
                 drug_t drug=API->search_one_drug(curPatient.prescription[i].name);
                 drug.amount=curPatient.prescription[i].amount;
                 currentAccount->add_item(drug);
@@ -161,7 +206,6 @@ void PatientScreen::on_checkout_p_clicked(){
             }
         }
     }
-    qDebug()<<"leave";
     slotcount--;
 }
 
@@ -169,30 +213,19 @@ void PatientScreen::on_accept_checkout(){
     if(curPatient.prescription.size()>0){
         for(size_t i=0;i<curPatient.prescription.size();i++){
             if(curPatient.prescription[i].getValid()&&(curPatient.prescription[i].inCart)){
-                curPatient.prescription[i].last_time=time(0);
+                curPatient.prescription[i].last_time=QDate::currentDate();
                 prescription_t prescription = curPatient.prescription[i];
                 QTableWidgetItem *num = new QTableWidgetItem(QString::fromStdString(std::to_string(i+1)));
                 QTableWidgetItem *name = new QTableWidgetItem(QString::fromStdString(prescription.name));
                 QTableWidgetItem *UPC = new QTableWidgetItem(QString::fromStdString(prescription.UPC));
                 QTableWidgetItem *amount = new QTableWidgetItem(QString::fromStdString(std::to_string(prescription.amount)));
                 QTableWidgetItem *next;
-                if(prescription.getValid()){
-                    next=new QTableWidgetItem(QString::fromStdString("N/A"));
-                    num->setBackground(Qt::green);
-                    name->setBackground(Qt::green);
-                    UPC->setBackground(Qt::green);
-                    amount->setBackground(Qt::green);
-                    next->setBackground(Qt::green);
-                }
-                else{
-                    time_t nextTime=prescription.last_time+60*60*24*prescription.period;
-                    next=new QTableWidgetItem(QString::fromStdString(ctime(&nextTime)));
-                    num->setBackground(Qt::red);
-                    name->setBackground(Qt::red);
-                    UPC->setBackground(Qt::red);
-                    amount->setBackground(Qt::red);
-                    next->setBackground(Qt::red);
-                }
+                next=new QTableWidgetItem(prescription.last_time.addDays(prescription.period).toString());
+                num->setBackground(Qt::red);
+                name->setBackground(Qt::red);
+                UPC->setBackground(Qt::red);
+                amount->setBackground(Qt::red);
+                next->setBackground(Qt::red);
                 ui->prescriptionTable->setItem(i,0,num);
                 ui->prescriptionTable->setItem(i,1,name);
                 ui->prescriptionTable->setItem(i,2,UPC);
@@ -200,6 +233,7 @@ void PatientScreen::on_accept_checkout(){
                 ui->prescriptionTable->setItem(i,4,next);
             }
         }
+        API->update_patient(curPatient);
     }
 }
 
@@ -209,4 +243,58 @@ void PatientScreen::on_clear_cart_action(){
         for(size_t i=0;i<curPatient.prescription.size();i++){
            curPatient.prescription[i].inCart=false;
         }
+}
+
+
+void PatientScreen::on_update_p_clicked(){
+    std::string name;
+    std::string address;
+    name=ui->nameEdit->text().toStdString();
+    int pos=name.find(' ');
+    curPatient.first_name=name.substr(0,pos);
+    name=name.substr(pos+1);
+    pos=name.find(' ');
+    if(pos==-1){
+        curPatient.last_name=name.substr(0,pos);
+        curPatient.middle_name="";
+    }
+    else{
+        curPatient.middle_name=name.substr(0,pos);
+        name=name.substr(pos+1);
+        pos=name.find(' ');
+        curPatient.last_name=name.substr(0,pos);
+    }
+    curPatient.phone=ui->phoneEdit->text().toStdString();
+    curPatient.SSN=ui->ssnEdit->text().toStdString();
+    address=ui->addressEdit->toPlainText().toStdString();
+    pos=address.find('\n');
+    curPatient.address.street_number=address.substr(0,pos);
+    address=address.substr(pos+1);
+    pos=address.find(',');
+    curPatient.address.city=address.substr(0,pos);
+    address=address.substr(pos+1);
+    pos=address.find(',');
+    curPatient.address.state=address.substr(0,pos);
+    address=address.substr(pos+1);
+    pos=address.find(',');
+    curPatient.address.zip_code=address.substr(0,pos);
+    curPatient.DOB.day=ui->dateEdit->date().day();
+    curPatient.DOB.month=ui->dateEdit->date().month();
+    curPatient.DOB.year=ui->dateEdit->date().year();
+    API->update_patient(curPatient);
+    ui->update_pButton->setEnabled(false);
+}
+
+void PatientScreen::on_edit(QString){
+    if(updateFlag)
+        ui->update_pButton->setEnabled(true);
+    else
+        ui->addNewButton->setEnabled(true);
+}
+
+void PatientScreen::on_date(QDate){
+    if(updateFlag)
+        ui->update_pButton->setEnabled(true);
+    else
+        ui->addNewButton->setEnabled(true);
 }

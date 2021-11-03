@@ -46,44 +46,20 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_5">
-    <item row="3" column="2" colspan="2">
-     <widget class="QLineEdit" name="ssnEdit"/>
-    </item>
-    <item row="0" column="2" colspan="2">
-     <widget class="QLineEdit" name="nameEdit"/>
-    </item>
-    <item row="5" column="2" colspan="2">
-     <widget class="QTableWidget" name="prescriptionTable">
-      <property name="columnCount">
-       <number>5</number>
-      </property>
-      <attribute name="horizontalHeaderVisible">
-       <bool>false</bool>
-      </attribute>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-      <column/>
-     </widget>
-    </item>
-    <item row="2" column="2" colspan="2">
-     <widget class="QLineEdit" name="phoneEdit"/>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLabel" name="label_phone">
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_name">
       <property name="text">
-       <string>Phone number:</string>
+       <string>Name:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QLabel" name="label_ssn">
+    <item row="4" column="1">
+     <widget class="QLabel" name="label">
       <property name="text">
-       <string>SSN:</string>
+       <string>DOB:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -100,7 +76,27 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item row="7" column="3">
+     <widget class="QPushButton" name="checkout_button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>CheckOut</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="label_ssn">
+      <property name="text">
+       <string>SSN:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
      <widget class="QLabel" name="label_address">
       <property name="text">
        <string>Address:</string>
@@ -110,27 +106,52 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="2" colspan="2">
-     <widget class="QPlainTextEdit" name="addressEdit"/>
+    <item row="6" column="2" colspan="2">
+     <widget class="QTableWidget" name="prescriptionTable">
+      <property name="columnCount">
+       <number>5</number>
+      </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+     </widget>
     </item>
-    <item row="7" column="2">
-     <widget class="QPushButton" name="addNewButton">
+    <item row="6" column="1" rowspan="2">
+     <widget class="QLabel" name="label_prescription">
       <property name="text">
-       <string>Add New</string>
+       <string>Prescription:</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="label_name">
+    <item row="2" column="1">
+     <widget class="QLabel" name="label_phone">
       <property name="text">
-       <string>Name:</string>
+       <string>Phone number:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
-    <item row="7" column="3">
+    <item row="1" column="2" colspan="2">
+     <widget class="QLineEdit" name="idEdit">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="2" colspan="2">
+     <widget class="QPlainTextEdit" name="addressEdit"/>
+    </item>
+    <item row="4" column="2" colspan="2">
+     <widget class="QDateEdit" name="dateEdit"/>
+    </item>
+    <item row="8" column="3">
      <widget class="QPushButton" name="update_pButton">
       <property name="enabled">
        <bool>false</bool>
@@ -140,10 +161,17 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2" colspan="2">
-     <widget class="QLineEdit" name="idEdit"/>
+    <item row="8" column="2">
+     <widget class="QPushButton" name="addNewButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Add New</string>
+      </property>
+     </widget>
     </item>
-    <item row="0" column="0" rowspan="8">
+    <item row="0" column="0" rowspan="9">
      <widget class="QTableWidget" name="tableWidget">
       <property name="enabled">
        <bool>false</bool>
@@ -199,22 +227,14 @@
       </item>
      </widget>
     </item>
-    <item row="5" column="1" rowspan="2">
-     <widget class="QLabel" name="label_prescription">
-      <property name="text">
-       <string>Prescription:</string>
-      </property>
-     </widget>
+    <item row="3" column="2" colspan="2">
+     <widget class="QLineEdit" name="ssnEdit"/>
     </item>
-    <item row="6" column="3">
-     <widget class="QPushButton" name="checkout_button">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>CheckOut</string>
-      </property>
-     </widget>
+    <item row="0" column="2" colspan="2">
+     <widget class="QLineEdit" name="nameEdit"/>
+    </item>
+    <item row="2" column="2" colspan="2">
+     <widget class="QLineEdit" name="phoneEdit"/>
     </item>
    </layout>
   </widget>

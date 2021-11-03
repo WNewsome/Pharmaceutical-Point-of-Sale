@@ -54,8 +54,8 @@ patient_t DataStorage::search_one_patient(std::string name){
         patient.valid       = true;
         patient.id          = (uint8_t)obj["id"].toString().toInt();
         //TODO: need real prescription return
-        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15),false});
-        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0),false});
+        patient.prescription.push_back({"Aspirin","31284313231",2,10,QDate::currentDate().addDays(-10),false});
+        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,QDate::currentDate(),false});
         // Return first result only
         return patient;
     }
@@ -140,8 +140,8 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
         patient.valid       = true;
         patient.id          = (uint8_t)obj["id"].toString().toInt();
         // TODO:*** need real prescription return
-        patient.prescription.push_back({"Aspirin","31284313231",2,10,(time(0)-3600*24*15),false});
-        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,time(0),false});
+        patient.prescription.push_back({"Aspirin","31284313231",2,10,QDate::currentDate().addDays(-10),false});
+        patient.prescription.push_back({"bad Aspirin","31284313333",6,5,QDate::currentDate(),false});
         // Return first result only
         result.push_back(patient);
     }
@@ -282,8 +282,8 @@ std::string address_t::toString(){
 
 bool prescription_t::getValid(){
     // Validate that we can prescribe the drug to the patient
-    //std::time_t x = time(0);
-    //int diff = std::difftime(x,last_time)/(3600*24);
-    return true;
+    int diff=last_time.daysTo(QDate::currentDate());
+
+    return diff>=period;
 }
 
