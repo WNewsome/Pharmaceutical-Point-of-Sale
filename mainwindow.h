@@ -6,10 +6,12 @@
 #include <QNetworkReply>
 #include <QListWidgetItem>
 #include <QTabWidget>
-#include "changedrugwindow.h"
 #include "datastorage.h"
-#include "dialog.h"
-#include "checkout.h"
+#include "changedrugwindow.h"
+#include "patientscreen.h"
+#include "salescreen.h"
+#include "managementscreen.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,7 +26,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    CheckoutAccount currentAccount;
+    CheckoutAccount* currentAccount;
 
 private:
     // Main User Interface
@@ -32,22 +34,15 @@ private:
     // Web API used to obtain drug, patients, and inventory data
     QString web_API = "https://wnewsome.com/POS/search.php";
     DataStorage *API;
-    changedrugwindow *updateDrug;
-    bool secuared;
-    std::vector<patient_t> patientList;
-    patient_t curPatient;
+    PatientScreen* patientScreen;
+    SaleScreen* saleScreen;
+    Managementscreen* managementScreen;
+
 
 private slots:
-    void searchDrug(QNetworkReply*);                            // Function that calls the API to obtain data
-    void on_search_button_clicked();                            // Main search button in sales tab
-    void on_pushButton_5_clicked();
-    void on_items_dropdown_itemClicked(QListWidgetItem *item);  // Select an item from search results
-    void on_search_button_p_clicked();                            // Main search button in patient tab
-    void on_search_table_p_clicked(int,int);
-    void on_correct_ssn(patient_t);
-    void on_clear_p_clicked();
-    void on_new_p_clicked();
-    void on_checkout_p_clicked();
+    //void on_search_button_clicked();                            // Main search button in sales tab
+    //void on_items_dropdown_itemClicked(QListWidgetItem *item);  // Select an item from search results
+    void on_checout_action();
 };
 
 #endif // MAINWINDOW_H

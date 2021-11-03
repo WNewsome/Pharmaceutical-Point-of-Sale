@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 #include <qdebug.h>
 #include <time.h>
+#include <QDate>
 
 struct address_t{
     // Address data type
@@ -46,7 +47,8 @@ struct prescription_t{
     std::string UPC;        //or any unique id
     int         amount;
     int         period;     //in weeks or days
-    time_t      last_time;
+    QDate       last_time;
+    bool        inCart ;
     bool getValid();
 };
 

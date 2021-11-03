@@ -223,8 +223,7 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
 bool DataStorage::create_new_drug(drug_t drug, int quantity){
     // Save new drug in DB
     // TODO: return true if successfully saved in DB
-    const QUrl url = QUrl(host_API+"/create_new_drug.php?name="+drug.name
-                          +"&brand="+drug.brand
+    const QUrl url = QUrl(host_API+"/create_new_drug.php?name="+drug.name+"&brand="+drug.brand
                           +"&cost="+QString::number(drug.cost)
                           +"&price="+QString::number(drug.price)
                           +"&control_status="+drug.control_status
@@ -309,8 +308,8 @@ std::string address_t::toString(){
 
 bool prescription_t::getValid(){
     // Validate that we can prescribe the drug to the patient
-    std::time_t x = time(0);
-    int diff = std::difftime(x,last_time)/(3600*24);
-    return diff > period;
+    int diff=last_time.daysTo(QDate::currentDate());
+
+    return diff>=period;
 }
 
