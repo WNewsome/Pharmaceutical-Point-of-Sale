@@ -197,8 +197,7 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
 bool DataStorage::create_new_drug(drug_t drug, int quantity){
     // Save new drug in DB
     // TODO: return true if successfully saved in DB
-    const QUrl url = QUrl(host_API+"/create_new_drug.php?name="+drug.name
-                          +"&brand="+drug.brand
+    const QUrl url = QUrl(host_API+"/create_new_drug.php?name="+drug.name+"&brand="+drug.brand
                           +"&cost="+QString::number(drug.cost)
                           +"&price="+QString::number(drug.price)
                           +"&control_status="+drug.control_status

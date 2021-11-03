@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addgrug.cpp \
     changedrugwindow.cpp \
     checkout.cpp \
     datastorage.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 
 
 HEADERS += \
+    addgrug.h \
     changedrugwindow.h \
     checkout.h \
     datastorage.h \
@@ -33,6 +35,7 @@ HEADERS += \
     patientscreen.h
 
 FORMS += \
+    addgrug.ui \
     changedrugwindow.ui \
     checkout.ui \
     dialog.ui \

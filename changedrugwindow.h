@@ -2,6 +2,7 @@
 #define CHANGEDRUGWINDOW_H
 
 #include <QMainWindow>
+#include "datastorage.h"
 
 namespace Ui {
 class changedrugwindow;
@@ -17,11 +18,12 @@ public:
     void changename(QString name);
 
 private slots:
-    void on_pushButton_clicked();
+    void on_confirm_clicked();
 
 private:
     Ui::changedrugwindow *ui;
     QString drugname;
+    DataStorage *API;
 };
 
 #endif // CHANGEDRUGWINDOW_H

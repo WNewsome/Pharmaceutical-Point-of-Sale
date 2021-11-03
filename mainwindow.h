@@ -10,6 +10,8 @@
 #include "changedrugwindow.h"
 #include "patientscreen.h"
 #include "salescreen.h"
+#include "managementscreen.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -34,6 +36,8 @@ private:
     DataStorage *API;
     PatientScreen* patientScreen;
     SaleScreen* saleScreen;
+    Managementscreen* managementScreen;
+
 
 private slots:
     //void on_search_button_clicked();                            // Main search button in sales tab
