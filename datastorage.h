@@ -88,12 +88,20 @@ public:
     bool add_inventory(drug_t drug, uint16_t n);                // Add 'n' of 'drug' to DB (add more to current inventory)
     bool update_patient(patient_t patient);                     // Update the address of an existing patient
 
+    // Store specific variables
+    QString get_store_name();
+    QString get_store_address();
+    int get_store_id();
+
     // TODO:
     //  1: sprint 3 method on return sales, profits, etc by date and store
 private:
     static DataStorage* instance;
     QString host_API = "https://wnewsome.com/POS";
     QNetworkAccessManager *manager;
+    // Specific to store
+    QString store_name;
+    QString store_address;
 };
 
 #endif // DATASTORAGE_H

@@ -8,6 +8,9 @@
 #include <QJsonArray>
 
 DataStorage::DataStorage(){
+    // TODO: read and load store settings
+    store_name = "Pharmacy Name 1";
+    store_address = "123 Main St. Blacksburg, VA";
     manager = new QNetworkAccessManager(this);
 }
 
@@ -169,7 +172,9 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
             prescription.UPC = obj2["UPC"].toString().toStdString();
             prescription.amount = obj2["amount"].toString().toInt();
             prescription.period = obj2["period"].toString().toInt();
-            // TODO: add patient.last_time
+            // TODO: update patient.last_time from JSON
+            prescription.last_time = QDate::currentDate();
+
             patient.prescription.push_back(prescription);
         }
         // Return first result only
@@ -306,6 +311,15 @@ bool DataStorage::update_patient(patient_t patient){
     loop.exec();
     return true;
 }
+
+QString DataStorage::get_store_name(){
+    return store_name;
+}
+
+QString DataStorage::get_store_address(){
+    return store_address;
+}
+
 std::string address_t::toString(){
     return street_number+"\n"+city+","+state+","+zip_code;
 }
