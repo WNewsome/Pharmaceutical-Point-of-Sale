@@ -29,6 +29,7 @@ private slots:
     void on_clicked_dropdown(QListWidgetItem *);
     void on_double_clicked_dropdown(QListWidgetItem *);
     void on_clicked_list(QListWidgetItem *);
+    void on_double_clicked_list(QListWidgetItem *);
     void on_checkout();
     void on_clear();
 };

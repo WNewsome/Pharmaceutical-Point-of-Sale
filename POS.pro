@@ -14,6 +14,7 @@ SOURCES += \
     checkout.cpp \
     datastorage.cpp \
     dialog.cpp \
+    doubleclicklist.cpp \
     main.cpp \
     mainwindow.cpp \
     managementscreen.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     checkout.h \
     datastorage.h \
     dialog.h \
+    doubleclicklist.h \
     mainwindow.h \
     managementscreen.h \
     salescreen.h \

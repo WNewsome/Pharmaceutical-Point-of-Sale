@@ -21,6 +21,7 @@ SaleScreen::SaleScreen(QWidget *parent) :
     connect(ui->cartButton,SIGNAL(clicked()), this, SLOT(on_checkout()));
     connect(ui->clearButton,SIGNAL(clicked()), this, SLOT(on_clear()));
     connect(ui->items_list,SIGNAL(itemClicked(QListWidgetItem *)),this,SLOT(on_clicked_list(QListWidgetItem *)));
+    connect(ui->items_list,SIGNAL(itemDoubleClicked(QListWidgetItem *)),this,SLOT(on_double_clicked_list(QListWidgetItem *)));
 }
 
 SaleScreen::~SaleScreen()
@@ -30,6 +31,7 @@ SaleScreen::~SaleScreen()
 
 void SaleScreen::on_search_button_d_clicked(){
     drug_list=API->search_drugs(ui->search_lineEdit->text().toStdString());
+    ui->items_list->clear();
     for (size_t i=0;i<drug_list.size() ;i++ ) {
         QListWidgetItem *newItem = new QListWidgetItem;
         newItem->setText(drug_list[i].name);
@@ -68,6 +70,7 @@ void SaleScreen::on_double_clicked_dropdown(QListWidgetItem * item){
     ui->items_dropdown->setEnabled(false);
     QListWidgetItem *newItem = new QListWidgetItem;
     newItem->setText(curDrug.name);
+    ui->items_list->insertItem(0,newItem);
     drug_list.push_back(curDrug);
     ui->drug_name->setText(curDrug.name);
     ui->drug_code->setText(QString::fromStdString(curDrug.UPC));
@@ -76,13 +79,17 @@ void SaleScreen::on_double_clicked_dropdown(QListWidgetItem * item){
 
 void SaleScreen::on_clicked_list(QListWidgetItem *item){
     curDrug = drug_list[ui->items_list->currentRow()];
-    QListWidgetItem *newItem = new QListWidgetItem;
-    newItem->setText(curDrug.name);
-    drug_list.push_back(curDrug);
     ui->drug_name->setText(curDrug.name);
     ui->drug_code->setText(QString::fromStdString(curDrug.UPC));
     ui->drug_stock->setText(QString::number(curDrug.amount));
     ui->spinBox->setValue(1);
+}
+
+void SaleScreen::on_double_clicked_list(QListWidgetItem *item){
+    curDrug = drug_list[ui->items_list->currentRow()];
+    drug_t drug=curDrug;
+    drug.amount=1;
+    currentAccount->add_item(drug);
 }
 
 void SaleScreen::on_checkout(){
@@ -102,4 +109,6 @@ void SaleScreen::on_clear(){
     ui->drug_code->setText("");
     ui->drug_name->setText("");
     ui->drug_stock->setText("");
+    ui->items_dropdown->setVisible(false);
+    ui->items_dropdown->setEnabled(false);
 }
