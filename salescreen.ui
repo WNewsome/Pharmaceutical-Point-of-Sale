@@ -31,7 +31,7 @@
     <string>123 Main St. City, VA</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="items_dropdown">
+  <widget class="DoubleClickList" name="items_dropdown">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -44,6 +44,9 @@
     <font>
      <pointsize>15</pointsize>
     </font>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="search_button">
@@ -65,7 +68,7 @@
     <string>Search</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="items_list">
+  <widget class="DoubleClickList" name="items_list">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -78,6 +81,9 @@
     <font>
      <pointsize>15</pointsize>
     </font>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -287,6 +293,13 @@
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DoubleClickList</class>
+   <extends>QListWidget</extends>
+   <header location="global">Doubleclicklist.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
