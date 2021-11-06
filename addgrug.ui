@@ -216,7 +216,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>ERROR: FILL IN ALL AREAS</string>
+         <string>ERROR: FILL IN ALL FIELDS</string>
         </property>
        </widget>
       </item>

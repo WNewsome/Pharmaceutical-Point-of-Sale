@@ -2,6 +2,7 @@
 #define MANAGEMENTSCREEN_H
 
 #include <QWidget>
+#include <QFileDialog>
 #include "datastorage.h"
 #include "changedrugwindow.h"
 #include "addgrug.h"
@@ -24,6 +25,10 @@ private slots:
     void on_addnewdrugclicked_clicked();
 
     void on_tableWidget_cellClicked(int row, int column);
+
+    void on_editdrug_2_clicked();
+
+    void on_editimage_clicked();
 
 private:
     Ui::Managementscreen *ui;

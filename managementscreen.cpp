@@ -13,6 +13,11 @@ Managementscreen::Managementscreen(QWidget *parent) :
     addDrug = new addgrug(this);
     connect(ui->changedruginfoclick, SIGNAL(clicked()), this, SLOT(on_changedruginfoclick_clicked()));
     connect(ui->tableWidget,SIGNAL(cellClicked(int,int)),this,SLOT(on_tableWidget_cellClicked(int,int)));
+
+    ui->addnewdrugclicked->setEnabled(false);
+    ui->storesearch->setEnabled(false);
+    ui->editdrug_2->setEnabled(false);
+    ui->editimage->setEnabled(false);
 }
 
 Managementscreen::~Managementscreen()
@@ -61,20 +66,22 @@ void Managementscreen::on_changedruginfoclick_clicked()
 
 void Managementscreen::on_tableWidget_cellClicked(int row,int column){
     if (row != 0){
-        drug_t drug = drugList[row-1];
+        curDrug = drugList[row-1];
         ui->addnewdrugclicked->setEnabled(true);
         ui->storesearch->setEnabled(true);
-        ui->drugnames->setText(drug.name);
-        ui->DEA_5->setText(QString::fromStdString(drug.DEA));
-        ui->GPI_5->setText(QString::fromStdString(drug.GPI));
-        ui->NPCs->setText(QString::fromStdString(drug.NDC));
-        ui->UPCs->setText(QString::fromStdString(drug.UPC));
-        ui->brands->setText(drug.brand);
-        ui->controls->setText(drug.control_status);
-        ui->cost->setText(QString::number(drug.cost));
+        ui->editdrug_2->setEnabled(true);
+        ui->editimage->setEnabled(true);
+        ui->drugnames->setText(curDrug.name);
+        ui->DEA_5->setText(QString::fromStdString(curDrug.DEA));
+        ui->GPI_5->setText(QString::fromStdString(curDrug.GPI));
+        ui->NPCs->setText(QString::fromStdString(curDrug.NDC));
+        ui->UPCs->setText(QString::fromStdString(curDrug.UPC));
+        ui->brands->setText(curDrug.brand);
+        ui->controls->setText(curDrug.control_status);
+        ui->cost->setText(QString::number(curDrug.cost));
 
         imageObject = new QImage();
-        imageObject->load(drug.picture_url);
+        imageObject->load(curDrug.picture_url);
 
         image = QPixmap::fromImage(*imageObject);
 
@@ -83,8 +90,8 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
         drugimage->setSceneRect(image.rect());
         ui->Image->setScene(drugimage);
 
-        ui->quantity->setText(QString::number(drug.amount));
-        ui->prices->setText(QString::number(drug.price));
+        ui->quantity->setText(QString::number(curDrug.amount));
+        ui->prices->setText(QString::number(curDrug.price));
     }
 }
 
@@ -97,4 +104,35 @@ void Managementscreen::on_addnewdrugclicked_clicked()
     addDrug->show();
 }
 
+
+
+void Managementscreen::on_editdrug_2_clicked()
+{
+    curDrug.brand = ui->brands->text();
+    curDrug.cost = ui->cost->text().toInt();
+    curDrug.price = ui->prices->text().toInt();
+    curDrug.UPC = ui->UPCs->text().toStdString();
+    curDrug.DEA = ui->DEA_5->text().toStdString();
+    curDrug.GPI = ui->GPI_5->text().toStdString();
+    curDrug.NDC = ui->NPCs->text().toStdString();
+    curDrug.amount = ui->quantity->text().toInt();
+    curDrug.control_status = ui->controls->text();
+
+}
+
+
+void Managementscreen::on_editimage_clicked()
+{
+    QString imagePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" ));
+    imageObject = new QImage();
+    imageObject->load(imagePath);
+
+    image = QPixmap::fromImage(*imageObject);
+
+    drugimage = new QGraphicsScene(this);
+    drugimage->addPixmap(image);
+    drugimage->setSceneRect(image.rect());
+    ui->Image->setScene(drugimage);
+    curDrug.picture_url = imagePath;
+}
 
