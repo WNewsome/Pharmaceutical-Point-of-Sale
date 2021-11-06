@@ -7,6 +7,7 @@ addgrug::addgrug(QWidget *parent) :
     ui(new Ui::addgrug)
 {
     ui->setupUi(this);
+    ui->Error->setVisible(false);
     API = DataStorage::getInstance();
 }
 
@@ -45,7 +46,9 @@ void addgrug::on_confirm_clicked()
     }
 
     else{
-
+        ui->frame->setStyleSheet("QFrame { border: 5px solid red } ");
+        ui->Error->setStyleSheet("QLabel { color : red; }");
+        ui->Error->setVisible(true);
     }
 }
 
