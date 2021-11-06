@@ -35,7 +35,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>-288</y>
+      <y>0</y>
       <width>748</width>
       <height>897</height>
      </rect>
@@ -316,9 +316,9 @@
              </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QLabel" name="controls">
+             <widget class="QLineEdit" name="controls">
               <property name="text">
-               <string>Control Status</string>
+               <string>Current Price</string>
               </property>
              </widget>
             </item>
@@ -328,7 +328,6 @@
            <zorder>dealabel</zorder>
            <zorder>ndclabel</zorder>
            <zorder>brandnamelabel</zorder>
-           <zorder>controls</zorder>
            <zorder>imagelabel</zorder>
            <zorder>UPCs</zorder>
            <zorder>gpilabel</zorder>
@@ -344,6 +343,7 @@
            <zorder>drugnames</zorder>
            <zorder>brands</zorder>
            <zorder>cost</zorder>
+           <zorder>controls</zorder>
           </widget>
          </item>
          <item>
@@ -405,14 +405,14 @@
        <item row="1" column="2">
         <widget class="QPushButton" name="changedruginfoclick">
          <property name="text">
-          <string>Search</string>
+          <string>Search for drug</string>
          </property>
         </widget>
        </item>
        <item row="1" column="3">
         <widget class="QPushButton" name="addnewdrugclicked">
          <property name="text">
-          <string>Add</string>
+          <string>Add new drug</string>
          </property>
         </widget>
        </item>

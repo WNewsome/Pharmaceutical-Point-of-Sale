@@ -18,6 +18,7 @@ Managementscreen::Managementscreen(QWidget *parent) :
     ui->storesearch->setEnabled(false);
     ui->editdrug_2->setEnabled(false);
     ui->editimage->setEnabled(false);
+    ui->scrollArea_2->setEnabled(false);
 }
 
 Managementscreen::~Managementscreen()
@@ -71,10 +72,11 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
         ui->storesearch->setEnabled(true);
         ui->editdrug_2->setEnabled(true);
         ui->editimage->setEnabled(true);
+        ui->scrollArea_2->setEnabled(true);
         ui->drugnames->setText(curDrug.name);
-        ui->DEA_5->setText(QString::fromStdString(curDrug.DEA));
-        ui->GPI_5->setText(QString::fromStdString(curDrug.GPI));
-        ui->NPCs->setText(QString::fromStdString(curDrug.NDC));
+        ui->DEAs->setText(QString::fromStdString(curDrug.DEA));
+        ui->GPIs->setText(QString::fromStdString(curDrug.GPI));
+        ui->NDCs->setText(QString::fromStdString(curDrug.NDC));
         ui->UPCs->setText(QString::fromStdString(curDrug.UPC));
         ui->brands->setText(curDrug.brand);
         ui->controls->setText(curDrug.control_status);
@@ -112,9 +114,9 @@ void Managementscreen::on_editdrug_2_clicked()
     curDrug.cost = ui->cost->text().toInt();
     curDrug.price = ui->prices->text().toInt();
     curDrug.UPC = ui->UPCs->text().toStdString();
-    curDrug.DEA = ui->DEA_5->text().toStdString();
-    curDrug.GPI = ui->GPI_5->text().toStdString();
-    curDrug.NDC = ui->NPCs->text().toStdString();
+    curDrug.DEA = ui->DEAs->text().toStdString();
+    curDrug.GPI = ui->GPIs->text().toStdString();
+    curDrug.NDC = ui->NDCs->text().toStdString();
     curDrug.amount = ui->quantity->text().toInt();
     curDrug.control_status = ui->controls->text();
 
