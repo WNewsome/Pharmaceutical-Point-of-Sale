@@ -56,12 +56,5 @@ void addgrug::on_openimage_clicked()
     scene->setSceneRect(image.rect());
     ui->Image->setScene(scene);
     newDrug.picture_url = imagePath;
-
-}
-
-
-void addgrug::on_saveimage_clicked()
-{
-
 }
 

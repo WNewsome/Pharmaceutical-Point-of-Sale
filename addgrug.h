@@ -26,8 +26,6 @@ private slots:
 
     void on_openimage_clicked();
 
-    void on_saveimage_clicked();
-
 private:
     Ui::addgrug *ui;
     QPixmap image;
