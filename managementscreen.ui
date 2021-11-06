@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>798</width>
-    <height>627</height>
+    <width>808</width>
+    <height>663</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>771</width>
-     <height>611</height>
+     <height>641</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -37,20 +37,17 @@
       <x>0</x>
       <y>0</y>
       <width>748</width>
-      <height>897</height>
+      <height>887</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
-     <item row="6" column="0">
-      <widget class="QLabel" name="reportslabel">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-         <underline>true</underline>
-        </font>
-       </property>
+     <item row="8" column="0" colspan="2">
+      <widget class="QGraphicsView" name="profits"/>
+     </item>
+     <item row="8" column="2" colspan="2">
+      <widget class="QLabel" name="profitslabel">
        <property name="text">
-        <string>Reports</string>
+        <string>Profits Report</string>
        </property>
       </widget>
      </item>
@@ -62,7 +59,13 @@
        <property name="minimumSize">
         <size>
          <width>341</width>
-         <height>510</height>
+         <height>500</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>500</height>
         </size>
        </property>
        <property name="rowCount">
@@ -116,13 +119,6 @@
        </item>
       </widget>
      </item>
-     <item row="8" column="2" colspan="2">
-      <widget class="QLabel" name="profitslabel">
-       <property name="text">
-        <string>Profits Report</string>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="0" colspan="4">
       <spacer name="horizontalSpacer_5">
        <property name="orientation">
@@ -136,6 +132,94 @@
        </property>
       </spacer>
      </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="reportslabel">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+         <underline>true</underline>
+        </font>
+       </property>
+       <property name="text">
+        <string>Reports</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0" colspan="2">
+      <widget class="QGraphicsView" name="sales"/>
+     </item>
+     <item row="7" column="2" colspan="2">
+      <widget class="QLabel" name="salesreportlabel">
+       <property name="text">
+        <string>Sales Report</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QPushButton" name="editdrug_2">
+       <property name="text">
+        <string>Edit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="4">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="editdruginfohead">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <underline>true</underline>
+          </font>
+         </property>
+         <property name="text">
+          <string>Edit Drug Information</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QPushButton" name="storesearch">
+         <property name="text">
+          <string>Search other stores</string>
+         </property>
+         <property name="shortcut">
+          <string>Return</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="insertnamehead">
+         <property name="text">
+          <string>Insert name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="changedruginfoclick">
+         <property name="text">
+          <string>Search for drug</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="addnewdrugclicked">
+         <property name="text">
+          <string>Add new drug</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="editdrug"/>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="2">
+      <widget class="QPushButton" name="editimage">
+       <property name="text">
+        <string>Edit Image</string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="1" colspan="3">
       <widget class="QScrollArea" name="scrollArea_2">
        <property name="sizePolicy">
@@ -147,7 +231,13 @@
        <property name="minimumSize">
         <size>
          <width>340</width>
-         <height>510</height>
+         <height>500</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>500</height>
         </size>
        </property>
        <property name="widgetResizable">
@@ -357,84 +447,6 @@
          </item>
         </layout>
        </widget>
-      </widget>
-     </item>
-     <item row="7" column="2" colspan="2">
-      <widget class="QLabel" name="salesreportlabel">
-       <property name="text">
-        <string>Sales Report</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="4">
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
-        <widget class="QLabel" name="insertnamehead">
-         <property name="text">
-          <string>Insert name:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QPushButton" name="storesearch">
-         <property name="text">
-          <string>Search other stores</string>
-         </property>
-         <property name="shortcut">
-          <string>Return</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="editdruginfohead">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-           <underline>true</underline>
-          </font>
-         </property>
-         <property name="text">
-          <string>Edit Drug Information</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="editdrug"/>
-       </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="changedruginfoclick">
-         <property name="text">
-          <string>Search for drug</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QPushButton" name="addnewdrugclicked">
-         <property name="text">
-          <string>Add new drug</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="8" column="0" colspan="2">
-      <widget class="QGraphicsView" name="profits"/>
-     </item>
-     <item row="7" column="0" colspan="2">
-      <widget class="QGraphicsView" name="sales"/>
-     </item>
-     <item row="3" column="3">
-      <widget class="QPushButton" name="editdrug_2">
-       <property name="text">
-        <string>Edit</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QPushButton" name="editimage">
-       <property name="text">
-        <string>Edit Image</string>
-       </property>
       </widget>
      </item>
     </layout>

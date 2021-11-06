@@ -1,7 +1,7 @@
 #include "managementscreen.h"
 #include "ui_managementscreen.h"
 
-//TODO: Drug url
+
 
 Managementscreen::Managementscreen(QWidget *parent) :
     QWidget(parent),

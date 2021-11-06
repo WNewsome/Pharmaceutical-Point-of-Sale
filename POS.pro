@@ -9,11 +9,13 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    adddrug.cpp \
     addgrug.cpp \
     changedrugwindow.cpp \
     checkout.cpp \
     datastorage.cpp \
     dialog.cpp \
+    editdrug.cpp \
     main.cpp \
     mainwindow.cpp \
     managementscreen.cpp \
@@ -22,21 +24,25 @@ SOURCES += \
 
 
 HEADERS += \
+    adddrug.h \
     addgrug.h \
     changedrugwindow.h \
     checkout.h \
     datastorage.h \
     dialog.h \
+    editdrug.h \
     mainwindow.h \
     managementscreen.h \
     settingsscreen.h \
     patientscreen.h
 
 FORMS += \
+    adddrug.ui \
     addgrug.ui \
     changedrugwindow.ui \
     checkout.ui \
     dialog.ui \
+    editdrug.ui \
     mainwindow.ui \
     managementscreen.ui \
     settingsscreen.ui \

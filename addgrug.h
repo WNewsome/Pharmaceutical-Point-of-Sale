@@ -2,8 +2,6 @@
 #define ADDGRUG_H
 
 #include <QMainWindow>
-#include <QDir>
-#include <QResource>
 #include "datastorage.h"
 #include <QGraphicsScene>
 
