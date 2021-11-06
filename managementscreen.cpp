@@ -29,6 +29,7 @@ Managementscreen::~Managementscreen()
 void Managementscreen::on_changedruginfoclick_clicked()
 {
     ui->tableWidget->setRowCount(1);
+    ui->addnewdrugclicked->setEnabled(true);
     drugList.clear();
     std::string search_buffer=ui->editdrug->text().toStdString();
    if(search_buffer.find(' ')!=-1){
@@ -68,7 +69,6 @@ void Managementscreen::on_changedruginfoclick_clicked()
 void Managementscreen::on_tableWidget_cellClicked(int row,int column){
     if (row != 0){
         curDrug = drugList[row-1];
-        ui->addnewdrugclicked->setEnabled(true);
         ui->storesearch->setEnabled(true);
         ui->editdrug_2->setEnabled(true);
         ui->editimage->setEnabled(true);
