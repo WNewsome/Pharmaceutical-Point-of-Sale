@@ -2,15 +2,20 @@
 #define ADDGRUG_H
 
 #include <QMainWindow>
+#include <QDir>
+#include <QResource>
 #include "datastorage.h"
+#include <QGraphicsScene>
 
 namespace Ui {
 class addgrug;
+
 }
 
 class addgrug : public QMainWindow
 {
     Q_OBJECT
+
 public:
     explicit addgrug(QWidget *parent = nullptr);
     ~addgrug();
@@ -19,8 +24,16 @@ public:
 private slots:
     void on_confirm_clicked();
 
+    void on_openimage_clicked();
+
+    void on_saveimage_clicked();
+
 private:
     Ui::addgrug *ui;
+    QPixmap image;
+    QImage  *imageObject;
+    QGraphicsScene *scene;
+
     DataStorage *API;
     drug_t newDrug;
 };

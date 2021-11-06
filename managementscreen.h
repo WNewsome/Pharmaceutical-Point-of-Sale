@@ -34,6 +34,9 @@ private:
     std::vector<drug_t> drugList;
     bool secured;
     drug_t curDrug;
+    QPixmap image;
+    QImage  *imageObject;
+    QGraphicsScene *scene;
 };
 
 #endif // MANAGEMENTSCREEN_H

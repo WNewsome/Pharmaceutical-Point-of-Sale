@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>771</width>
-     <height>631</height>
+     <height>551</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -169,6 +169,62 @@
             </size>
            </property>
            <layout class="QGridLayout" name="gridLayout_8">
+            <item row="10" column="0">
+             <widget class="QLabel" name="label_57">
+              <property name="text">
+               <string>Image</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="0">
+             <widget class="QLabel" name="label_51">
+              <property name="text">
+               <string>NDC</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_55">
+              <property name="text">
+               <string>Inventory</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_48">
+              <property name="text">
+               <string>UPC</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_50">
+              <property name="text">
+               <string>Control Status</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="drugnames">
+              <property name="text">
+               <string>Name</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="prices">
+              <property name="text">
+               <string>Current Price</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QLabel" name="GPI_5">
+              <property name="text">
+               <string>GPI</string>
+              </property>
+             </widget>
+            </item>
             <item row="7" column="0">
              <widget class="QLabel" name="label_54">
               <property name="text">
@@ -176,15 +232,29 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
-             <widget class="QLineEdit" name="quantity">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_52">
               <property name="text">
-               <string>Current Quantity</string>
+               <string>Drug name</string>
               </property>
              </widget>
             </item>
-            <item row="9" column="0">
-             <widget class="QLabel" name="label_51">
+            <item row="6" column="1">
+             <widget class="QLabel" name="UPCs">
+              <property name="text">
+               <string>UPC</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_49">
+              <property name="text">
+               <string>Price</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <widget class="QLabel" name="NPCs">
               <property name="text">
                <string>NDC</string>
               </property>
@@ -197,48 +267,6 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QLabel" name="Cost_5">
-              <property name="text">
-               <string>Cost</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QLabel" name="controls">
-              <property name="text">
-               <string>Control Status</string>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="0">
-             <widget class="QLabel" name="label_57">
-              <property name="text">
-               <string>Image</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QLabel" name="UPCs">
-              <property name="text">
-               <string>UPC</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0">
-             <widget class="QLabel" name="label_56">
-              <property name="text">
-               <string>GPI</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLineEdit" name="prices">
-              <property name="text">
-               <string>Current Price</string>
-              </property>
-             </widget>
-            </item>
             <item row="3" column="0">
              <widget class="QLabel" name="label_53">
               <property name="text">
@@ -246,43 +274,8 @@
               </property>
              </widget>
             </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="label_48">
-              <property name="text">
-               <string>UPC</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_52">
-              <property name="text">
-               <string>Drug name</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="label_50">
-              <property name="text">
-               <string>Control Status</string>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="1">
-             <widget class="QLabel" name="DEA_5">
-              <property name="text">
-               <string>DEA</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_55">
-              <property name="text">
-               <string>Inventory</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QLabel" name="GPI_5">
+            <item row="8" column="0">
+             <widget class="QLabel" name="label_56">
               <property name="text">
                <string>GPI</string>
               </property>
@@ -295,32 +288,60 @@
               </property>
              </widget>
             </item>
-            <item row="9" column="1">
-             <widget class="QLabel" name="NPCs">
+            <item row="5" column="1">
+             <widget class="QLabel" name="controls">
               <property name="text">
-               <string>NDC</string>
+               <string>Control Status</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="drugnames">
+            <item row="7" column="1">
+             <widget class="QLabel" name="DEA_5">
               <property name="text">
-               <string>Name</string>
+               <string>DEA</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_49">
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="quantity">
               <property name="text">
-               <string>Price</string>
+               <string>Current Quantity</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="Cost_5">
+              <property name="text">
+               <string>Cost</string>
               </property>
              </widget>
             </item>
            </layout>
+           <zorder>quantity</zorder>
+           <zorder>Cost_5</zorder>
+           <zorder>GPI_5</zorder>
+           <zorder>brands</zorder>
+           <zorder>label_54</zorder>
+           <zorder>label_51</zorder>
+           <zorder>label_47</zorder>
+           <zorder>controls</zorder>
+           <zorder>label_57</zorder>
+           <zorder>UPCs</zorder>
+           <zorder>label_56</zorder>
+           <zorder>prices</zorder>
+           <zorder>label_53</zorder>
+           <zorder>label_48</zorder>
+           <zorder>label_52</zorder>
+           <zorder>label_50</zorder>
+           <zorder>DEA_5</zorder>
+           <zorder>label_55</zorder>
+           <zorder>NPCs</zorder>
+           <zorder>drugnames</zorder>
+           <zorder>label_49</zorder>
           </widget>
          </item>
          <item>
-          <widget class="QGraphicsView" name="Image_2">
+          <widget class="QGraphicsView" name="Image">
            <property name="minimumSize">
             <size>
              <width>0</width>
