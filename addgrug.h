@@ -23,14 +23,13 @@ public:
 
 private slots:
     void on_confirm_clicked();
-
     void on_openimage_clicked();
 
 private:
     Ui::addgrug *ui;
     QPixmap image;
-    QImage  *imageObject;
-    QGraphicsScene *scene;
+    QImage* imageObject;
+    QGraphicsScene* drugimage;
 
     DataStorage *API;
     drug_t newDrug;

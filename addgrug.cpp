@@ -25,21 +25,28 @@ void addgrug::on_confirm_clicked()
     //check if everything is filled in and display error??
 
     //put drug stuff from lines in
-    newDrug.brand = ui->brandname->text();
-    newDrug.cost = ui->Cost->text().toInt();
-    newDrug.price = ui->Price->text().toInt();
-    newDrug.UPC = ui->upc->text().toStdString();
-    newDrug.DEA = ui->DEA->text().toStdString();
-    newDrug.GPI = ui->gpi->text().toStdString();
-    newDrug.NDC = ui->NDC->text().toStdString();
-    newDrug.amount = ui->invintory->text().toInt();
-    newDrug.control_status = ui->control->text();
-   // newDrug.picture_url = "the_url";
-    int quaintity = newDrug.amount;
+    if ((ui->brandname->text() != "") && (ui->Cost->text() != "") && (ui->Price->text() != "")
+            && (ui->upc->text() != "") && (ui->DEA->text() != "") && (ui->gpi->text() != "")
+            && (ui->NDC->text() != "") && (ui->control->text() != "") && (newDrug.picture_url != "")){
+        newDrug.brand = ui->brandname->text();
+        newDrug.cost = ui->Cost->text().toInt();
+        newDrug.price = ui->Price->text().toInt();
+        newDrug.UPC = ui->upc->text().toStdString();
+        newDrug.DEA = ui->DEA->text().toStdString();
+        newDrug.GPI = ui->gpi->text().toStdString();
+        newDrug.NDC = ui->NDC->text().toStdString();
+        newDrug.amount = ui->invintory->text().toInt();
+        newDrug.control_status = ui->control->text();
+        int quaintity = newDrug.amount;
 
-    API->create_new_drug(newDrug,quaintity);
+        API->create_new_drug(newDrug,quaintity);
 
-    this->close();
+        this->close();
+    }
+
+    else{
+
+    }
 }
 
 
@@ -51,10 +58,10 @@ void addgrug::on_openimage_clicked()
 
     image = QPixmap::fromImage(*imageObject);
 
-    scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->Image->setScene(scene);
+    drugimage = new QGraphicsScene(this);
+    drugimage->addPixmap(image);
+    drugimage->setSceneRect(image.rect());
+    ui->Image->setScene(drugimage);
     newDrug.picture_url = imagePath;
 }
 

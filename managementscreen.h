@@ -35,8 +35,8 @@ private:
     bool secured;
     drug_t curDrug;
     QPixmap image;
-    QImage  *imageObject;
-    QGraphicsScene *scene;
+    QImage* imageObject;
+    QGraphicsScene* drugimage;
 };
 
 #endif // MANAGEMENTSCREEN_H

@@ -71,17 +71,17 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
         ui->UPCs->setText(QString::fromStdString(drug.UPC));
         ui->brands->setText(drug.brand);
         ui->controls->setText(drug.control_status);
-        ui->Cost_5->setText(QString::number(drug.cost));
+        ui->cost->setText(QString::number(drug.cost));
 
         imageObject = new QImage();
         imageObject->load(drug.picture_url);
 
         image = QPixmap::fromImage(*imageObject);
 
-        scene = new QGraphicsScene(this);
-        scene->addPixmap(image);
-        scene->setSceneRect(image.rect());
-        ui->Image->setScene(scene);
+        drugimage = new QGraphicsScene(this);
+        drugimage->addPixmap(image);
+        drugimage->setSceneRect(image.rect());
+        ui->Image->setScene(drugimage);
 
         ui->quantity->setText(QString::number(drug.amount));
         ui->prices->setText(QString::number(drug.price));
