@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     // Create a new drug and 32 units in inventory
     drug_t new_drug;
-    new_drug.name = "this is a new drug";
+    new_drug.name = "Aspirin123";
     new_drug.brand = "This is its brand";
     new_drug.cost = 8;
     new_drug.price = 12;
@@ -68,8 +68,11 @@ MainWindow::MainWindow(QWidget *parent)
     new_drug.GPI = "123456777";
     new_drug.NDC = "12jj";
 
-    //API->create_new_drug(new_drug, 10);
-
+    // API->create_new_drug(new_drug, 10);
+    drug_t to_update = API->search_one_drug("Aspirin123");
+    to_update.name = "UPDATEDNAMETEST";
+    to_update.brand = "UPDATED_BRAND";
+    //API->update_drug(to_update);
     // Test create a new patient into the DB
     patient_t new_patient;
     new_patient.first_name = "Willy";

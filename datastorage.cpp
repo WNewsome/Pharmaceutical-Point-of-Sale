@@ -115,6 +115,7 @@ drug_t DataStorage::search_one_drug(std::string name){
         drug.NDC = obj["NDC"].toString().toStdString();
         drug.valid = true;
         drug.amount = obj["quantity"].toString().toInt();
+        drug.id = obj["id"].toString().toInt();
         // Return first result only
         return drug;
     }
@@ -222,6 +223,7 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
         drug.NDC = obj["NDC"].toString().toStdString();
         drug.valid = true;
         drug.amount = obj["quantity"].toString().toInt();
+        drug.id = obj["id"].toString().toInt();
         // Add result to vector
         result.push_back(drug);
     }
@@ -251,7 +253,14 @@ bool DataStorage::create_new_drug(drug_t drug, int quantity){
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
-    return true;
+
+    QString strReply = (QString)reply->readAll();
+    qDebug() << strReply;
+
+    if(strReply == "200 Ok"){
+        return true;
+    }
+    return false;
 }
 
 bool DataStorage::create_new_patient(patient_t patient){
@@ -281,8 +290,9 @@ bool DataStorage::create_new_patient(patient_t patient){
 }
 
 bool DataStorage::add_inventory(drug_t drug, uint16_t n){
-    // TODO: add n of drug to current inventory
-    return true;
+    // Add n of drug to current inventory
+    drug.amount += n;
+    return update_drug(drug);
 }
 
 bool DataStorage::update_patient(patient_t patient){
@@ -309,7 +319,44 @@ bool DataStorage::update_patient(patient_t patient){
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
-    return true;
+
+    QString strReply = (QString)reply->readAll();
+    qDebug() << strReply;
+
+    if(strReply == "200 Ok"){
+        return true;
+    }
+    return false;
+}
+
+bool DataStorage::update_drug(drug_t drug){
+    const QUrl url = QUrl(host_API+"/update_drug.php?name="+drug.name+"&brand="+drug.brand
+                          +"&cost="+QString::number(drug.cost)
+                          +"&price="+QString::number(drug.price)
+                          +"&control_status="+drug.control_status
+                          +"&picture_url="+drug.picture_url
+                          +"&quantity="+QString::number(drug.amount)
+                          +"&UPC="+QString::fromStdString(drug.UPC)
+                          +"&DEA="+QString::fromStdString(drug.DEA)
+                          +"&GPI="+QString::fromStdString(drug.GPI)
+                          +"&NDC="+QString::fromStdString(drug.NDC)
+                          +"&id="+QString::number(drug.id));
+    qDebug() << url;
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    QString strReply = (QString)reply->readAll();
+    qDebug() << strReply;
+
+    if(strReply == "200 Ok"){
+        return true;
+    }
+    return false;
 }
 
 QString DataStorage::get_store_name(){

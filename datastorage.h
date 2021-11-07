@@ -40,6 +40,7 @@ struct drug_t {
     std::string NDC;    // 10-digit or 11-digit, 3-segment number
     int amount;
     bool valid = false;
+    int id;             // Unique id from DB
 };
 
 struct prescription_t{
@@ -86,7 +87,8 @@ public:
 
     // Update functions:
     bool add_inventory(drug_t drug, uint16_t n);                // Add 'n' of 'drug' to DB (add more to current inventory)
-    bool update_patient(patient_t patient);                     // Update the address of an existing patient
+    bool update_patient(patient_t patient);                     // Update an existing patient
+    bool update_drug(drug_t drug);                              // Update an existing drug
 
     // Store specific variables
     QString get_store_name();
