@@ -27,7 +27,7 @@ void NewPrescription::on_accept(){
         if(ui->checkBox->isChecked()){
             drug.amount=ui->spinBox->value();
             currentAccount->add_item(drug);
-            emit accept({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),QDate::currentDate(),true});
+            emit accept({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),QDate(2010,1,1),true});
             this->close();
         }
         else{
