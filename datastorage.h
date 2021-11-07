@@ -40,6 +40,7 @@ struct drug_t {
     std::string NDC;    // 10-digit or 11-digit, 3-segment number
     int amount;
     bool valid = false;
+    int id;             // Unique id from DB
 };
 
 struct prescription_t{
@@ -79,6 +80,7 @@ public:
     drug_t search_one_drug(std::string name);                   // returns the first drug found by name
     std::vector<patient_t> search_patients(std::string name);   // returns a vector of patients of the resulting search by name
     std::vector<drug_t> search_drugs(std::string name);         // returns a vector of drugs of the resulting search by name
+    drug_t search_drug_by_id(int id);                           // returns a drug by id
 
     // Create functions:
     bool create_new_drug(drug_t drug, int quantity);
@@ -86,7 +88,8 @@ public:
 
     // Update functions:
     bool add_inventory(drug_t drug, uint16_t n);                // Add 'n' of 'drug' to DB (add more to current inventory)
-    bool update_patient(patient_t patient);                     // Update the address of an existing patient
+    bool update_patient(patient_t patient);                     // Update an existing patient
+    bool update_drug(drug_t drug);                              // Update an existing drug
 
     // Store specific variables
     QString get_store_name();
