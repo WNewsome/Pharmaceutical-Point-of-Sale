@@ -80,6 +80,7 @@ public:
     drug_t search_one_drug(std::string name);                   // returns the first drug found by name
     std::vector<patient_t> search_patients(std::string name);   // returns a vector of patients of the resulting search by name
     std::vector<drug_t> search_drugs(std::string name);         // returns a vector of drugs of the resulting search by name
+    drug_t search_drug_by_id(int id);                           // returns a drug by id
 
     // Create functions:
     bool create_new_drug(drug_t drug, int quantity);

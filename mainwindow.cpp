@@ -36,7 +36,11 @@ MainWindow::MainWindow(QWidget *parent)
     // Init API
     API = DataStorage::getInstance();
 
+    // -------------------
+    // Data Storage Tests:
+    // -------------------
     // TODO: remove these tests
+    /*
     // Search for one drug matching word "Tyle*"
     drug_t drug = API->search_one_drug("tyle");
     if(drug.valid){
@@ -87,11 +91,19 @@ MainWindow::MainWindow(QWidget *parent)
     new_patient.DOB.day = 12;
     new_patient.DOB.month = 11;
     new_patient.DOB.year = 1997;
-
-    //API->create_new_patient(new_patient);
+    API->create_new_patient(new_patient);
     patient = API->search_one_patient("Berth");
     patient.first_name = "Berthoooo";
     API->update_patient(patient);
+    drug_t searchID = API->search_drug_by_id(41);
+    if(searchID.valid)
+        qDebug() << searchID.name;
+
+    patient_t patient = API->search_one_patient("Alex");
+    patient.first_name = "Alex2TEST";
+    API->update_patient(patient);
+    API->create_new_patient(patient);
+    */
 }
 
 
@@ -99,36 +111,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-/*void MainWindow::on_search_button_clicked()
-{
-    // Search requested
-    // Connect to web API
-    QNetworkAccessManager *man = new QNetworkAccessManager(this);
-    // Add name of drug as a parameter
-    QString word_to_search = ui->search_lineEdit->text();
-    // Once a response is received it will call searchDrug()
-    connect(man, &QNetworkAccessManager::finished, this, &MainWindow::searchDrug);
-    const QUrl url = QUrl(web_API+"?name="+word_to_search);
-    QNetworkRequest request(url);
-    man->get(request);
-}
-
-void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)
-{
-    // An item was selected from the dropdown search result list
-    // Hide dropdown list
-    ui->items_dropdown->setVisible(false);
-    QListWidgetItem *newItem = new QListWidgetItem;
-    newItem->setText(item->text());
-    ui->items_list->insertItem(0, newItem);
-    // Add item to current account to update shopping list
-    //currentAccount.add_item( item->data(1).toDouble());
-    // Delete items in dropdown lists (We dont need them anymore)
-    ui->items_dropdown->clear();
-    // Update current total
-    ui->total->setText("$ "+QString::number(currentAccount->get_total()));
-}*/
 
 void MainWindow::on_checout_action(){
     Checkout* checkout=new Checkout(this);

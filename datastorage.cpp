@@ -70,7 +70,7 @@ patient_t DataStorage::search_one_patient(std::string name){
             prescription.UPC = obj2["UPC"].toString().toStdString();
             prescription.amount = obj2["amount"].toString().toInt();
             prescription.period = obj2["period"].toString().toInt();
-            // TODO: add patient.last_time
+            prescription.last_time = QDate::fromString(obj2["last_time"].toString(), "ddMMyyyy");
             patient.prescription.push_back(prescription);
         }
         // Return first result only
@@ -158,10 +158,7 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
         patient.valid       = true;
         patient.id          = (uint8_t)obj["id"].toString().toInt();
         // Prescription
-        //QString str= "{\"firstname\":\"James\",\"middlename\":\"\",\"lastname\":\"Smith\",\"prescription\":[{\"name\":\"ssasprin\"},{\"name\":\"sbad asprin\"}]}";
         QString str = obj["prescription"].toString();
-        qDebug() << "here";
-        qDebug() << str;
         QJsonDocument doc=QJsonDocument::fromJson(str.toUtf8());
         QJsonObject obj2 = doc.object();
         QJsonArray arr= obj2["prescription"].toArray();
@@ -173,8 +170,7 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
             prescription.UPC = obj2["UPC"].toString().toStdString();
             prescription.amount = obj2["amount"].toString().toInt();
             prescription.period = obj2["period"].toString().toInt();
-            // TODO: update patient.last_time from JSON
-            prescription.last_time = QDate::currentDate();
+            prescription.last_time = QDate::fromString(obj2["last_time"].toString(), "ddMMyyyy");
 
             patient.prescription.push_back(prescription);
         }
@@ -231,9 +227,49 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
     return result;
 }
 
+drug_t DataStorage::search_drug_by_id(int id){
+    drug_t drug;
+    const QUrl url = QUrl(host_API+"/search_drug_by_id.php?id="+QString::number(id));
+
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Convert to JSON
+    QString strReply = (QString)reply->readAll();
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+    QJsonArray jsonArray = jsonObject["results"].toArray();
+
+    foreach (const QJsonValue & value, jsonArray) {
+        QJsonObject obj = value.toObject();
+        drug.name = obj["name"].toString();
+        drug.brand = obj["brand"].toString();
+        drug.cost = obj["cost"].toString().toDouble();
+        drug.price = obj["price"].toString().toDouble();
+        drug.control_status = obj["control_status"].toString();
+        drug.picture_url = obj["picture_url"].toString();
+        drug.UPC = obj["UPC"].toString().toStdString();
+        drug.DEA = obj["DEA"].toString().toStdString();
+        drug.GPI = obj["GPI"].toString().toStdString();
+        drug.NDC = obj["NDC"].toString().toStdString();
+        drug.valid = true;
+        drug.amount = obj["quantity"].toString().toInt();
+        drug.id = obj["id"].toString().toInt();
+        // Return first result only
+        return drug;
+    }
+    // validate result by looking at drug.valid
+    return drug;
+}
+
 bool DataStorage::create_new_drug(drug_t drug, int quantity){
     // Save new drug in DB
-    // TODO: return true if successfully saved in DB
     const QUrl url = QUrl(host_API+"/create_new_drug.php?name="+drug.name+"&brand="+drug.brand
                           +"&cost="+QString::number(drug.cost)
                           +"&price="+QString::number(drug.price)
@@ -244,7 +280,7 @@ bool DataStorage::create_new_drug(drug_t drug, int quantity){
                           +"&DEA="+QString::fromStdString(drug.DEA)
                           +"&GPI="+QString::fromStdString(drug.GPI)
                           +"&NDC="+QString::fromStdString(drug.NDC));
-    qDebug() << url;
+
     // Request url by GET
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
@@ -255,16 +291,29 @@ bool DataStorage::create_new_drug(drug_t drug, int quantity){
     loop.exec();
 
     QString strReply = (QString)reply->readAll();
-    qDebug() << strReply;
 
     if(strReply == "200 Ok"){
         return true;
     }
+    qDebug() << "ERROR: "+strReply;
     return false;
 }
 
 bool DataStorage::create_new_patient(patient_t patient){
-    // TODO: return true if successfully saved in DB
+
+    std::string prescription = "{\"prescription\":[";
+    for(size_t n = 0; n < patient.prescription.size(); n++){
+        prescription = prescription+"{\"name\":\""+patient.prescription[n].name+"\",";
+        prescription = prescription+"\"UPC\":\""+patient.prescription[n].UPC+"\",";
+        prescription = prescription+"\"amount\":\""+std::to_string(patient.prescription[n].amount)+"\",";
+        prescription = prescription+"\"last_time\":\""+patient.prescription[n].last_time.toString("ddMMyyyy").toStdString()+"\",";
+        prescription = prescription+"\"period\":\""+std::to_string(patient.prescription[n].period)+"\"}";
+        if(n < patient.prescription.size()-1)
+            prescription += ",";
+    }
+    prescription += "]}";
+
+    // Store a new patient in the DB and assign a unique ID
     const QUrl url = QUrl(host_API+QString::fromStdString("/create_new_patient.php?first_name="+patient.first_name
                           +"&middle_name="+patient.middle_name
                           +"&last_name="+patient.last_name
@@ -276,8 +325,9 @@ bool DataStorage::create_new_patient(patient_t patient){
                           +"&SSN="+patient.SSN)
                           +"&month="+QString::number(patient.DOB.month)
                           +"&day="+QString::number(patient.DOB.day)
-                          +"&year="+QString::number(patient.DOB.year));
-    qDebug() << url;
+                          +"&year="+QString::number(patient.DOB.year)
+                          +"&prescription="+QString::fromStdString(prescription));
+
     // Request url by GET
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
@@ -286,7 +336,14 @@ bool DataStorage::create_new_patient(patient_t patient){
     QEventLoop loop;
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
-    return true;
+
+    QString strReply = (QString)reply->readAll();
+
+    if(strReply == "200 Ok"){
+        return true;
+    }
+    qDebug() << "ERROR: "+strReply;
+    return false;
 }
 
 bool DataStorage::add_inventory(drug_t drug, uint16_t n){
@@ -296,7 +353,20 @@ bool DataStorage::add_inventory(drug_t drug, uint16_t n){
 }
 
 bool DataStorage::update_patient(patient_t patient){
-    // TODO: return true if successfully saved in DB
+    // Update an existing patinent in the DB by its unique id
+
+    std::string prescription = "{\"prescription\":[";
+    for(size_t n = 0; n < patient.prescription.size(); n++){
+        prescription = prescription+"{\"name\":\""+patient.prescription[n].name+"\",";
+        prescription = prescription+"\"UPC\":\""+patient.prescription[n].UPC+"\",";
+        prescription = prescription+"\"amount\":\""+std::to_string(patient.prescription[n].amount)+"\",";
+        prescription = prescription+"\"last_time\":\""+patient.prescription[n].last_time.toString("ddMMyyyy").toStdString()+"\",";
+        prescription = prescription+"\"period\":\""+std::to_string(patient.prescription[n].period)+"\"}";
+        if(n < patient.prescription.size()-1)
+            prescription += ",";
+    }
+    prescription += "]}";
+
     const QUrl url = QUrl(host_API+QString::fromStdString("/update_patient.php?first_name="+patient.first_name
                           +"&middle_name="+patient.middle_name
                           +"&last_name="+patient.last_name
@@ -309,8 +379,9 @@ bool DataStorage::update_patient(patient_t patient){
                           +"&month="+QString::number(patient.DOB.month)
                           +"&day="+QString::number(patient.DOB.day)
                           +"&year="+QString::number(patient.DOB.year)
-                          +"&id="+QString::number(patient.id));
-    qDebug() << url;
+                          +"&id="+QString::number(patient.id)
+                          +"&prescription="+QString::fromStdString(prescription));
+
     // Request url by GET
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
@@ -321,11 +392,11 @@ bool DataStorage::update_patient(patient_t patient){
     loop.exec();
 
     QString strReply = (QString)reply->readAll();
-    qDebug() << strReply;
 
     if(strReply == "200 Ok"){
         return true;
     }
+    qDebug() << "ERROR: "+strReply;
     return false;
 }
 
@@ -341,7 +412,7 @@ bool DataStorage::update_drug(drug_t drug){
                           +"&GPI="+QString::fromStdString(drug.GPI)
                           +"&NDC="+QString::fromStdString(drug.NDC)
                           +"&id="+QString::number(drug.id));
-    qDebug() << url;
+
     // Request url by GET
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
@@ -351,11 +422,11 @@ bool DataStorage::update_drug(drug_t drug){
     connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
     loop.exec();
     QString strReply = (QString)reply->readAll();
-    qDebug() << strReply;
 
     if(strReply == "200 Ok"){
         return true;
     }
+    qDebug() << "ERROR: "+strReply;
     return false;
 }
 
