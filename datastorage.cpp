@@ -76,6 +76,10 @@ patient_t DataStorage::search_one_patient(std::string name){
         // Return first result only
         return patient;
     }
+
+    // No patient found
+    qDebug() << "ERROR: No patient found";
+    return patient;
 }
 
 drug_t DataStorage::search_one_drug(std::string name){
@@ -120,6 +124,8 @@ drug_t DataStorage::search_one_drug(std::string name){
         return drug;
     }
 
+    // No drug found
+    qDebug() << "ERROR: No drug found";
     return drug;
 }
 
@@ -177,6 +183,10 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
         // Return first result only
         result.push_back(patient);
     }
+
+    if(0 == result.size())
+        qDebug() << "ERROR: No patients found";
+
     return result;
 }
 
@@ -224,6 +234,9 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
         result.push_back(drug);
     }
 
+    if(0 == result.size())
+        qDebug() << "ERROR: No drugs found";
+
     return result;
 }
 
@@ -264,7 +277,10 @@ drug_t DataStorage::search_drug_by_id(int id){
         // Return first result only
         return drug;
     }
-    // validate result by looking at drug.valid
+
+    // No drug found
+    qDebug() << "ERROR: No drug found";
+
     return drug;
 }
 
