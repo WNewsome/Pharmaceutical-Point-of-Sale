@@ -5,6 +5,7 @@
 #include "datastorage.h"
 #include "dialog.h"
 #include "checkout.h"
+#include "newprescription.h"
 
 namespace Ui {
 class patientScreen;
@@ -39,6 +40,8 @@ private slots:
     void on_update_p_clicked();
     void on_edit(QString);
     void on_date(QDate);
+    void on_add_p_clicked();
+    void on_accept_add(prescription_t);
 };
 
 #endif // PATIENTSCREEN_H
