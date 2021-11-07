@@ -18,6 +18,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     managementscreen.cpp \
+    newprescription.cpp \
     salescreen.cpp \
     settingsscreen.cpp \
     patientscreen.cpp
@@ -32,6 +33,7 @@ HEADERS += \
     doubleclicklist.h \
     mainwindow.h \
     managementscreen.h \
+    newprescription.h \
     salescreen.h \
     settingsscreen.h \
     patientscreen.h
@@ -43,6 +45,7 @@ FORMS += \
     dialog.ui \
     mainwindow.ui \
     managementscreen.ui \
+    newprescription.ui \
     salescreen.ui \
     settingsscreen.ui \
     patientscreen.ui

@@ -18,6 +18,7 @@ PatientScreen::PatientScreen(QWidget *parent) :
     connect(ui->ssnEdit,SIGNAL(textEdited(QString)),this,SLOT(on_edit(QString)));
     connect(ui->dateEdit,SIGNAL(dateChanged(QDate)),this,SLOT(on_date(QDate)));
     connect(ui->update_pButton, SIGNAL(clicked()), this, SLOT(on_update_p_clicked()));
+    connect(ui->addNewButton_2,SIGNAL(clicked()), this, SLOT(on_add_p_clicked()));
     API = DataStorage::getInstance();
     currentAccount = CheckoutAccount::getInstance();
     updateFlag=false;
@@ -136,6 +137,7 @@ void PatientScreen::on_correct_ssn(patient_t patient){
         ui->prescriptionTable->setItem(i,4,next);
     }
     ui->update_pButton->setEnabled(false);
+    ui->addNewButton_2->setEnabled(true);
 }
 
 void PatientScreen::on_clear_p_clicked(){
@@ -150,6 +152,7 @@ void PatientScreen::on_clear_p_clicked(){
     updateFlag=false;
     ui->update_pButton->setEnabled(false);
     ui->addNewButton->setEnabled(false);
+    ui->addNewButton_2->setEnabled(false);
     ui->dateEdit->setDate(QDate());
 }
 
@@ -290,6 +293,7 @@ void PatientScreen::on_edit(QString){
         ui->update_pButton->setEnabled(true);
     else
         ui->addNewButton->setEnabled(true);
+    ui->addNewButton_2->setEnabled(true);
 }
 
 void PatientScreen::on_date(QDate){
@@ -297,4 +301,45 @@ void PatientScreen::on_date(QDate){
         ui->update_pButton->setEnabled(true);
     else
         ui->addNewButton->setEnabled(true);
+
+    ui->addNewButton_2->setEnabled(true);
+}
+
+void PatientScreen::on_add_p_clicked(){
+    NewPrescription* newWindow = new NewPrescription(this);
+    connect(newWindow,SIGNAL(accept(prescription_t)),this,SLOT(on_accept_add(prescription_t)));
+    newWindow->setWindowFlag(Qt::SubWindow);
+    newWindow->show();
+}
+void PatientScreen::on_accept_add(prescription_t prescription){
+    int row=ui->prescriptionTable->rowCount();
+    ui->prescriptionTable->setRowCount(row+1);
+    curPatient.prescription.push_back(prescription);
+    QTableWidgetItem *num = new QTableWidgetItem(QString::fromStdString(std::to_string(ui->prescriptionTable->rowCount()+1)));
+    QTableWidgetItem *name = new QTableWidgetItem(QString::fromStdString(prescription.name));
+    QTableWidgetItem *UPC = new QTableWidgetItem(QString::fromStdString(prescription.UPC));
+    QTableWidgetItem *amount = new QTableWidgetItem(QString::fromStdString(std::to_string(prescription.amount)));
+    QTableWidgetItem *next;
+    if(prescription.getValid()){
+        next=new QTableWidgetItem(QString::fromStdString("N/A"));
+        num->setBackground(Qt::green);
+        name->setBackground(Qt::green);
+        UPC->setBackground(Qt::green);
+        amount->setBackground(Qt::green);
+        next->setBackground(Qt::green);
+    }
+    else{
+        next=new QTableWidgetItem(prescription.last_time.addDays(prescription.period).toString());
+        num->setBackground(Qt::red);
+        name->setBackground(Qt::red);
+        UPC->setBackground(Qt::red);
+        amount->setBackground(Qt::red);
+        next->setBackground(Qt::red);
+    }
+    ui->prescriptionTable->setItem(row,0,num);
+    ui->prescriptionTable->setItem(row,1,name);
+    ui->prescriptionTable->setItem(row,2,UPC);
+    ui->prescriptionTable->setItem(row,3,amount);
+    ui->prescriptionTable->setItem(row,4,next);
+    ui->update_pButton->setEnabled(true);
 }
