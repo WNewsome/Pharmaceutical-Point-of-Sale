@@ -22,6 +22,7 @@ SaleScreen::SaleScreen(QWidget *parent) :
     connect(ui->clearButton,SIGNAL(clicked()), this, SLOT(on_clear()));
     connect(ui->items_list,SIGNAL(itemClicked(QListWidgetItem *)),this,SLOT(on_clicked_list(QListWidgetItem *)));
     connect(ui->items_list,SIGNAL(itemDoubleClicked(QListWidgetItem *)),this,SLOT(on_double_clicked_list(QListWidgetItem *)));
+    connect(ui->comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(on_combo_changed(int)));
 }
 
 SaleScreen::~SaleScreen()
@@ -111,4 +112,14 @@ void SaleScreen::on_clear(){
     ui->drug_stock->setText("");
     ui->items_dropdown->setVisible(false);
     ui->items_dropdown->setEnabled(false);
+}
+
+void SaleScreen::on_combo_changed(int index){
+    if(curDrug.valid)
+    switch (index) {
+    case 0:ui->drug_code->setText(QString::fromStdString(curDrug.UPC));break;
+    case 1:ui->drug_code->setText(QString::fromStdString(curDrug.DEA));break;
+    case 2:ui->drug_code->setText(QString::fromStdString(curDrug.GPI));break;
+    case 3:ui->drug_code->setText(QString::fromStdString(curDrug.NDC));break;
+    }
 }

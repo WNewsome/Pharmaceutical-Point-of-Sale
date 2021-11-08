@@ -32,6 +32,7 @@ private slots:
     void on_double_clicked_list(QListWidgetItem *);
     void on_checkout();
     void on_clear();
+    void on_combo_changed(int);
 };
 
 #endif // SALESCREEN_H

@@ -19,6 +19,7 @@ PatientScreen::PatientScreen(QWidget *parent) :
     connect(ui->dateEdit,SIGNAL(dateChanged(QDate)),this,SLOT(on_date(QDate)));
     connect(ui->update_pButton, SIGNAL(clicked()), this, SLOT(on_update_p_clicked()));
     connect(ui->addNewButton_2,SIGNAL(clicked()), this, SLOT(on_add_p_clicked()));
+    connect(ui->prescriptionTable,SIGNAL(cellClicked(int,int)),this,SLOT(on_table_p_clicked(int,int)));
     API = DataStorage::getInstance();
     currentAccount = CheckoutAccount::getInstance();
     updateFlag=false;
@@ -342,4 +343,50 @@ void PatientScreen::on_accept_add(prescription_t prescription){
     ui->prescriptionTable->setItem(row,3,amount);
     ui->prescriptionTable->setItem(row,4,next);
     ui->update_pButton->setEnabled(true);
+}
+
+
+void PatientScreen::on_changed(prescription_t prescription,int index){
+    curPatient.prescription[index]=prescription;
+    QTableWidgetItem *num = new QTableWidgetItem(QString::fromStdString(std::to_string(ui->prescriptionTable->rowCount()+1)));
+    QTableWidgetItem *name = new QTableWidgetItem(QString::fromStdString(prescription.name));
+    QTableWidgetItem *UPC = new QTableWidgetItem(QString::fromStdString(prescription.UPC));
+    QTableWidgetItem *amount = new QTableWidgetItem(QString::fromStdString(std::to_string(prescription.amount)));
+    QTableWidgetItem *next;
+    if(prescription.getValid()){
+        next=new QTableWidgetItem(QString::fromStdString("N/A"));
+        num->setBackground(Qt::green);
+        name->setBackground(Qt::green);
+        UPC->setBackground(Qt::green);
+        amount->setBackground(Qt::green);
+        next->setBackground(Qt::green);
+    }
+    else{
+        next=new QTableWidgetItem(prescription.last_time.addDays(prescription.period).toString());
+        num->setBackground(Qt::red);
+        name->setBackground(Qt::red);
+        UPC->setBackground(Qt::red);
+        amount->setBackground(Qt::red);
+        next->setBackground(Qt::red);
+    }
+    ui->prescriptionTable->setItem(index,0,num);
+    ui->prescriptionTable->setItem(index,1,name);
+    ui->prescriptionTable->setItem(index,2,UPC);
+    ui->prescriptionTable->setItem(index,3,amount);
+    ui->prescriptionTable->setItem(index,4,next);
+    ui->update_pButton->setEnabled(true);
+}
+void PatientScreen::on_delete(int index){
+    curPatient.prescription.erase(curPatient.prescription.begin()+index);
+    ui->prescriptionTable->removeRow(index);
+    ui->prescriptionTable->setRowCount(curPatient.prescription.size());
+    ui->update_pButton->setEnabled(true);
+}
+
+void PatientScreen::on_table_p_clicked(int row,int){
+    NewPrescription* newWindow = new NewPrescription(curPatient.prescription[row],row,this);
+    connect(newWindow,SIGNAL(changed(prescription_t,int)),this,SLOT(on_changed(prescription_t,int)));
+    connect(newWindow,SIGNAL(to_delete(int)),this,SLOT(on_delete(int)));
+    newWindow->setWindowFlag(Qt::SubWindow);
+    newWindow->show();
 }
