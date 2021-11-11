@@ -60,5 +60,6 @@ void Checkout::on_accept(){
     if((ui->textEdit->toPlainText().toDouble()-total)>-0.01){
         this->close();
         clearCart();
+        this->setParent(nullptr);
     }
 }

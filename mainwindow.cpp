@@ -10,34 +10,6 @@
 
 DataStorage* DataStorage::instance;
 
-void MainWindow::searchDrug(QNetworkReply *reply){
-    // TODO: I will remove this function to use datastorage class instead!
-    // Reply from server received
-    // Convert all values to JSON format
-    QString strReply = (QString)reply->readAll();
-    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
-    QJsonObject jsonObject = jsonResponse.object();
-    QJsonArray jsonArray = jsonObject["results"].toArray();
-    int i = 0;
-
-    // Set dropdown list to visible and delete any older items
-    ui->items_dropdown->setVisible(true);
-    ui->items_dropdown->clear();
-    // Display every json object
-    foreach (const QJsonValue & value, jsonArray) {
-        QJsonObject obj = value.toObject();
-        QString name = obj["name"].toString();
-        QString price = obj["price"].toString();
-        QString cost = price;
-        QListWidgetItem *newItem = new QListWidgetItem;
-        newItem->setData(1, cost.toDouble());
-        newItem->setText(name+" $"+price);
-        ui->items_dropdown->insertItem(i, newItem);
-        i++;
-        // Adapt the height of the list menu according to number of items found
-        ui->items_dropdown->setFixedHeight(33*i);
-    }
-}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -45,23 +17,30 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     patientScreen=new PatientScreen();
-    managementScreen=new Managementscreen();
+    saleScreen = new SaleScreen();
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
-
+    ui->tabWidget->addTab(saleScreen,QString("Sale").arg(ui->tabWidget->count()+1));
+    managementScreen=new Managementscreen();
+    
     ui->tabWidget->addTab(patientScreen,QString("Patient").arg(ui->tabWidget->count()+1));
     ui->tabWidget->addTab(managementScreen, QString("Management").arg(ui->tabWidget->count() +1));
     ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
 
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
-    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
-      
+    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()))   
+
+    ui->tabWidget->setCurrentIndex(0);
+
     // Set search drug dropdown to invisible
-    ui->items_dropdown->setVisible(false);
     currentAccount->getInstance();
     // Init API
     API = DataStorage::getInstance();
 
+    // -------------------
+    // Data Storage Tests:
+    // -------------------
     // TODO: remove these tests
+    /*
     // Search for one drug matching word "Tyle*"
     drug_t drug = API->search_one_drug("tyle");
     if(drug.valid){
@@ -69,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // Show results of searching for "Asp*"
-    std::vector<drug_t> drugs = API->search_drugs("Asp");
+    std::vector<drug_t> drugs = API->search_drugs("A");
 
     for(size_t i = 0; i < drugs.size(); i++){
          qDebug() << "Drug Name: "+ drugs[i].name+" Quantity: "+QString::number(drugs[i].amount);
@@ -81,8 +60,13 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << QString::fromStdString(patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state);
     }
     // Create a new drug and 32 units in inventory
+
    /* drug_t new_drug;
     new_drug.name = "this is a new drug";
+
+    drug_t new_drug;
+    new_drug.name = "Aspirin123";
+
     new_drug.brand = "This is its brand";
     new_drug.cost = 8;
     new_drug.price = 12;
@@ -93,8 +77,11 @@ MainWindow::MainWindow(QWidget *parent)
     new_drug.GPI = "123456777";
     new_drug.NDC = "12jj";
 
-    //API->create_new_drug(new_drug, 10);
-
+    // API->create_new_drug(new_drug, 10);
+    drug_t to_update = API->search_one_drug("Aspirin123");
+    to_update.name = "UPDATEDNAMETEST";
+    to_update.brand = "UPDATED_BRAND";
+    //API->update_drug(to_update);
     // Test create a new patient into the DB
     patient_t new_patient;
     new_patient.first_name = "Willy";
@@ -108,12 +95,39 @@ MainWindow::MainWindow(QWidget *parent)
     new_patient.SSN = "123654789";
     new_patient.DOB.day = 12;
     new_patient.DOB.month = 11;
+
     new_patient.DOB.year = 1997;*/
 
     //API->create_new_patient(new_patient);
    // patient = API->search_one_patient("Berth");
    // patient.first_name = "Berthoooo";
   //  API->update_patient(patient);
+
+    new_patient.DOB.year = 1997;
+    API->create_new_patient(new_patient);
+    patient = API->search_one_patient("Berth");
+    patient.first_name = "Berthoooo";
+    API->update_patient(patient);
+    drug_t searchID = API->search_drug_by_id(41);
+    if(searchID.valid)
+        qDebug() << searchID.name;
+
+    patient_t patient = API->search_one_patient("Alex");
+    patient.first_name = "Alex2TEST";
+    API->update_patient(patient);
+    API->create_new_patient(patient);
+    // Regiter a transaction
+
+
+    drug_t drug = API->search_drug_by_id(49);
+    API->register_a_transaction(drug, 1);
+    // How to access the report functions
+    QDate nov21;
+    nov21.setDate(2021,11,1); // Dont really care about day
+    API->get_monthly_report(nov21);
+    API->get_top_drugs(nov21);
+    */
+
 }
 
 
@@ -122,40 +136,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_search_button_clicked()
-{
-    // Search requested
-    // Connect to web API
-    QNetworkAccessManager *man = new QNetworkAccessManager(this);
-    // Add name of drug as a parameter
-    QString word_to_search = ui->search_lineEdit->text();
-    // Once a response is received it will call searchDrug()
-    connect(man, &QNetworkAccessManager::finished, this, &MainWindow::searchDrug);
-    const QUrl url = QUrl(web_API+"?name="+word_to_search);
-    QNetworkRequest request(url);
-    man->get(request);
-}
-
-void MainWindow::on_items_dropdown_itemClicked(QListWidgetItem *item)
-{
-    // An item was selected from the dropdown search result list
-    // Hide dropdown list
-    ui->items_dropdown->setVisible(false);
-    QListWidgetItem *newItem = new QListWidgetItem;
-    newItem->setText(item->text());
-    ui->items_list->insertItem(0, newItem);
-    // Add item to current account to update shopping list
-    //currentAccount.add_item( item->data(1).toDouble());
-    // Delete items in dropdown lists (We dont need them anymore)
-    ui->items_dropdown->clear();
-    // Update current total
-    ui->total->setText("$ "+QString::number(currentAccount->get_total()));
-}
-
 void MainWindow::on_checout_action(){
     Checkout* checkout=new Checkout(this);
     checkout->setWindowFlag(Qt::SubWindow);
     connect(checkout,SIGNAL(clearCart()),patientScreen,SLOT(on_accept_checkout()));
+    connect(checkout,SIGNAL(clearCart()),saleScreen,SLOT(on_clear()));
     checkout->show();
 }
 
