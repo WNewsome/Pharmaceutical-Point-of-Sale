@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>409</width>
-    <height>510</height>
+    <width>406</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,65 +32,41 @@
        <x>0</x>
        <y>0</y>
        <width>357</width>
-       <height>453</height>
+       <height>517</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Image</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QPushButton" name="confirm">
-        <property name="text">
-         <string>Confirm these changes</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
-       <widget class="QGraphicsView" name="Image"/>
-      </item>
-      <item row="0" column="0">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Drug name</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLineEdit" name="Price">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
+        <item row="7" column="0">
          <widget class="QLabel" name="label_7">
           <property name="text">
            <string>UPC</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_2">
+        <item row="6" column="1">
+         <widget class="QLineEdit" name="control">
           <property name="text">
-           <string>Inventory</string>
+           <string/>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="drugname">
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_8">
           <property name="text">
-           <string>Name</string>
+           <string>Control Status</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
+        <item row="7" column="1">
+         <widget class="QLineEdit" name="upc">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
          <widget class="QLineEdit" name="invintory">
           <property name="text">
            <string/>
@@ -98,98 +74,105 @@
          </widget>
         </item>
         <item row="9" column="0">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>NDC</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>Brand</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
          <widget class="QLabel" name="label_10">
           <property name="text">
            <string>GPI</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Control Status</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
+        <item row="8" column="0">
          <widget class="QLabel" name="label_9">
           <property name="text">
            <string>DEA</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_3">
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="Price">
           <property name="text">
-           <string>Price</string>
+           <string/>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_18">
-          <property name="text">
-           <string>Cost</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
+        <item row="2" column="1">
          <widget class="QLineEdit" name="brandname">
           <property name="text">
            <string/>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="Cost">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLineEdit" name="control">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QLineEdit" name="upc">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QLineEdit" name="DEA">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
         <item row="9" column="1">
-         <widget class="QLineEdit" name="NDC">
+         <widget class="QLineEdit" name="gpi">
           <property name="text">
            <string/>
           </property>
          </widget>
         </item>
         <item row="8" column="1">
-         <widget class="QLineEdit" name="gpi">
+         <widget class="QLineEdit" name="DEA">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Inventory</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QLineEdit" name="NDC">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>NDC</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Brand</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Price</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Drug name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_18">
+          <property name="text">
+           <string>Cost</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="Cost">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="drugname">
           <property name="text">
            <string/>
           </property>
@@ -197,16 +180,74 @@
         </item>
        </layout>
       </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="openimage">
+        <property name="maximumSize">
+         <size>
+          <width>93</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Upload</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QPushButton" name="confirm">
+        <property name="text">
+         <string>Confirm these changes</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Image</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QGraphicsView" name="Image"/>
+      </item>
+      <item row="0" column="0" alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="Error">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>ERROR: FIELDS CANNOT BE LEFT EMPTY</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>-1</y>
+      <width>401</width>
+      <height>461</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <zorder>frame</zorder>
+   <zorder>scrollArea</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>409</width>
+     <width>406</width>
      <height>26</height>
     </rect>
    </property>

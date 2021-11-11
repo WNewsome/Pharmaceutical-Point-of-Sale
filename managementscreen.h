@@ -2,8 +2,8 @@
 #define MANAGEMENTSCREEN_H
 
 #include <QWidget>
+#include <QFileDialog>
 #include "datastorage.h"
-#include "changedrugwindow.h"
 #include "addgrug.h"
 
 namespace Ui {
@@ -25,15 +25,21 @@ private slots:
 
     void on_tableWidget_cellClicked(int row, int column);
 
+    void on_editdrug_2_clicked();
+
+    void on_editimage_clicked();
+
 private:
     Ui::Managementscreen *ui;
     DataStorage *API;
-    changedrugwindow *updateDrug;
     addgrug* addDrug;
     drug_t newDrug;
     std::vector<drug_t> drugList;
     bool secured;
     drug_t curDrug;
+    QPixmap image;
+    QImage* imageObject;
+    QGraphicsScene* drugimage;
 };
 
 #endif // MANAGEMENTSCREEN_H
