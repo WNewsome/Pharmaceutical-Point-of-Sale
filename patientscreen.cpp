@@ -204,9 +204,7 @@ void PatientScreen::on_checkout_p_clicked(){
         for(size_t i=0;i<curPatient.prescription.size();i++){
             if(curPatient.prescription[i].getValid()&&(!curPatient.prescription[i].inCart)){
                 drug_t drug=API->search_one_drug(curPatient.prescription[i].name);
-                drug.amount=curPatient.prescription[i].amount;
-                currentAccount->add_item(drug);
-                curPatient.prescription[i].inCart=true;
+                curPatient.prescription[i].inCart=currentAccount->add_item(drug,curPatient.prescription[i].amount);
             }
         }
     }

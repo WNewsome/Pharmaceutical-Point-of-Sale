@@ -14,6 +14,7 @@ SaleScreen::SaleScreen(QWidget *parent) :
     ui->drug_stock->setStyleSheet("QLabel { background-color : white; color : black; }");
     ui->items_dropdown->setVisible(false);
     ui->items_dropdown->setEnabled(false);
+    drugimage = new QGraphicsScene(ui->graphicsView);
     connect(ui->search_lineEdit,SIGNAL(textEdited(QString)),this,SLOT(on_edit_change(QString)));
     connect(ui->items_dropdown,SIGNAL(itemClicked(QListWidgetItem *)),this,SLOT(on_clicked_dropdown(QListWidgetItem *)));
     connect(ui->items_dropdown,SIGNAL(itemDoubleClicked(QListWidgetItem *)),this,SLOT(on_double_clicked_dropdown(QListWidgetItem *)));
@@ -66,6 +67,7 @@ void SaleScreen::on_clicked_dropdown(QListWidgetItem * item){
 }
 
 void SaleScreen::on_double_clicked_dropdown(QListWidgetItem * item){
+    drugimage->clear();
     curDrug = API->search_one_drug(item->text().toStdString());
     ui->items_dropdown->setVisible(false);
     ui->items_dropdown->setEnabled(false);
@@ -76,30 +78,47 @@ void SaleScreen::on_double_clicked_dropdown(QListWidgetItem * item){
     ui->drug_name->setText(curDrug.name);
     ui->drug_code->setText(QString::fromStdString(curDrug.UPC));
     ui->drug_stock->setText(QString::number(curDrug.amount));
+    QDir dir;
+    QString path=dir.relativeFilePath("../Pharmaceutical-Point-of-Sale/asset/Lexapro.jpg");
+    imageObject = new QImage();
+    imageObject->load(path);
+    image = QPixmap::fromImage(*imageObject);
+    drugimage->addPixmap(image);
+    drugimage->setSceneRect(image.rect());
+    ui->graphicsView->setScene(drugimage);
+    ui->spinBox->setValue(1);
 }
 
 void SaleScreen::on_clicked_list(QListWidgetItem *item){
+    drugimage->clear();
     curDrug = drug_list[ui->items_list->currentRow()];
     ui->drug_name->setText(curDrug.name);
     ui->drug_code->setText(QString::fromStdString(curDrug.UPC));
     ui->drug_stock->setText(QString::number(curDrug.amount));
+    QDir dir;
+    QString path=dir.relativeFilePath("../Pharmaceutical-Point-of-Sale/asset/Lexapro.jpg");
+    imageObject = new QImage();
+    imageObject->load(path);
+    image = QPixmap::fromImage(*imageObject);
+    drugimage->addPixmap(image);
+    drugimage->setSceneRect(image.rect());
+    ui->graphicsView->setScene(drugimage);
     ui->spinBox->setValue(1);
 }
 
 void SaleScreen::on_double_clicked_list(QListWidgetItem *item){
     curDrug = drug_list[ui->items_list->currentRow()];
     drug_t drug=curDrug;
-    drug.amount=1;
-    currentAccount->add_item(drug);
+    currentAccount->add_item(drug,1);
 }
 
 void SaleScreen::on_checkout(){
     drug_t drug=curDrug;
-    drug.amount=ui->spinBox->value();
-    currentAccount->add_item(drug);
+    currentAccount->add_item(drug,ui->spinBox->value());
 }
 
 void SaleScreen::on_clear(){
+    drugimage->clear();
     curDrug=drug_t();
     drug_list.clear();
     ui->search_lineEdit->clear();

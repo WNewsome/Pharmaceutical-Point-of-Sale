@@ -61,9 +61,7 @@ void NewPrescription::on_accept(){
     if(drug.valid){
         if(updateFlag){
             if(ui->checkBox->isChecked()){
-                drug.amount=ui->spinBox->value();
-                currentAccount->add_item(drug);
-                emit changed({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),ui->dateEdit->date(),true},index);
+                emit changed({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),ui->dateEdit->date(),currentAccount->add_item(drug,ui->spinBox->value())},index);
             }
             else{
                 emit changed({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),ui->dateEdit->date(),false},index);
@@ -71,9 +69,7 @@ void NewPrescription::on_accept(){
         }
         else{
             if(ui->checkBox->isChecked()){
-                drug.amount=ui->spinBox->value();
-                currentAccount->add_item(drug);
-                emit accept({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),QDate(2010,1,1),true});
+                emit accept({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),QDate(2010,1,1),currentAccount->add_item(drug,ui->spinBox->value())});
             }
             else{
                 emit accept({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),QDate(2010,1,1),false});
