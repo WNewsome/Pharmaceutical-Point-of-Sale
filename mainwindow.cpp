@@ -103,6 +103,16 @@ MainWindow::MainWindow(QWidget *parent)
     patient.first_name = "Alex2TEST";
     API->update_patient(patient);
     API->create_new_patient(patient);
+    // Regiter a transaction
+
+
+    drug_t drug = API->search_drug_by_id(49);
+    API->register_a_transaction(drug, 1);
+    // How to access the report functions
+    QDate nov21;
+    nov21.setDate(2021,11,1); // Dont really care about day
+    API->get_monthly_report(nov21);
+    API->get_top_drugs(nov21);
     */
 }
 
