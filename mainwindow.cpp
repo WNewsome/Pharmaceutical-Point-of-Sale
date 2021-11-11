@@ -81,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << QString::fromStdString(patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state);
     }
     // Create a new drug and 32 units in inventory
-    drug_t new_drug;
+   /* drug_t new_drug;
     new_drug.name = "this is a new drug";
     new_drug.brand = "This is its brand";
     new_drug.cost = 8;
@@ -108,12 +108,12 @@ MainWindow::MainWindow(QWidget *parent)
     new_patient.SSN = "123654789";
     new_patient.DOB.day = 12;
     new_patient.DOB.month = 11;
-    new_patient.DOB.year = 1997;
+    new_patient.DOB.year = 1997;*/
 
     //API->create_new_patient(new_patient);
-    patient = API->search_one_patient("Berth");
-    patient.first_name = "Berthoooo";
-    API->update_patient(patient);
+   // patient = API->search_one_patient("Berth");
+   // patient.first_name = "Berthoooo";
+  //  API->update_patient(patient);
 }
 
 
