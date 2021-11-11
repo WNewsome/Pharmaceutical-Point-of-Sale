@@ -67,6 +67,11 @@ struct patient_t{
     bool valid = false;
 };
 
+struct sales_report{
+    double cost = 0;
+    double profit = 0;  // profit = price - cost
+};
+
 class DataStorage : public QObject
 {
 protected:
@@ -91,10 +96,13 @@ public:
     bool update_patient(patient_t patient);                     // Update an existing patient
     bool update_drug(drug_t drug);                              // Update an existing drug
 
-    // Store specific variables
+    // Store specific methods:
     QString get_store_name();
     QString get_store_address();
     int get_store_id();
+    void register_a_transaction(drug_t drug, int quantity);
+    sales_report get_monthly_report(QDate);
+    std::vector<drug_t> get_top_drugs(QDate monthYear);
 
     // TODO:
     //  1: sprint 3 method on return sales, profits, etc by date and store
@@ -105,6 +113,7 @@ private:
     // Specific to store
     QString store_name;
     QString store_address;
+    int store_id;
 };
 
 #endif // DATASTORAGE_H

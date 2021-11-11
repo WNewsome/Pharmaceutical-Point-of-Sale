@@ -6,11 +6,13 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <fstream>
 
 DataStorage::DataStorage(){
     // TODO: read and load store settings
     store_name = "Pharmacy Name 1";
     store_address = "123 Main St. Blacksburg, VA";
+    store_id = 1;
     manager = new QNetworkAccessManager(this);
 }
 
@@ -279,7 +281,7 @@ drug_t DataStorage::search_drug_by_id(int id){
     }
 
     // No drug found
-    qDebug() << "ERROR: No drug found";
+    qDebug() << "ERROR: No drug found " + QString::number(id);
 
     return drug;
 }
@@ -465,3 +467,121 @@ bool prescription_t::getValid(){
     return diff>=period;
 }
 
+int DataStorage::get_store_id(){
+    // Returns the store id stored in local file
+    return store_id;
+}
+
+void DataStorage::register_a_transaction(drug_t drug, int quantity){
+    // This method should be called for EVERY item being sold
+
+    // Reduce quantity in inventory
+    drug.amount -= quantity;
+    update_drug(drug);
+
+    // Store transaction locally
+    // Format: store id, drug id, cost, profit, quantity sold
+    QString today = QDateTime::currentDateTime().toString("MMMM_yyyy");
+    today += ".txt";
+
+    std::string filename(today.toStdString());
+    std::ofstream file_out;
+    file_out.open(filename, std::ios_base::app);
+    file_out << get_store_id() << ",";
+    file_out << drug.id << ",";
+    file_out << drug.cost << ",";
+    file_out << drug.price - drug.cost << ",";
+    file_out << quantity;
+    file_out << std::endl;
+}
+
+std::vector<drug_t> DataStorage::get_top_drugs(QDate monthYear){
+    // Returns a vector of all drugs sorted by quantity sold
+    // where index 0 is the most sold drug
+
+    std::vector<drug_t> topDrugs;
+    // monthYear is the corresponding month in which a report will be calculated
+    QString file = monthYear.toString("MMMM_yyyy");
+    file += ".txt";
+    int i = 0;
+    //   map<drug ID, quantity>
+    std::map<int, int> drugs;
+    std::string line, colname;
+    std::ifstream myFile(file.toStdString());
+    int currentDrugId;
+
+    if(myFile.good()){
+        // Read every line string
+        while(std::getline(myFile, line, ',')){
+
+            switch(i){
+            case 1:
+                // Checking drug ID
+                currentDrugId = stoi(line);
+                //drugs[stoi(line)]++;
+                break;
+            case 4:
+                // TODO: Checking quantity
+                drugs[currentDrugId]+=stoi(line);
+                break;
+            }
+
+            if(i == 4)
+                i = 0;
+            i++;
+        }
+    } else {
+        qDebug() << "No report available for "+monthYear.toString("MMMM yyyy");
+    }
+    int max = 0;
+    int id = 0;
+    size_t drugsSize = drugs.size();
+    for(size_t n = 0; n < drugsSize; n++) {
+        for(auto const & d: drugs) {
+            // O(n^2) | n is the number of different drugs sold
+            if(d.second > max){
+                max = d.second;
+                id = d.first;
+            }
+        }
+        drug_t current = search_drug_by_id(id);
+        current.amount = max;
+        topDrugs.push_back(current);
+        std::map<int,int>::iterator it = drugs.find(id);
+        drugs.erase(it);
+        max = 0;
+    }
+    return topDrugs;
+}
+
+sales_report DataStorage::get_monthly_report(QDate monthYear){
+    // monthYear is the corresponding month in which a report will be calculated
+    sales_report report;
+    QString file = monthYear.toString("MMMM_yyyy");
+    file += ".txt";
+    int i = 0;
+    std::string line, colname;
+    std::ifstream myFile(file.toStdString());
+    if(myFile.good()){
+        // Read every line string
+        while(std::getline(myFile, line, ',')){
+            if(i == 4)
+                i =0;
+            switch(i){
+            case 2:
+                // Checking cost
+                report.cost +=  std::stod(line);
+                break;
+            case 3:
+                // Checking profit
+                report.profit += std::stod(line);
+                break;
+            }
+            i++;
+        }
+    } else {
+        qDebug() << "No report available for "+monthYear.toString("MMMM yyyy");
+    }
+
+    return report;
+}
