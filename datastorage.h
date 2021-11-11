@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 #include <qdebug.h>
 #include <time.h>
+#include <QDate>
 
 struct address_t{
     // Address data type
@@ -39,6 +40,7 @@ struct drug_t {
     std::string NDC;    // 10-digit or 11-digit, 3-segment number
     int amount;
     bool valid = false;
+    int id;             // Unique id from DB
 };
 
 struct prescription_t{
@@ -46,7 +48,7 @@ struct prescription_t{
     std::string UPC;        //or any unique id
     int         amount;
     int         period;     //in weeks or days
-    time_t      last_time;
+    QDate       last_time;
     bool        inCart ;
     bool getValid();
 };
@@ -65,6 +67,11 @@ struct patient_t{
     bool valid = false;
 };
 
+struct sales_report{
+    double cost = 0;
+    double profit = 0;  // profit = price - cost
+};
+
 class DataStorage : public QObject
 {
 protected:
@@ -78,6 +85,7 @@ public:
     drug_t search_one_drug(std::string name);                   // returns the first drug found by name
     std::vector<patient_t> search_patients(std::string name);   // returns a vector of patients of the resulting search by name
     std::vector<drug_t> search_drugs(std::string name);         // returns a vector of drugs of the resulting search by name
+    drug_t search_drug_by_id(int id);                           // returns a drug by id
 
     // Create functions:
     bool create_new_drug(drug_t drug, int quantity);
@@ -85,7 +93,16 @@ public:
 
     // Update functions:
     bool add_inventory(drug_t drug, uint16_t n);                // Add 'n' of 'drug' to DB (add more to current inventory)
-    bool update_patient(patient_t patient);                     // Update the address of an existing patient
+    bool update_patient(patient_t patient);                     // Update an existing patient
+    bool update_drug(drug_t drug);                              // Update an existing drug
+
+    // Store specific methods:
+    QString get_store_name();
+    QString get_store_address();
+    int get_store_id();
+    void register_a_transaction(drug_t drug, int quantity);
+    sales_report get_monthly_report(QDate);
+    std::vector<drug_t> get_top_drugs(QDate monthYear);
 
     // TODO:
     //  1: sprint 3 method on return sales, profits, etc by date and store
@@ -93,6 +110,10 @@ private:
     static DataStorage* instance;
     QString host_API = "https://wnewsome.com/POS";
     QNetworkAccessManager *manager;
+    // Specific to store
+    QString store_name;
+    QString store_address;
+    int store_id;
 };
 
 #endif // DATASTORAGE_H

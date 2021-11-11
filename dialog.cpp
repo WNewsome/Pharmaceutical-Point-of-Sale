@@ -27,6 +27,7 @@ void Dialog::on_clicked_ok(){
     if(input_ssn==patient.SSN){
         correct_ssn(patient);
         this->close();
+        this->setParent(nullptr);
     }
     else{
         ui->label_incorrect->setEnabled(true);
