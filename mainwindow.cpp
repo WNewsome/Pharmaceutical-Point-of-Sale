@@ -27,10 +27,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
 
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
-    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
-    ui->tabWidget->addTab(new Managementscreen(), QString("Management").arg(ui->tabWidget->count() +1));
-    ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
+
+    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
+
+
     ui->tabWidget->setCurrentIndex(0);
+
     // Set search drug dropdown to invisible
     currentAccount->getInstance();
     // Init API
@@ -60,8 +62,13 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << QString::fromStdString(patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state);
     }
     // Create a new drug and 32 units in inventory
+
+   /* drug_t new_drug;
+    new_drug.name = "this is a new drug";
+
     drug_t new_drug;
     new_drug.name = "Aspirin123";
+
     new_drug.brand = "This is its brand";
     new_drug.cost = 8;
     new_drug.price = 12;
@@ -90,7 +97,15 @@ MainWindow::MainWindow(QWidget *parent)
     new_patient.SSN = "123654789";
     new_patient.DOB.day = 12;
     new_patient.DOB.month = 11;
-    new_patient.DOB.year = 1997;
+
+    new_patient.DOB.year = 1997;*/
+
+    //API->create_new_patient(new_patient);
+   // patient = API->search_one_patient("Berth");
+   // patient.first_name = "Berthoooo";
+  //  API->update_patient(patient);
+
+   /* new_patient.DOB.year = 1997;
     API->create_new_patient(new_patient);
     patient = API->search_one_patient("Berth");
     patient.first_name = "Berthoooo";
@@ -113,7 +128,10 @@ MainWindow::MainWindow(QWidget *parent)
     nov21.setDate(2021,11,1); // Dont really care about day
     API->get_monthly_report(nov21);
     API->get_top_drugs(nov21);
+
     */
+
+
 }
 
 

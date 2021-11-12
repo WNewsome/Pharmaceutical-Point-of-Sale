@@ -7,7 +7,6 @@
 #include <QListWidgetItem>
 #include <QTabWidget>
 #include "datastorage.h"
-#include "changedrugwindow.h"
 #include "patientscreen.h"
 #include "salescreen.h"
 #include "managementscreen.h"

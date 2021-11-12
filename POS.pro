@@ -10,7 +10,6 @@ CONFIG += c++11
 
 SOURCES += \
     addgrug.cpp \
-    changedrugwindow.cpp \
     checkout.cpp \
     datastorage.cpp \
     dialog.cpp \
@@ -26,7 +25,6 @@ SOURCES += \
 
 HEADERS += \
     addgrug.h \
-    changedrugwindow.h \
     checkout.h \
     datastorage.h \
     dialog.h \
@@ -40,7 +38,6 @@ HEADERS += \
 
 FORMS += \
     addgrug.ui \
-    changedrugwindow.ui \
     checkout.ui \
     dialog.ui \
     mainwindow.ui \
