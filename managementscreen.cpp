@@ -125,15 +125,19 @@ void Managementscreen::on_editdrug_2_clicked()
     curDrug.amount = ui->quantity->text().toInt();
     curDrug.control_status = ui->controls->text();
     API->update_drug(curDrug);
+    qDebug() << curDrug.picture_url;
 
 }
 
 
 void Managementscreen::on_editimage_clicked()
 {
-    QString imagePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" ));
+    QString imagePath = QFileDialog::getOpenFileName(this, tr("Open File"), "assets/", tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" ));
     imageObject = new QImage();
     imageObject->load(imagePath);
+    QFileInfo im(imagePath);
+
+    QFile::rename(imagePath, "assets/" + im.completeBaseName() + "." + im.completeSuffix()); //move file??
 
     image = QPixmap::fromImage(*imageObject);
 
@@ -141,6 +145,6 @@ void Managementscreen::on_editimage_clicked()
     drugimage->addPixmap(image);
     drugimage->setSceneRect(image.rect());
     ui->Image->setScene(drugimage);
-    curDrug.picture_url = imagePath;
+    curDrug.picture_url = "assets/" + im.baseName() + "." + im.completeSuffix();
 }
 

@@ -42,6 +42,8 @@ void addgrug::on_confirm_clicked()
         int quaintity = newDrug.amount;
 
         API->create_new_drug(newDrug,quaintity);
+        qDebug() << newDrug.picture_url;
+
 
         this->close();
     }
@@ -59,6 +61,9 @@ void addgrug::on_openimage_clicked()
     QString imagePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" ));
     imageObject = new QImage();
     imageObject->load(imagePath);
+    QFileInfo im(imagePath);
+
+    QFile::rename(imagePath, "assets/" + im.completeBaseName() + "." + im.completeSuffix()); //moves file to assets
 
     image = QPixmap::fromImage(*imageObject);
 
@@ -66,6 +71,6 @@ void addgrug::on_openimage_clicked()
     drugimage->addPixmap(image);
     drugimage->setSceneRect(image.rect());
     ui->Image->setScene(drugimage);
-    newDrug.picture_url = imagePath;
+    newDrug.picture_url = "assets/" + im.baseName() + "." + im.completeSuffix();
 }
 
