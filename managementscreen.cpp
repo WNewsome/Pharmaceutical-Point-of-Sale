@@ -113,6 +113,7 @@ void Managementscreen::on_editdrug_2_clicked()
     //TODO - confirm all is filled in
     //Display that drug has been updated
     //clear the screen?
+    //update table
 
     curDrug.name = ui->drugnames->text();
     curDrug.brand = ui->brands->text();

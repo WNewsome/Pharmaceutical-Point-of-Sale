@@ -44,6 +44,16 @@ void addgrug::on_confirm_clicked()
         API->create_new_drug(newDrug,quaintity);
         qDebug() << newDrug.picture_url;
 
+        ui->drugname->clear();
+        ui->brandname->clear();
+        ui->Cost->clear();
+        ui->Price->clear();
+        ui->upc->clear();
+        ui->DEA->clear();
+        ui->gpi->clear();
+        ui->NDC->clear();
+        ui->invintory->clear();
+        ui->control->clear();
 
         this->close();
     }
