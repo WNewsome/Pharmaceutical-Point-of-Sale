@@ -42,6 +42,9 @@ private slots:
     void on_date(QDate);
     void on_add_p_clicked();
     void on_accept_add(prescription_t);
+    void on_changed(prescription_t,int);
+    void on_delete(int);
+    void on_table_p_clicked(int,int);
 };
 
 #endif // PATIENTSCREEN_H

@@ -5,6 +5,8 @@
 #include "datastorage.h"
 #include "checkout.h"
 #include <QListWidget>
+#include <QDir>
+#include <QGraphicsScene>
 namespace Ui {
 class SaleScreen;
 }
@@ -23,6 +25,9 @@ private:
     CheckoutAccount* currentAccount;
     drug_t curDrug;
     std::vector<drug_t> drug_list;
+    QPixmap image;
+    QImage* imageObject;
+    QGraphicsScene* drugimage;
 private slots:
     void on_search_button_d_clicked();
     void on_edit_change(QString);
@@ -32,6 +37,7 @@ private slots:
     void on_double_clicked_list(QListWidgetItem *);
     void on_checkout();
     void on_clear();
+    void on_combo_changed(int);
 };
 
 #endif // SALESCREEN_H
