@@ -15,6 +15,7 @@ class NewPrescription : public QMainWindow
 
 public:
     explicit NewPrescription(QWidget *parent = nullptr);
+    NewPrescription(prescription_t,int,QWidget *parent = nullptr);
     ~NewPrescription();
 
 private:
@@ -23,13 +24,17 @@ private:
     CheckoutAccount* currentAccount;
     prescription_t prescriotion;
     drug_t drug;
+    bool updateFlag;
+    int index;
 signals:
     void accept(prescription_t);
+    void changed(prescription_t,int);
+    void to_delete(int);
 private slots:
     void on_accept();
-    void on_reject();
     void on_edit_change(QString);
     void on_clicked_dropdown(QListWidgetItem *);
+    void on_delete();
 };
 
 #endif // NEWPRESCRIPTION_H

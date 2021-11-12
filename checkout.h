@@ -8,6 +8,7 @@
 class CheckoutAccount{
 public:
     std::vector<drug_t> drugList;
+    std::vector<int> amountList;
     // This class keeps track of the main sales screen state
     CheckoutAccount(){
         // Constructor sets everything to 0
@@ -27,10 +28,16 @@ public:
         drugList.clear();
     }
 
-    void add_item(drug_t drug){
+    bool add_item(drug_t drug,int amount){
         // Just update total for now
-        total += drug.price*drug.amount;
+        if(drug.amount<amount){
+            qDebug()<<"out of stock";
+            return false;
+        }
+        total += drug.price*amount;
         drugList.push_back(drug);
+        amountList.push_back(amount);
+        return true;
     }
 
     double get_total(){
@@ -59,6 +66,8 @@ private:
     Ui::Checkout *ui;
     double total;
     QString buffer;
+    CheckoutAccount* account;
+    DataStorage* API;
 private slots:
     void on_accept();
 signals:

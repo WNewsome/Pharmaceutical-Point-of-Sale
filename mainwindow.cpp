@@ -29,6 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
 
+
+    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
+
+
     ui->tabWidget->setCurrentIndex(0);
 
     // Set search drug dropdown to invisible
@@ -126,7 +130,9 @@ MainWindow::MainWindow(QWidget *parent)
     nov21.setDate(2021,11,1); // Dont really care about day
     API->get_monthly_report(nov21);
     API->get_top_drugs(nov21);
+
     */
+
 
 }
 
