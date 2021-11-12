@@ -15,6 +15,8 @@ NewPrescription::NewPrescription(QWidget *parent) :
     ui->dateEdit->setEnabled(false);
     ui->dateEdit->setVisible(false);
     ui->pushButton->setVisible(false);
+    ui->label_5->setEnabled(false);
+    ui->label_5->setVisible(false);
     connect(ui->lineEdit,SIGNAL(textEdited(QString)),this,SLOT(on_edit_change(QString)));
     connect(ui->items_dropdown,SIGNAL(itemClicked(QListWidgetItem *)),this,SLOT(on_clicked_dropdown(QListWidgetItem *)));
     connect(ui->buttonBox,SIGNAL(accepted()),this,SLOT(on_accept()));
