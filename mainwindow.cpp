@@ -27,7 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
 
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
-    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()))   
+
+    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
+
 
     ui->tabWidget->setCurrentIndex(0);
 
@@ -103,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
    // patient.first_name = "Berthoooo";
   //  API->update_patient(patient);
 
-    new_patient.DOB.year = 1997;
+   /* new_patient.DOB.year = 1997;
     API->create_new_patient(new_patient);
     patient = API->search_one_patient("Berth");
     patient.first_name = "Berthoooo";
@@ -126,7 +128,9 @@ MainWindow::MainWindow(QWidget *parent)
     nov21.setDate(2021,11,1); // Dont really care about day
     API->get_monthly_report(nov21);
     API->get_top_drugs(nov21);
+
     */
+
 
 }
 
