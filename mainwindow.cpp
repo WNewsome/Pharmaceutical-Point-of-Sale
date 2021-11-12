@@ -28,9 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
 
-    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
-
-    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()))   
+    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
 
 
     ui->tabWidget->setCurrentIndex(0);
@@ -107,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
    // patient.first_name = "Berthoooo";
   //  API->update_patient(patient);
 
-    new_patient.DOB.year = 1997;
+   /* new_patient.DOB.year = 1997;
     API->create_new_patient(new_patient);
     patient = API->search_one_patient("Berth");
     patient.first_name = "Berthoooo";

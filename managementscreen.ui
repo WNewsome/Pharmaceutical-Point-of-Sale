@@ -99,17 +99,17 @@
        </item>
        <item row="0" column="1">
         <property name="text">
-         <string>Name</string>
+         <string>Brand</string>
         </property>
        </item>
        <item row="0" column="2">
         <property name="text">
-         <string>Inventory</string>
+         <string>Name</string>
         </property>
        </item>
        <item row="0" column="3">
         <property name="text">
-         <string>Cost</string>
+         <string>Inventory</string>
         </property>
        </item>
        <item row="0" column="4">

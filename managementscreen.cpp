@@ -1,7 +1,9 @@
 #include "managementscreen.h"
 #include "ui_managementscreen.h"
 
-
+//TODO: clear add drug window after window is closed
+//search by brand name
+//Change size of columns
 
 Managementscreen::Managementscreen(QWidget *parent) :
     QWidget(parent),
@@ -53,13 +55,13 @@ void Managementscreen::on_changedruginfoclick_clicked()
         drug_t drug = drugList[i];
         QTableWidgetItem *num = new QTableWidgetItem(QString::fromStdString(std::to_string(i+1)));
         QTableWidgetItem *name = new QTableWidgetItem(drug.name);
+        QTableWidgetItem *brand = new QTableWidgetItem(drug.brand);
         QTableWidgetItem *inventory = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.amount)));
-        QTableWidgetItem *cost = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.cost)));
         QTableWidgetItem *price = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.price)));
         ui->tableWidget->setItem(i+1,0,num);
         ui->tableWidget->setItem(i+1,1,name);
-        ui->tableWidget->setItem(i+1,2,inventory);
-        ui->tableWidget->setItem(i+1,3,cost);
+        ui->tableWidget->setItem(i+1,2,brand);
+        ui->tableWidget->setItem(i+1,3,inventory);
         ui->tableWidget->setItem(i+1,4,price);
     }
 
@@ -100,7 +102,6 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
 
 void Managementscreen::on_addnewdrugclicked_clicked()
 {
-    //if no, move on to creation
     addDrug->newDrugname(ui->editdrug->text());
     addDrug->show();
 }
@@ -109,6 +110,11 @@ void Managementscreen::on_addnewdrugclicked_clicked()
 
 void Managementscreen::on_editdrug_2_clicked()
 {
+    //TODO - confirm all is filled in
+    //Display that drug has been updated
+    //clear the screen?
+
+    curDrug.name = ui->drugnames->text();
     curDrug.brand = ui->brands->text();
     curDrug.cost = ui->cost->text().toInt();
     curDrug.price = ui->prices->text().toInt();
@@ -118,6 +124,7 @@ void Managementscreen::on_editdrug_2_clicked()
     curDrug.NDC = ui->NDCs->text().toStdString();
     curDrug.amount = ui->quantity->text().toInt();
     curDrug.control_status = ui->controls->text();
+    API->update_drug(curDrug);
 
 }
 
