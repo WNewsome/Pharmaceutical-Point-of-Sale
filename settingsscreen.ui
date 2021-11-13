@@ -14,6 +14,9 @@
    <string>Form</string>
   </property>
   <widget class="QScrollArea" name="scrollArea_2">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -56,7 +59,7 @@
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>260</y>
+       <y>310</y>
        <width>55</width>
        <height>16</height>
       </rect>
@@ -83,20 +86,10 @@
       <string>Address:</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>420</x>
-       <y>500</y>
-       <width>121</width>
-       <height>28</height>
-      </rect>
+    <widget class="QLineEdit" name="Company_name_label">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
-     <property name="text">
-      <string>Save these changes</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_3">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -106,7 +99,10 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_4">
+    <widget class="QLineEdit" name="storeStreet">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -119,8 +115,8 @@
     <widget class="QGraphicsView" name="graphicsView_3">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>280</y>
+       <x>110</x>
+       <y>310</y>
        <width>181</width>
        <height>151</height>
       </rect>
@@ -162,7 +158,10 @@
       <string>State:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_5">
+    <widget class="QLineEdit" name="storeCity">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -172,7 +171,10 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_6">
+    <widget class="QLineEdit" name="storeState">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -200,7 +202,10 @@
       <string>Zip code:</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_7">
+    <widget class="QLineEdit" name="storeZIP">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -208,6 +213,24 @@
        <width>113</width>
        <height>22</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="EdditSettings">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>220</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Edit Info</string>
      </property>
     </widget>
    </widget>
