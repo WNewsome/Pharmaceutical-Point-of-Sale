@@ -16,7 +16,8 @@ public:
     explicit Settingsscreen(QWidget *parent = nullptr);
     ~Settingsscreen();
     void loadSettings();
-
+signals:
+    void changed();
 private slots:
     void on_EdditSettings_clicked();
     void toggle_enable_settings(bool enabled);

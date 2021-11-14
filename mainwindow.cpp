@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
-
+    connect(settingScreen,SIGNAL(changed()),saleScreen,SLOT(on_setting_changed()));
 
     ui->tabWidget->setCurrentIndex(0);
 

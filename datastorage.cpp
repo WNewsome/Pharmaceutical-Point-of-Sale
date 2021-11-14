@@ -628,8 +628,8 @@ void DataStorage::load_local_info(){
 bool DataStorage::save_local_address(address_t newAddress, std::string companyName){
 
     std::string settingsFile("assets/store_settings.txt");
-    std::ifstream myFile(settingsFile);
-    if(myFile.good()){
+    //std::ifstream myFile(settingsFile);
+    //if(myFile.good()){
         std::ofstream file_out;
         file_out.open(settingsFile, std::ofstream::trunc);
         file_out << companyName;
@@ -647,7 +647,7 @@ bool DataStorage::save_local_address(address_t newAddress, std::string companyNa
         file_out.close();
         load_local_info();
         return true;
-    }
+    //}
     qDebug() << "File store_settings.txt does not exist.";
     return false;
 }
