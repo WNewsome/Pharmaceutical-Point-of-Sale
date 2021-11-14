@@ -54,6 +54,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     assets/.gitkeep \
+    assets/icon.ico \
     assets/image.png \
     assets/leaf.png \
     assets/zenzedi.png
+
+RC_ICONS += assets/icon.ico
