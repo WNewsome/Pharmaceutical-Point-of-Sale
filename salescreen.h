@@ -38,6 +38,7 @@ private slots:
     void on_checkout();
     void on_clear();
     void on_combo_changed(int);
+    void on_setting_changed();
 };
 
 #endif // SALESCREEN_H

@@ -18,7 +18,6 @@ class PatientScreen : public QWidget
 public:
     explicit PatientScreen(QWidget *parent = nullptr);
     ~PatientScreen();
-
 private:
     Ui::patientScreen *ui;
     DataStorage *API;

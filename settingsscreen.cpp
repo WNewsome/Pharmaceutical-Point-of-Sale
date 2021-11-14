@@ -36,6 +36,7 @@ void Settingsscreen::on_EdditSettings_clicked(){
         std::string newName = ui->Company_name_label->text().toStdString();
         if(API->save_local_address(newAddress, newName)){
             loadSettings();
+            emit changed();
         }
         ui->EdditSettings->setText("Edit Info");
     } else {

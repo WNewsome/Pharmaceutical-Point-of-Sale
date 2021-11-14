@@ -24,6 +24,8 @@ SaleScreen::SaleScreen(QWidget *parent) :
     connect(ui->items_list,SIGNAL(itemClicked(QListWidgetItem *)),this,SLOT(on_clicked_list(QListWidgetItem *)));
     connect(ui->items_list,SIGNAL(itemDoubleClicked(QListWidgetItem *)),this,SLOT(on_double_clicked_list(QListWidgetItem *)));
     connect(ui->comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(on_combo_changed(int)));
+    ui->label_3->setText(API->get_store_name());
+    ui->label_4->setText(QString::fromStdString(API->get_store_address().toString()));
 }
 
 SaleScreen::~SaleScreen()
@@ -141,4 +143,9 @@ void SaleScreen::on_combo_changed(int index){
     case 2:ui->drug_code->setText(QString::fromStdString(curDrug.GPI));break;
     case 3:ui->drug_code->setText(QString::fromStdString(curDrug.NDC));break;
     }
+}
+
+void SaleScreen::on_setting_changed(){
+    ui->label_3->setText(API->get_store_name());
+    ui->label_4->setText(QString::fromStdString(API->get_store_address().toString()));
 }
