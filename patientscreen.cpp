@@ -30,6 +30,7 @@ PatientScreen::~PatientScreen()
     delete ui;
 }
 
+
 void  PatientScreen::on_search_button_p_clicked(){
     ui->tableWidget->setRowCount(1);
     patientList.clear();

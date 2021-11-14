@@ -10,6 +10,7 @@
 #include "patientscreen.h"
 #include "salescreen.h"
 #include "managementscreen.h"
+#include "settingsscreen.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -36,6 +37,8 @@ private:
     PatientScreen* patientScreen;
     SaleScreen* saleScreen;
     Managementscreen* managementScreen;
+    Settingsscreen* settingScreen;
+    virtual void resizeEvent(QResizeEvent *event);
 
 
 private slots:
