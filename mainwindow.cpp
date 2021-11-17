@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     
     ui->tabWidget->addTab(patientScreen,QString("Patient").arg(ui->tabWidget->count()+1));
     ui->tabWidget->addTab(managementScreen, QString("Management").arg(ui->tabWidget->count() +1));
-    ui->tabWidget->addTab(new Settingsscreen(), QString("Settings").arg(ui->tabWidget->count() +1));
 
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
 
@@ -63,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     // Create a new drug and 32 units in inventory
 
-   /* drug_t new_drug;
+    drug_t new_drug;
     new_drug.name = "this is a new drug";
 
     drug_t new_drug;
