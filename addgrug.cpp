@@ -28,7 +28,7 @@ void addgrug::on_confirm_clicked()
     //put drug stuff from lines in
     if ((ui->brandname->text() != "") && (ui->Cost->text() != "") && (ui->Price->text() != "")
             && (ui->upc->text() != "") && (ui->DEA->text() != "") && (ui->gpi->text() != "")
-            && (ui->NDC->text() != "") && (ui->control->text() != "") && (newDrug.picture_url != "")){
+            && (ui->NDC->text() != "") && (ui->control->text() != "")){
         newDrug.name = ui->drugname->text();
         newDrug.brand = ui->brandname->text();
         newDrug.cost = ui->Cost->text().toInt();
