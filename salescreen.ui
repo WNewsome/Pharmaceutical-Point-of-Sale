@@ -250,7 +250,7 @@
   <customwidget>
    <class>DoubleClickList</class>
    <extends>QListWidget</extends>
-   <header location="global">Doubleclicklist.h</header>
+   <header>Doubleclicklist.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
