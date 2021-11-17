@@ -158,18 +158,19 @@ void Managementscreen::on_editimage_clicked()
     drugimage->setSceneRect(image.rect());
     ui->Image->setScene(drugimage);
     curDrug.picture_url = "assets/" + im.baseName() + "." + im.completeSuffix();
-}
+} 
 
 
-void Managementscreen::on_Reportgeneration_clicked()
+void Managementscreen::on_generatereports_clicked()
 {
     reports->show();
 
 }
 
 
-void Managementscreen::on_settingsupdate_clicked()
+void Managementscreen::on_updatesettigns_clicked()
 {
     settings->show();
 }
+
 

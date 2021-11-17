@@ -31,9 +31,9 @@ private slots:
 
     void on_editimage_clicked();
 
-    void on_Reportgeneration_clicked();
+    void on_generatereports_clicked();
 
-    void on_settingsupdate_clicked();
+    void on_updatesettigns_clicked();
 
 private:
     Ui::Managementscreen *ui;

@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
     ui->tabWidget->addTab(saleScreen,QString("Sale").arg(ui->tabWidget->count()+1));
     managementScreen=new Managementscreen(this);
-    settingScreen = new Settingsscreen(this);
+    settingScreen = new Settingsscreen();
     ui->tabWidget->addTab(patientScreen,QString("Patient").arg(ui->tabWidget->count()+1));
     ui->tabWidget->addTab(managementScreen, QString("Management").arg(ui->tabWidget->count() +1));
 
@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
-    connect(settingScreen,SIGNAL(changed()),saleScreen,SLOT(on_setting_changed()));
 
     ui->tabWidget->setCurrentIndex(0);
 
