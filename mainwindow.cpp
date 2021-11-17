@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     settingScreen = new Settingsscreen(this);
     ui->tabWidget->addTab(patientScreen,QString("Patient").arg(ui->tabWidget->count()+1));
     ui->tabWidget->addTab(managementScreen, QString("Management").arg(ui->tabWidget->count() +1));
+    ui->tabWidget->addTab(settingScreen, QString("Settings").arg(ui->tabWidget->count() +1));
 
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));

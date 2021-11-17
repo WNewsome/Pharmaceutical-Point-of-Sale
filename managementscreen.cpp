@@ -2,14 +2,8 @@
 #include "ui_managementscreen.h"
 
 //TODO: clear add drug window after window is closed
+//search by brand name
 //Change size of columns
-
-//sales report struct
-//montly repot
-//profit report
-
-//get top drugs
-//QDate argument
 
 Managementscreen::Managementscreen(QWidget *parent) :
     QWidget(parent),
@@ -18,8 +12,6 @@ Managementscreen::Managementscreen(QWidget *parent) :
     ui->setupUi(this);
     API = DataStorage::getInstance();
     addDrug = new addgrug(this);
-    settings = new Settingsscreen();
-    reports = new Reports();
     connect(ui->changedruginfoclick, SIGNAL(clicked()), this, SLOT(on_changedruginfoclick_clicked()));
     connect(ui->tableWidget,SIGNAL(cellClicked(int,int)),this,SLOT(on_tableWidget_cellClicked(int,int)));
 
@@ -28,7 +20,6 @@ Managementscreen::Managementscreen(QWidget *parent) :
     ui->editdrug_2->setEnabled(false);
     ui->editimage->setEnabled(false);
     ui->scrollArea_2->setEnabled(false);
-
 }
 
 Managementscreen::~Managementscreen()
@@ -111,7 +102,7 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
 
 void Managementscreen::on_addnewdrugclicked_clicked()
 {
-    //addDrug->newDrugname(ui->editdrug->text());
+    addDrug->newDrugname(ui->editdrug->text());
     addDrug->show();
 }
 
@@ -147,9 +138,7 @@ void Managementscreen::on_editimage_clicked()
     imageObject->load(imagePath);
     QFileInfo im(imagePath);
 
-    QFile::rename(imagePath, "../Phamaceutical-Point-of-Sale/" + im.completeBaseName() + "." + im.completeSuffix()); //move file??
-
-    //QFile::rename(imagePath, "assets/" + im.completeBaseName() + "." + im.completeSuffix()); //move file??
+    QFile::rename(imagePath, "assets/" + im.completeBaseName() + "." + im.completeSuffix()); //move file??
 
     image = QPixmap::fromImage(*imageObject);
 
@@ -158,18 +147,5 @@ void Managementscreen::on_editimage_clicked()
     drugimage->setSceneRect(image.rect());
     ui->Image->setScene(drugimage);
     curDrug.picture_url = "assets/" + im.baseName() + "." + im.completeSuffix();
-}
-
-
-void Managementscreen::on_Reportgeneration_clicked()
-{
-    reports->show();
-
-}
-
-
-void Managementscreen::on_settingsupdate_clicked()
-{
-    settings->show();
 }
 
