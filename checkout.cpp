@@ -5,7 +5,8 @@
 Checkout::Checkout(QWidget *parent ): QMainWindow(parent),
     ui(new Ui::Checkout){
     ui->setupUi(this);
-    CheckoutAccount* account=CheckoutAccount::getInstance();
+    account=CheckoutAccount::getInstance();
+    API=DataStorage::getInstance();
     std::vector<drug_t> drugList=account->drugList;
     ui->tableWidget->setRowCount(drugList.size());
     for(size_t i=0;i<drugList.size();i++){
@@ -13,7 +14,7 @@ Checkout::Checkout(QWidget *parent ): QMainWindow(parent),
         QTableWidgetItem *price = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.price)));
         QTableWidgetItem *name = new QTableWidgetItem(drug.name);
         QTableWidgetItem *totalPrice = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.price*drug.amount)));
-        QTableWidgetItem *amount = new QTableWidgetItem(QString::fromStdString(std::to_string(drug.amount)));
+        QTableWidgetItem *amount = new QTableWidgetItem(QString::fromStdString(std::to_string(account->amountList[i])));
         total+=drug.price*drug.amount;
         ui->tableWidget->setItem(i,0,name);
         ui->tableWidget->setItem(i,1,price);
@@ -58,6 +59,10 @@ void Checkout::keyPressEvent(QKeyEvent *e){
 
 void Checkout::on_accept(){
     if((ui->textEdit->toPlainText().toDouble()-total)>-0.01){
+        for (size_t i=0;i<account->drugList.size() ;i++ ) {
+            API->register_a_transaction(account->drugList[i],account->amountList[i]);
+        }
+        account->clear();
         this->close();
         clearCart();
         this->setParent(nullptr);

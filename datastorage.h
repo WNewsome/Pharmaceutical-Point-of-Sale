@@ -72,6 +72,14 @@ struct sales_report{
     double profit = 0;  // profit = price - cost
 };
 
+struct store_t {
+    // id, address, name stored locally
+    // in DB id for each drug
+    int id;
+    std::string address;
+    std::string name;
+};
+
 class DataStorage : public QObject
 {
 protected:
@@ -86,6 +94,7 @@ public:
     std::vector<patient_t> search_patients(std::string name);   // returns a vector of patients of the resulting search by name
     std::vector<drug_t> search_drugs(std::string name);         // returns a vector of drugs of the resulting search by name
     drug_t search_drug_by_id(int id);                           // returns a drug by id
+    std::vector<drug_t>search_drugs_remotelly(int storeID, std::string name); // returns a vectore of drugs not in local store
 
     // Create functions:
     bool create_new_drug(drug_t drug, int quantity);
@@ -98,11 +107,13 @@ public:
 
     // Store specific methods:
     QString get_store_name();
-    QString get_store_address();
+    address_t get_store_address();
     int get_store_id();
     void register_a_transaction(drug_t drug, int quantity);
     sales_report get_monthly_report(QDate);
     std::vector<drug_t> get_top_drugs(QDate monthYear);
+    void load_local_info();
+    bool save_local_address(address_t newAddress, std::string companyName);
 
     // TODO:
     //  1: sprint 3 method on return sales, profits, etc by date and store
@@ -112,7 +123,7 @@ private:
     QNetworkAccessManager *manager;
     // Specific to store
     QString store_name;
-    QString store_address;
+    address_t store_address;
     int store_id;
 };
 

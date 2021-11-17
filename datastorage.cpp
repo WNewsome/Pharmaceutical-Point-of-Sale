@@ -9,10 +9,8 @@
 #include <fstream>
 
 DataStorage::DataStorage(){
-    // TODO: read and load store settings
-    store_name = "Pharmacy Name 1";
-    store_address = "123 Main St. Blacksburg, VA";
-    store_id = 1;
+    // Read and load store settings
+    load_local_info();
     manager = new QNetworkAccessManager(this);
 }
 
@@ -193,11 +191,16 @@ std::vector<patient_t> DataStorage::search_patients(std::string name){
 }
 
 std::vector<drug_t> DataStorage::search_drugs(std::string name){
-    // Search drugs by name
+    // Search drugs by name for local store only
+    return search_drugs_remotelly(get_store_id(), name);
+}
+
+std::vector<drug_t> DataStorage::search_drugs_remotelly(int storeID, std::string name){
+    // Search drugs by name in store with id storeID
 
     std::vector<drug_t> result;
     QString word_to_search = QString::fromStdString(name);
-    const QUrl url = QUrl(host_API+"/search.php?name="+word_to_search);
+    const QUrl url = QUrl(host_API+"/search_drug_in_store.php?name="+word_to_search+"&storeid="+QString::number(storeID));
 
     // Request url by GET
     QNetworkRequest request(url);
@@ -237,7 +240,7 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
     }
 
     if(0 == result.size())
-        qDebug() << "ERROR: No drugs found";
+        qDebug() << "ERROR: No drugs found at store with id "+QString::number(storeID);
 
     return result;
 }
@@ -297,7 +300,8 @@ bool DataStorage::create_new_drug(drug_t drug, int quantity){
                           +"&UPC="+QString::fromStdString(drug.UPC)
                           +"&DEA="+QString::fromStdString(drug.DEA)
                           +"&GPI="+QString::fromStdString(drug.GPI)
-                          +"&NDC="+QString::fromStdString(drug.NDC));
+                          +"&NDC="+QString::fromStdString(drug.NDC)
+                          +"&storeid="+QString::number(get_store_id()));
 
     // Request url by GET
     QNetworkRequest request(url);
@@ -452,7 +456,7 @@ QString DataStorage::get_store_name(){
     return store_name;
 }
 
-QString DataStorage::get_store_address(){
+address_t DataStorage::get_store_address(){
     return store_address;
 }
 
@@ -584,4 +588,66 @@ sales_report DataStorage::get_monthly_report(QDate monthYear){
     }
 
     return report;
+}
+
+void DataStorage::load_local_info(){
+    std::string file = "assets/store_settings.txt";
+    std::string line, colname;
+    std::ifstream myFile(file);
+    int i = 0;
+    if(myFile.good()){
+        // Read every line string
+        while(std::getline(myFile, line)){
+            switch(i){
+            case 0:
+                store_name = QString::fromStdString(line);
+                break;
+            case 1:
+                store_address.street_number = line;
+                break;
+            case 2:
+                store_address.city = line;
+                break;
+            case 3:
+                store_address.state = line;
+                break;
+            case 4:
+                store_address.zip_code = line;
+                break;
+            case 5:
+                store_id = std::stoi(line);
+                break;
+            }
+            i++;
+        }
+    } else {
+        qDebug() << "Local settings file not available";
+    }
+}
+
+bool DataStorage::save_local_address(address_t newAddress, std::string companyName){
+
+    std::string settingsFile("assets/store_settings.txt");
+    //std::ifstream myFile(settingsFile);
+    //if(myFile.good()){
+        std::ofstream file_out;
+        file_out.open(settingsFile, std::ofstream::trunc);
+        file_out << companyName;
+        file_out << std::endl;
+        file_out << newAddress.street_number;
+        file_out << std::endl;
+        file_out << newAddress.city;
+        file_out << std::endl;
+        file_out << newAddress.state;
+        file_out << std::endl;
+        file_out << newAddress.zip_code;
+        file_out << std::endl;
+        file_out << get_store_id();
+        file_out << std::endl;
+        file_out.close();
+        load_local_info();
+        return true;
+    //}
+    qDebug() << "File store_settings.txt does not exist.";
+    return false;
 }

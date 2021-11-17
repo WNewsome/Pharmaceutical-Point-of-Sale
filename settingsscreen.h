@@ -2,6 +2,7 @@
 #define SETTINGSSCREEN_H
 
 #include <QWidget>
+#include "datastorage.h"
 
 namespace Ui {
 class Settingsscreen;
@@ -14,9 +15,16 @@ class Settingsscreen : public QWidget
 public:
     explicit Settingsscreen(QWidget *parent = nullptr);
     ~Settingsscreen();
+    void loadSettings();
+signals:
+    void changed();
+private slots:
+    void on_EdditSettings_clicked();
+    void toggle_enable_settings(bool enabled);
 
 private:
     Ui::Settingsscreen *ui;
+    DataStorage *API;
 };
 
 #endif // SETTINGSSCREEN_H

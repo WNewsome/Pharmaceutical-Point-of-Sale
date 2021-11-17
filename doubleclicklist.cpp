@@ -7,7 +7,9 @@ DoubleClickList::DoubleClickList(QWidget *parent):QListWidget(parent),m_single_c
 }
 
 void DoubleClickList::mousePressEvent(QMouseEvent* event){
-    qDebug()<< event->type();
+    if(count()<=0){
+        return;
+    }
     if(!m_bDoubleClicked){
         m_bDoubleClicked=true;
         m_single_clicked_timer->start(200);
@@ -16,12 +18,18 @@ void DoubleClickList::mousePressEvent(QMouseEvent* event){
 }
 
 void DoubleClickList::mouseDoubleClickEvent(QMouseEvent* event){
+    if(count()<=0){
+        return;
+    }
     m_single_clicked_timer->stop();
     m_bDoubleClicked = false;
     emit itemDoubleClicked(this->currentItem());
 }
 
 void DoubleClickList::on_timeout(){
+    if(count()<=0){
+        return;
+    }
     m_bDoubleClicked = false;
     emit itemClicked(this->currentItem());
 }
