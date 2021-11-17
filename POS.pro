@@ -1,7 +1,6 @@
 QT       += core gui
 QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-greaterThan(QT_MAJOR_VERSION, 4): QT += charts
 
 CONFIG += c++11
 
@@ -19,7 +18,6 @@ SOURCES += \
     mainwindow.cpp \
     managementscreen.cpp \
     newprescription.cpp \
-    reports.cpp \
     salescreen.cpp \
     settingsscreen.cpp \
     patientscreen.cpp
@@ -34,7 +32,6 @@ HEADERS += \
     mainwindow.h \
     managementscreen.h \
     newprescription.h \
-    reports.h \
     salescreen.h \
     settingsscreen.h \
     patientscreen.h
@@ -46,7 +43,6 @@ FORMS += \
     mainwindow.ui \
     managementscreen.ui \
     newprescription.ui \
-    reports.ui \
     salescreen.ui \
     settingsscreen.ui \
     patientscreen.ui
