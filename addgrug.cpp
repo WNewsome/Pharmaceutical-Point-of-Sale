@@ -9,6 +9,7 @@ addgrug::addgrug(QWidget *parent) :
     ui->setupUi(this);
     ui->Error->setVisible(false);
     API = DataStorage::getInstance();
+    drugimage = new QGraphicsScene(this);
 }
 
 addgrug::~addgrug()
@@ -16,9 +17,23 @@ addgrug::~addgrug()
     delete ui;
 }
 
-void addgrug::newDrugname(QString drugname){
-    newDrug.name = drugname;
-    ui->drugname->setText(newDrug.name);
+//if the window closes, this function clears all the values
+void addgrug::closeEvent(QCloseEvent *event){
+
+    newDrug.picture_url  = "";
+    ui->drugname->clear();
+    ui->brandname->clear();
+    ui->Cost->clear();
+    ui->Price->clear();
+    ui->upc->clear();
+    ui->DEA->clear();
+    ui->gpi->clear();
+    ui->NDC->clear();
+    ui->invintory->clear();
+    ui->control->clear();
+    drugimage->clear();
+    ui->Image->viewport()->update();
+    QMainWindow::closeEvent(event);
 }
 
 void addgrug::on_confirm_clicked()
@@ -26,9 +41,9 @@ void addgrug::on_confirm_clicked()
     //check if everything is filled in and display error??
 
     //put drug stuff from lines in
-    if ((ui->brandname->text() != "") && (ui->Cost->text() != "") && (ui->Price->text() != "")
-            && (ui->upc->text() != "") && (ui->DEA->text() != "") && (ui->gpi->text() != "")
-            && (ui->NDC->text() != "") && (ui->control->text() != "") && (newDrug.picture_url != "")){
+    if ((ui->drugname->text() != "") && (ui->brandname->text() != "") && (ui->Cost->text() != "") && (ui->Price->text() != "")
+            && (ui->upc->text() != "") && (ui->DEA->text() != "") && (ui->invintory->text() != "") && (ui->gpi->text() != "")
+            && (ui->NDC->text() != "") && (ui->control->text() != "")){
         newDrug.name = ui->drugname->text();
         newDrug.brand = ui->brandname->text();
         newDrug.cost = ui->Cost->text().toInt();
@@ -42,7 +57,6 @@ void addgrug::on_confirm_clicked()
         int quaintity = newDrug.amount;
 
         API->create_new_drug(newDrug,quaintity);
-        qDebug() << newDrug.picture_url;
 
         ui->drugname->clear();
         ui->brandname->clear();
@@ -54,6 +68,8 @@ void addgrug::on_confirm_clicked()
         ui->NDC->clear();
         ui->invintory->clear();
         ui->control->clear();
+        drugimage->clear();
+        ui->Image->viewport()->update();
 
         this->close();
     }
@@ -77,7 +93,6 @@ void addgrug::on_openimage_clicked()
 
     image = QPixmap::fromImage(*imageObject);
 
-    drugimage = new QGraphicsScene(this);
     drugimage->addPixmap(image);
     drugimage->setSceneRect(image.rect());
     ui->Image->setScene(drugimage);

@@ -18,20 +18,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     patientScreen=new PatientScreen(this);
     saleScreen = new SaleScreen(this);
+    managementScreen = new Managementscreen(this);
+
     ui->tabWidget->setStyleSheet("QTabBar::tab { height: 150px; width: 100px; }");
     ui->tabWidget->addTab(saleScreen,QString("Sale").arg(ui->tabWidget->count()+1));
-    managementScreen=new Managementscreen(this);
-    settingScreen = new Settingsscreen(this);
     ui->tabWidget->addTab(patientScreen,QString("Patient").arg(ui->tabWidget->count()+1));
-    ui->tabWidget->addTab(managementScreen, QString("Management").arg(ui->tabWidget->count() +1));
-    ui->tabWidget->addTab(settingScreen, QString("Settings").arg(ui->tabWidget->count() +1));
+    ui->tabWidget->addTab(managementScreen, QString("Management").arg(ui->tabWidget->count()+1));
 
     connect(ui->actionCheckout,SIGNAL(triggered()), this, SLOT(on_checout_action()));
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
 
 
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
-    connect(settingScreen,SIGNAL(changed()),saleScreen,SLOT(on_setting_changed()));
 
     ui->tabWidget->setCurrentIndex(0);
 
@@ -63,26 +61,27 @@ MainWindow::MainWindow(QWidget *parent)
         qDebug() << QString::fromStdString( patient.first_name + " " + patient.last_name);
         qDebug() << QString::fromStdString(patient.address.street_number+", "+patient.address.city+ ", "+ patient.address.state);
     }
+    */
     // Create a new drug and 32 units in inventory
 
-    drug_t new_drug;
-    new_drug.name = "this is a new drug";
+  //  drug_t new_drug;
+   // new_drug.name = "this is a new drug";
 
-    drug_t new_drug;
+  /*  drug_t new_drug;
     new_drug.name = "Aspirin123";
 
     new_drug.brand = "This is its brand";
     new_drug.cost = 8;
     new_drug.price = 12;
     new_drug.control_status = "AWEF";
-    new_drug.picture_url = "the_url";
+    new_drug.picture_url = "";
     new_drug.UPC = "12345";
     new_drug.DEA = "123444";
     new_drug.GPI = "123456777";
-    new_drug.NDC = "12jj";
+    new_drug.NDC = "12jj";*/
 
-    // API->create_new_drug(new_drug, 10);
-    drug_t to_update = API->search_one_drug("Aspirin123");
+   // API->create_new_drug(new_drug, 10);
+  /*  drug_t to_update = API->search_one_drug("Aspirin123");
     to_update.name = "UPDATEDNAMETEST";
     to_update.brand = "UPDATED_BRAND";
     //API->update_drug(to_update);
@@ -161,7 +160,6 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     patientScreen->resize(size);
     saleScreen->resize(size);
     managementScreen->resize(size);
-    settingScreen->resize(size);
     size.setHeight(size.height()+5);
     size.setWidth(size.width()+5);
     ui->tabWidget->resize(size);

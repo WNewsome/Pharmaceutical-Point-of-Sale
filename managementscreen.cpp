@@ -2,7 +2,6 @@
 #include "ui_managementscreen.h"
 
 //TODO: clear add drug window after window is closed
-//search by brand name
 //Change size of columns
 
 Managementscreen::Managementscreen(QWidget *parent) :
@@ -11,15 +10,19 @@ Managementscreen::Managementscreen(QWidget *parent) :
 {
     ui->setupUi(this);
     API = DataStorage::getInstance();
-    addDrug = new addgrug(this);
-    connect(ui->changedruginfoclick, SIGNAL(clicked()), this, SLOT(on_changedruginfoclick_clicked()));
+    addDrug = new addgrug();
+    settings = new Settingsscreen();
+    reports = new Reports();
+    connect(ui->changedruginfoclick, SIGNAL(clicked()), this, SLOT(changedruginfoclicked()));
     connect(ui->tableWidget,SIGNAL(cellClicked(int,int)),this,SLOT(on_tableWidget_cellClicked(int,int)));
 
+    ui->changedruginfoclick->setEnabled(true);
     ui->addnewdrugclicked->setEnabled(false);
     ui->storesearch->setEnabled(false);
     ui->editdrug_2->setEnabled(false);
     ui->editimage->setEnabled(false);
     ui->scrollArea_2->setEnabled(false);
+    ui->Error->setVisible(false);
 }
 
 Managementscreen::~Managementscreen()
@@ -27,13 +30,15 @@ Managementscreen::~Managementscreen()
     delete ui;
 }
 
-void Managementscreen::on_changedruginfoclick_clicked()
+void Managementscreen::changedruginfoclicked()
 {
+    ui->Error->setVisible(false);
     ui->tableWidget->setRowCount(1);
     ui->addnewdrugclicked->setEnabled(true);
     drugList.clear();
     std::string search_buffer=ui->editdrug->text().toStdString();
-   if(search_buffer.find(' ')!=-1){
+
+    if(search_buffer.find(' ')!=-1){
         std::vector<std::pair<int,std::string>> searchList;
         int pos=search_buffer.find(' ');
         while (pos>-1) {
@@ -68,6 +73,7 @@ void Managementscreen::on_changedruginfoclick_clicked()
 }
 
 void Managementscreen::on_tableWidget_cellClicked(int row,int column){
+    ui->Error->setVisible(false);
     if (row != 0){
         curDrug = drugList[row-1];
         ui->storesearch->setEnabled(true);
@@ -98,15 +104,10 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
     }
 }
 
-
-
 void Managementscreen::on_addnewdrugclicked_clicked()
 {
-    addDrug->newDrugname(ui->editdrug->text());
     addDrug->show();
 }
-
-
 
 void Managementscreen::on_editdrug_2_clicked()
 {
@@ -115,18 +116,27 @@ void Managementscreen::on_editdrug_2_clicked()
     //clear the screen?
     //update table
 
-    curDrug.name = ui->drugnames->text();
-    curDrug.brand = ui->brands->text();
-    curDrug.cost = ui->cost->text().toInt();
-    curDrug.price = ui->prices->text().toInt();
-    curDrug.UPC = ui->UPCs->text().toStdString();
-    curDrug.DEA = ui->DEAs->text().toStdString();
-    curDrug.GPI = ui->GPIs->text().toStdString();
-    curDrug.NDC = ui->NDCs->text().toStdString();
-    curDrug.amount = ui->quantity->text().toInt();
-    curDrug.control_status = ui->controls->text();
-    API->update_drug(curDrug);
-    qDebug() << curDrug.picture_url;
+    if ((ui->drugnames->text() != "") && (ui->brands->text() != "")&& (ui->cost->text() != "") && (ui->prices->text() != "")
+            && (ui->UPCs->text() != "") && (ui->DEAs->text() != "") && (ui->quantity->text() != "") && (ui->GPIs->text() != "")
+            && (ui->NDCs->text() != "") && (ui->controls->text() != "")){
+        curDrug.name = ui->drugnames->text();
+        curDrug.brand = ui->brands->text();
+        curDrug.cost = ui->cost->text().toInt();
+        curDrug.price = ui->prices->text().toInt();
+        curDrug.UPC = ui->UPCs->text().toStdString();
+        curDrug.DEA = ui->DEAs->text().toStdString();
+        curDrug.GPI = ui->GPIs->text().toStdString();
+        curDrug.NDC = ui->NDCs->text().toStdString();
+        curDrug.amount = ui->quantity->text().toInt();
+        curDrug.control_status = ui->controls->text();
+        API->update_drug(curDrug);
+        qDebug() << curDrug.picture_url;
+        changedruginfoclicked();
+    }
+    else{
+        ui->Error->setStyleSheet("QLabel { color : red; }");
+        ui->Error->setVisible(true);
+    }
 
 }
 
@@ -147,5 +157,16 @@ void Managementscreen::on_editimage_clicked()
     drugimage->setSceneRect(image.rect());
     ui->Image->setScene(drugimage);
     curDrug.picture_url = "assets/" + im.baseName() + "." + im.completeSuffix();
+} 
+
+void Managementscreen::on_generatereports_clicked()
+{
+    reports->show();
+}
+
+
+void Managementscreen::on_updatesettigns_clicked()
+{
+    settings->show();
 }
 

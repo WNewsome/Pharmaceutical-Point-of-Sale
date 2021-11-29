@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>808</width>
-    <height>663</height>
+    <width>759</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,21 +29,168 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>771</width>
-        <height>822</height>
+        <y>-206</y>
+        <width>714</width>
+        <height>821</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="8" column="0" colspan="2">
-        <widget class="QGraphicsView" name="profits"/>
+       <item row="4" column="0" colspan="4">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>528</width>
+           <height>48</height>
+          </size>
+         </property>
+        </spacer>
        </item>
-       <item row="8" column="2" colspan="2">
-        <widget class="QLabel" name="profitslabel">
+       <item row="10" column="0">
+        <widget class="QPushButton" name="updatesettigns">
          <property name="text">
-          <string>Profits Report</string>
+          <string>Update Settings</string>
          </property>
         </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QPushButton" name="editdrug_2">
+         <property name="text">
+          <string>Update</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="4">
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="1" column="0">
+          <widget class="QLabel" name="insertnamehead">
+           <property name="text">
+            <string>Insert name:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QPushButton" name="addnewdrugclicked">
+           <property name="text">
+            <string>Add new drug</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QPushButton" name="storesearch">
+           <property name="text">
+            <string>Search other stores</string>
+           </property>
+           <property name="shortcut">
+            <string>Return</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="changedruginfoclick">
+           <property name="text">
+            <string>Search for drug</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="editdrug"/>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="editdruginfohead">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+             <underline>true</underline>
+            </font>
+           </property>
+           <property name="text">
+            <string>Edit Drug Information</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="2">
+        <widget class="QPushButton" name="editimage">
+         <property name="text">
+          <string>Update Image</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="reportslabel">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <underline>true</underline>
+          </font>
+         </property>
+         <property name="text">
+          <string>Reports</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="reportslabel">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <underline>true</underline>
+          </font>
+         </property>
+         <property name="text">
+          <string>Reports</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="7" column="0">
+        <widget class="QPushButton" name="generatereports">
+         <property name="text">
+          <string>Generate Reports</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <underline>true</underline>
+          </font>
+         </property>
+         <property name="text">
+          <string>Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="4">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>528</width>
+           <height>48</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item row="2" column="0">
         <widget class="QTableWidget" name="tableWidget">
@@ -113,107 +260,6 @@
          </item>
         </widget>
        </item>
-       <item row="4" column="0" colspan="4">
-        <spacer name="horizontalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>528</width>
-           <height>48</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="reportslabel">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-           <underline>true</underline>
-          </font>
-         </property>
-         <property name="text">
-          <string>Reports</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0" colspan="2">
-        <widget class="QGraphicsView" name="sales"/>
-       </item>
-       <item row="7" column="2" colspan="2">
-        <widget class="QLabel" name="salesreportlabel">
-         <property name="text">
-          <string>Sales Report</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QPushButton" name="editdrug_2">
-         <property name="text">
-          <string>Edit</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="4">
-        <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="0" colspan="2">
-          <widget class="QLabel" name="editdruginfohead">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-             <underline>true</underline>
-            </font>
-           </property>
-           <property name="text">
-            <string>Edit Drug Information</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QPushButton" name="storesearch">
-           <property name="text">
-            <string>Search other stores</string>
-           </property>
-           <property name="shortcut">
-            <string>Return</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="insertnamehead">
-           <property name="text">
-            <string>Insert name:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="changedruginfoclick">
-           <property name="text">
-            <string>Search for drug</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QPushButton" name="addnewdrugclicked">
-           <property name="text">
-            <string>Add new drug</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="editdrug"/>
-         </item>
-        </layout>
-       </item>
-       <item row="3" column="2">
-        <widget class="QPushButton" name="editimage">
-         <property name="text">
-          <string>Edit Image</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="1" colspan="3">
         <widget class="QScrollArea" name="scrollArea_2">
          <property name="sizePolicy">
@@ -242,11 +288,24 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>321</width>
-            <height>812</height>
+            <width>320</width>
+            <height>845</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="Error">
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="text">
+              <string>ERROR: FIELDS CANNOT BE LEFT EMPTY</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
            <item>
             <widget class="QFrame" name="frame">
              <property name="enabled">
@@ -259,38 +318,10 @@
               </size>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
-              <item row="10" column="0">
-               <widget class="QLabel" name="ndclabel">
+              <item row="5" column="0">
+               <widget class="QLabel" name="pricelabel">
                 <property name="text">
-                 <string>NDC</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="invlabel">
-                <property name="text">
-                 <string>Inventory</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="upclabel">
-                <property name="text">
-                 <string>UPC</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="controllabel">
-                <property name="text">
-                 <string>Control Status</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLineEdit" name="brands">
-                <property name="text">
-                 <string>Current Brand</string>
+                 <string>Price</string>
                 </property>
                </widget>
               </item>
@@ -301,59 +332,10 @@
                 </property>
                </widget>
               </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="dealabel">
+              <item row="10" column="0">
+               <widget class="QLabel" name="ndclabel">
                 <property name="text">
-                 <string>DEA</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="dragnamelabel">
-                <property name="text">
-                 <string>Drug name</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="drugnames">
-                <property name="text">
-                 <string>Current Name</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="pricelabel">
-                <property name="text">
-                 <string>Price</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="1">
-               <widget class="QLineEdit" name="NDCs">
-                <property name="text">
-                 <string>Current NDC</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="brandnamelabel">
-                <property name="text">
-                 <string>Brand</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="costlabel">
-                <property name="text">
-                 <string>Cost</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QLineEdit" name="UPCs">
-                <property name="text">
-                 <string>Current UPC</string>
+                 <string>NDC</string>
                 </property>
                </widget>
               </item>
@@ -361,13 +343,6 @@
                <widget class="QLineEdit" name="cost">
                 <property name="text">
                  <string>Current Cost</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1">
-               <widget class="QLineEdit" name="controls">
-                <property name="text">
-                 <string>Current Control Status</string>
                 </property>
                </widget>
               </item>
@@ -385,6 +360,20 @@
                 </property>
                </widget>
               </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="brandnamelabel">
+                <property name="text">
+                 <string>Brand</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="dragnamelabel">
+                <property name="text">
+                 <string>Drug name</string>
+                </property>
+               </widget>
+              </item>
               <item row="8" column="1">
                <widget class="QLineEdit" name="DEAs">
                 <property name="text">
@@ -396,6 +385,76 @@
                <widget class="QLineEdit" name="quantity">
                 <property name="text">
                  <string>Current Quantity</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="costlabel">
+                <property name="text">
+                 <string>Cost</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="drugnames">
+                <property name="text">
+                 <string>Current Name</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="dealabel">
+                <property name="text">
+                 <string>DEA</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="upclabel">
+                <property name="text">
+                 <string>UPC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="UPCs">
+                <property name="text">
+                 <string>Current UPC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="controls">
+                <property name="text">
+                 <string>Current Control Status</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="brands">
+                <property name="text">
+                 <string>Current Brand</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="controllabel">
+                <property name="text">
+                 <string>Control Status</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="1">
+               <widget class="QLineEdit" name="NDCs">
+                <property name="text">
+                 <string>Current NDC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="invlabel">
+                <property name="text">
+                 <string>Inventory</string>
                 </property>
                </widget>
               </item>
