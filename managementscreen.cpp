@@ -1,9 +1,6 @@
 #include "managementscreen.h"
 #include "ui_managementscreen.h"
 
-//TODO:
-//Change size of columns
-
 Managementscreen::Managementscreen(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Managementscreen)
@@ -75,7 +72,7 @@ void Managementscreen::changedruginfoclicked()
 
 }
 
-void Managementscreen::on_tableWidget_cellClicked(int row,int column){
+void Managementscreen::on_tableWidget_cellClicked(int row, int column){
     ui->Message->setVisible(false);
     if (row != 0){
         curDrug = drugList[row-1];
@@ -104,6 +101,7 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
 
         ui->quantity->setText(QString::number(curDrug.amount));
         ui->prices->setText(QString::number(curDrug.price));
+        qDebug() << curDrug.id;
     }
 }
 
@@ -115,8 +113,8 @@ void Managementscreen::on_addnewdrugclicked_clicked()
 void Managementscreen::on_editdrug_2_clicked()
 {
     if ((ui->drugnames->text() != "") && (ui->brands->text() != "")&& (ui->cost->text() != "") && (ui->prices->text() != "")
-            && (ui->UPCs->text() != "") && (ui->DEAs->text() != "") && (ui->quantity->text() != "") && (ui->GPIs->text() != "")
-            && (ui->NDCs->text() != "") && (ui->controls->text() != "")){
+            && (ui->UPCs->text() != "") && (ui->quantity->text() != "") && (ui->GPIs->text() != "")
+            && (ui->NDCs->text() != "")){
         curDrug.name = ui->drugnames->text();
         curDrug.brand = ui->brands->text();
         curDrug.cost = ui->cost->text().toInt();
@@ -140,7 +138,6 @@ void Managementscreen::on_editdrug_2_clicked()
     }
 
 }
-
 
 void Managementscreen::on_editimage_clicked()
 {
@@ -169,9 +166,7 @@ void Managementscreen::on_generatereports_clicked()
     reports->show();
 }
 
-
 void Managementscreen::on_updatesettigns_clicked()
 {
     settings->show();
 }
-
