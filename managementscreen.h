@@ -21,7 +21,7 @@ public:
     ~Managementscreen();
 
 private slots:
-    void on_changedruginfoclick_clicked();
+    void changedruginfoclicked();
 
     void on_addnewdrugclicked_clicked();
 

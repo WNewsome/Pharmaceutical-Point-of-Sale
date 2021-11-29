@@ -13,9 +13,10 @@ Managementscreen::Managementscreen(QWidget *parent) :
     addDrug = new addgrug();
     settings = new Settingsscreen();
     reports = new Reports();
-    connect(ui->changedruginfoclick, SIGNAL(clicked()), this, SLOT(on_changedruginfoclick_clicked()));
+    connect(ui->changedruginfoclick, SIGNAL(clicked()), this, SLOT(changedruginfoclicked()));
     connect(ui->tableWidget,SIGNAL(cellClicked(int,int)),this,SLOT(on_tableWidget_cellClicked(int,int)));
 
+    ui->changedruginfoclick->setEnabled(true);
     ui->addnewdrugclicked->setEnabled(false);
     ui->storesearch->setEnabled(false);
     ui->editdrug_2->setEnabled(false);
@@ -28,7 +29,7 @@ Managementscreen::~Managementscreen()
     delete ui;
 }
 
-void Managementscreen::on_changedruginfoclick_clicked()
+void Managementscreen::changedruginfoclicked()
 {
     ui->tableWidget->setRowCount(1);
     ui->addnewdrugclicked->setEnabled(true);
