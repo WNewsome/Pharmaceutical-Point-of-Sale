@@ -2,7 +2,6 @@
 #include "ui_managementscreen.h"
 
 //TODO: clear add drug window after window is closed
-//search by brand name
 //Change size of columns
 
 Managementscreen::Managementscreen(QWidget *parent) :
@@ -11,7 +10,9 @@ Managementscreen::Managementscreen(QWidget *parent) :
 {
     ui->setupUi(this);
     API = DataStorage::getInstance();
-    addDrug = new addgrug(this);
+    addDrug = new addgrug();
+    settings = new Settingsscreen();
+    reports = new Reports();
     connect(ui->changedruginfoclick, SIGNAL(clicked()), this, SLOT(on_changedruginfoclick_clicked()));
     connect(ui->tableWidget,SIGNAL(cellClicked(int,int)),this,SLOT(on_tableWidget_cellClicked(int,int)));
 
@@ -33,7 +34,8 @@ void Managementscreen::on_changedruginfoclick_clicked()
     ui->addnewdrugclicked->setEnabled(true);
     drugList.clear();
     std::string search_buffer=ui->editdrug->text().toStdString();
-   if(search_buffer.find(' ')!=-1){
+
+    if(search_buffer.find(' ')!=-1){
         std::vector<std::pair<int,std::string>> searchList;
         int pos=search_buffer.find(' ');
         while (pos>-1) {
@@ -149,11 +151,9 @@ void Managementscreen::on_editimage_clicked()
     curDrug.picture_url = "assets/" + im.baseName() + "." + im.completeSuffix();
 } 
 
-
 void Managementscreen::on_generatereports_clicked()
 {
     reports->show();
-
 }
 
 

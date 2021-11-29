@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include "datastorage.h"
 #include "addgrug.h"
+#include "settingsscreen.h"
+#include "reports.h"
 
 namespace Ui {
 class Managementscreen;
@@ -44,6 +46,8 @@ private:
     QPixmap image;
     QImage* imageObject;
     QGraphicsScene* drugimage;
+    Settingsscreen* settings;
+    Reports* reports;
 };
 
 #endif // MANAGEMENTSCREEN_H
