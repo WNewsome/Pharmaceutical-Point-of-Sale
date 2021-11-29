@@ -7,6 +7,7 @@
 #include <QListWidget>
 #include <QDir>
 #include <QGraphicsScene>
+#include "otherstore.h"
 namespace Ui {
 class SaleScreen;
 }

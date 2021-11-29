@@ -202,11 +202,22 @@ void PatientScreen::on_checkout_p_clicked(){
         return;
     slotcount++;
     if(curPatient.prescription.size()>0){
+        std::vector<drug_t> outOfStock;
         for(size_t i=0;i<curPatient.prescription.size();i++){
             if(curPatient.prescription[i].getValid()&&(!curPatient.prescription[i].inCart)){
-                drug_t drug=API->search_one_drug(curPatient.prescription[i].name);
-                curPatient.prescription[i].inCart=currentAccount->add_item(drug,curPatient.prescription[i].amount);
+                drug_t drug=API->search_drug_by_id(std::stoi(curPatient.prescription[i].UPC));
+                if(!(curPatient.prescription[i].inCart=currentAccount->add_item(drug,curPatient.prescription[i].amount))){
+                    int trueamount=drug.amount;
+                    drug.amount=curPatient.prescription[i].amount;
+                    outOfStock.push_back(drug);
+                    drug.amount=trueamount;
+                }
             }
+        }
+        if(outOfStock.size()>0){
+            OtherStore *othersore=new OtherStore(outOfStock,this);
+            othersore->setWindowFlag(Qt::SubWindow);
+            othersore->show();
         }
     }
     slotcount--;

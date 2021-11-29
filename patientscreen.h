@@ -6,6 +6,7 @@
 #include "dialog.h"
 #include "checkout.h"
 #include "newprescription.h"
+#include "otherstore.h"
 
 namespace Ui {
 class patientScreen;

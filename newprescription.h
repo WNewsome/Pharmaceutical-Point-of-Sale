@@ -5,6 +5,7 @@
 #include <datastorage.h>
 #include <qlistwidget.h>
 #include <checkout.h>
+#include "otherstore.h"
 namespace Ui {
 class NewPrescription;
 }
