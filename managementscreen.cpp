@@ -22,6 +22,7 @@ Managementscreen::Managementscreen(QWidget *parent) :
     ui->editdrug_2->setEnabled(false);
     ui->editimage->setEnabled(false);
     ui->scrollArea_2->setEnabled(false);
+    ui->Error->setVisible(false);
 }
 
 Managementscreen::~Managementscreen()
@@ -31,6 +32,7 @@ Managementscreen::~Managementscreen()
 
 void Managementscreen::changedruginfoclicked()
 {
+    ui->Error->setVisible(false);
     ui->tableWidget->setRowCount(1);
     ui->addnewdrugclicked->setEnabled(true);
     drugList.clear();
@@ -71,6 +73,7 @@ void Managementscreen::changedruginfoclicked()
 }
 
 void Managementscreen::on_tableWidget_cellClicked(int row,int column){
+    ui->Error->setVisible(false);
     if (row != 0){
         curDrug = drugList[row-1];
         ui->storesearch->setEnabled(true);
@@ -101,14 +104,10 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
     }
 }
 
-
-
 void Managementscreen::on_addnewdrugclicked_clicked()
 {
     addDrug->show();
 }
-
-
 
 void Managementscreen::on_editdrug_2_clicked()
 {
@@ -117,18 +116,27 @@ void Managementscreen::on_editdrug_2_clicked()
     //clear the screen?
     //update table
 
-    curDrug.name = ui->drugnames->text();
-    curDrug.brand = ui->brands->text();
-    curDrug.cost = ui->cost->text().toInt();
-    curDrug.price = ui->prices->text().toInt();
-    curDrug.UPC = ui->UPCs->text().toStdString();
-    curDrug.DEA = ui->DEAs->text().toStdString();
-    curDrug.GPI = ui->GPIs->text().toStdString();
-    curDrug.NDC = ui->NDCs->text().toStdString();
-    curDrug.amount = ui->quantity->text().toInt();
-    curDrug.control_status = ui->controls->text();
-    API->update_drug(curDrug);
-    qDebug() << curDrug.picture_url;
+    if ((ui->drugnames->text() != "") && (ui->brands->text() != "")&& (ui->cost->text() != "") && (ui->prices->text() != "")
+            && (ui->UPCs->text() != "") && (ui->DEAs->text() != "") && (ui->quantity->text() != "") && (ui->GPIs->text() != "")
+            && (ui->NDCs->text() != "") && (ui->controls->text() != "")){
+        curDrug.name = ui->drugnames->text();
+        curDrug.brand = ui->brands->text();
+        curDrug.cost = ui->cost->text().toInt();
+        curDrug.price = ui->prices->text().toInt();
+        curDrug.UPC = ui->UPCs->text().toStdString();
+        curDrug.DEA = ui->DEAs->text().toStdString();
+        curDrug.GPI = ui->GPIs->text().toStdString();
+        curDrug.NDC = ui->NDCs->text().toStdString();
+        curDrug.amount = ui->quantity->text().toInt();
+        curDrug.control_status = ui->controls->text();
+        API->update_drug(curDrug);
+        qDebug() << curDrug.picture_url;
+        changedruginfoclicked();
+    }
+    else{
+        ui->Error->setStyleSheet("QLabel { color : red; }");
+        ui->Error->setVisible(true);
+    }
 
 }
 

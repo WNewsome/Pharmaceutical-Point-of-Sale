@@ -20,7 +20,6 @@ addgrug::~addgrug()
 //if the window closes, this function clears all the values
 void addgrug::closeEvent(QCloseEvent *event){
 
-    qDebug() << newDrug.picture_url;
     newDrug.picture_url  = "";
     ui->drugname->clear();
     ui->brandname->clear();
@@ -42,8 +41,8 @@ void addgrug::on_confirm_clicked()
     //check if everything is filled in and display error??
 
     //put drug stuff from lines in
-    if ((ui->brandname->text() != "") && (ui->Cost->text() != "") && (ui->Price->text() != "")
-            && (ui->upc->text() != "") && (ui->DEA->text() != "") && (ui->gpi->text() != "")
+    if ((ui->drugname->text() != "") && (ui->brandname->text() != "") && (ui->Cost->text() != "") && (ui->Price->text() != "")
+            && (ui->upc->text() != "") && (ui->DEA->text() != "") && (ui->invintory->text() != "") && (ui->gpi->text() != "")
             && (ui->NDC->text() != "") && (ui->control->text() != "")){
         newDrug.name = ui->drugname->text();
         newDrug.brand = ui->brandname->text();
@@ -58,7 +57,6 @@ void addgrug::on_confirm_clicked()
         int quaintity = newDrug.amount;
 
         API->create_new_drug(newDrug,quaintity);
-        qDebug() << newDrug.picture_url;
 
         ui->drugname->clear();
         ui->brandname->clear();
