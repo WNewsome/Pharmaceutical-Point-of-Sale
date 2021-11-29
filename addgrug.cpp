@@ -9,6 +9,7 @@ addgrug::addgrug(QWidget *parent) :
     ui->setupUi(this);
     ui->Error->setVisible(false);
     API = DataStorage::getInstance();
+    drugimage = new QGraphicsScene(this);
 }
 
 addgrug::~addgrug()
@@ -16,9 +17,24 @@ addgrug::~addgrug()
     delete ui;
 }
 
-void addgrug::newDrugname(QString drugname){
-    newDrug.name = drugname;
-    ui->drugname->setText(newDrug.name);
+//if the window closes, this function clears all the values
+void addgrug::closeEvent(QCloseEvent *event){
+
+    qDebug() << newDrug.picture_url;
+    newDrug.picture_url  = "";
+    ui->drugname->clear();
+    ui->brandname->clear();
+    ui->Cost->clear();
+    ui->Price->clear();
+    ui->upc->clear();
+    ui->DEA->clear();
+    ui->gpi->clear();
+    ui->NDC->clear();
+    ui->invintory->clear();
+    ui->control->clear();
+    drugimage->clear();
+    ui->Image->viewport()->update();
+    QMainWindow::closeEvent(event);
 }
 
 void addgrug::on_confirm_clicked()
@@ -54,6 +70,8 @@ void addgrug::on_confirm_clicked()
         ui->NDC->clear();
         ui->invintory->clear();
         ui->control->clear();
+        drugimage->clear();
+        ui->Image->viewport()->update();
 
         this->close();
     }
@@ -77,7 +95,6 @@ void addgrug::on_openimage_clicked()
 
     image = QPixmap::fromImage(*imageObject);
 
-    drugimage = new QGraphicsScene(this);
     drugimage->addPixmap(image);
     drugimage->setSceneRect(image.rect());
     ui->Image->setScene(drugimage);

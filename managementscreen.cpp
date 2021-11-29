@@ -105,7 +105,6 @@ void Managementscreen::on_tableWidget_cellClicked(int row,int column){
 
 void Managementscreen::on_addnewdrugclicked_clicked()
 {
-    addDrug->newDrugname(ui->editdrug->text());
     addDrug->show();
 }
 

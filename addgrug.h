@@ -17,7 +17,9 @@ class addgrug : public QMainWindow
 public:
     explicit addgrug(QWidget *parent = nullptr);
     ~addgrug();
-    void newDrugname(QString drugname);
+
+private:
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void on_confirm_clicked();
