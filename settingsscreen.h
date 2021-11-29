@@ -21,6 +21,8 @@ signals:
 private slots:
     void on_EdditSettings_clicked();
     void toggle_enable_settings(bool enabled);
+    void toggle_enable_nearby(bool enabled);
+    void on_Edditnearby_clicked();
 
 private:
     Ui::Settingsscreen *ui;

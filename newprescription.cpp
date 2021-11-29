@@ -63,18 +63,37 @@ void NewPrescription::on_accept(){
     if(drug.valid){
         if(updateFlag){
             if(ui->checkBox->isChecked()){
-                emit changed({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),ui->dateEdit->date(),currentAccount->add_item(drug,ui->spinBox->value())},index);
+                if(drug.amount<ui->spinBox->value())
+                {
+                    std::vector<drug_t> outOfStock;
+                    drug.amount=ui->spinBox->value();
+                    outOfStock.push_back(drug);
+                    OtherStore *othersore=new OtherStore(outOfStock,this);
+                    othersore->setWindowFlag(Qt::SubWindow);
+                    othersore->show();
+                }
+                emit changed({drug.name.toStdString(),std::to_string(drug.id),ui->spinBox->value(),ui->spinBox_2->value(),ui->dateEdit->date(),currentAccount->add_item(drug,ui->spinBox->value())},index);
+
             }
             else{
-                emit changed({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),ui->dateEdit->date(),false},index);
+                emit changed({drug.name.toStdString(),std::to_string(drug.id),ui->spinBox->value(),ui->spinBox_2->value(),ui->dateEdit->date(),false},index);
             }
         }
         else{
             if(ui->checkBox->isChecked()){
-                emit accept({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),QDate(2010,1,1),currentAccount->add_item(drug,ui->spinBox->value())});
+                if(drug.amount<ui->spinBox->value())
+                {
+                    std::vector<drug_t> outOfStock;
+                    drug.amount=ui->spinBox->value();
+                    outOfStock.push_back(drug);
+                    OtherStore *othersore=new OtherStore(outOfStock,this);
+                    othersore->setWindowFlag(Qt::SubWindow);
+                    othersore->show();
+                }
+                emit accept({drug.name.toStdString(),std::to_string(drug.id),ui->spinBox->value(),ui->spinBox_2->value(),QDate(2010,1,1),currentAccount->add_item(drug,ui->spinBox->value())});
             }
             else{
-                emit accept({drug.name.toStdString(),drug.UPC,ui->spinBox->value(),ui->spinBox_2->value(),QDate(2010,1,1),false});
+                emit accept({drug.name.toStdString(),std::to_string(drug.id),ui->spinBox->value(),ui->spinBox_2->value(),QDate(2010,1,1),false});
             }
         }
         this->close();

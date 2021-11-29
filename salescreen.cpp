@@ -42,6 +42,12 @@ void SaleScreen::on_search_button_d_clicked(){
         ui->items_list->insertItem(i,newItem);
     }
     ui->items_list->setEnabled(true);
+    ui->drug_name->clear();
+    ui->drug_code->clear();
+    ui->drug_stock->clear();
+    drugimage->clear();
+    ui->graphicsView->setScene(drugimage);
+    ui->spinBox->clear();
 }
 
 void SaleScreen::on_edit_change(QString buffer){
@@ -81,7 +87,7 @@ void SaleScreen::on_double_clicked_dropdown(QListWidgetItem * item){
     ui->drug_code->setText(QString::fromStdString(curDrug.UPC));
     ui->drug_stock->setText(QString::number(curDrug.amount));
     QDir dir;
-    QString path=dir.relativeFilePath("../Pharmaceutical-Point-of-Sale/asset/Lexapro.jpg");
+    QString path=dir.relativeFilePath(curDrug.picture_url);
     imageObject = new QImage();
     imageObject->load(path);
     image = QPixmap::fromImage(*imageObject);
@@ -98,7 +104,7 @@ void SaleScreen::on_clicked_list(QListWidgetItem *item){
     ui->drug_code->setText(QString::fromStdString(curDrug.UPC));
     ui->drug_stock->setText(QString::number(curDrug.amount));
     QDir dir;
-    QString path=dir.relativeFilePath("../Pharmaceutical-Point-of-Sale/asset/Lexapro.jpg");
+    QString path=dir.relativeFilePath(curDrug.picture_url);
     imageObject = new QImage();
     imageObject->load(path);
     image = QPixmap::fromImage(*imageObject);
@@ -111,12 +117,32 @@ void SaleScreen::on_clicked_list(QListWidgetItem *item){
 void SaleScreen::on_double_clicked_list(QListWidgetItem *item){
     curDrug = drug_list[ui->items_list->currentRow()];
     drug_t drug=curDrug;
-    currentAccount->add_item(drug,1);
+    if(!currentAccount->add_item(drug,1)){
+        int trueamount=curDrug.amount;
+        curDrug.amount=1;
+        std::vector<drug_t> outOfStock;
+        drug.amount=ui->spinBox->value();
+        outOfStock.push_back(drug);
+        curDrug.amount=trueamount;
+        OtherStore *othersore=new OtherStore(outOfStock,this);
+        othersore->setWindowFlag(Qt::SubWindow);
+        othersore->show();
+    }
 }
 
 void SaleScreen::on_checkout(){
     drug_t drug=curDrug;
-    currentAccount->add_item(drug,ui->spinBox->value());
+    if(!currentAccount->add_item(drug,ui->spinBox->value())){
+        int trueamount=curDrug.amount;
+        curDrug.amount=ui->spinBox->value();
+        std::vector<drug_t> outOfStock;
+        drug.amount=ui->spinBox->value();
+        outOfStock.push_back(drug);
+        curDrug.amount=trueamount;
+        OtherStore *othersore=new OtherStore(outOfStock,this);
+        othersore->setWindowFlag(Qt::SubWindow);
+        othersore->show();
+    }
 }
 
 void SaleScreen::on_clear(){

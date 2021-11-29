@@ -86,7 +86,7 @@ drug_t DataStorage::search_one_drug(std::string name){
     // Search one drug by name
 
     QString word_to_search = QString::fromStdString(name);
-    const QUrl url = QUrl(host_API+"/search.php?name="+word_to_search);
+    const QUrl url = QUrl(host_API+"/new_search_drugs.php?name="+word_to_search+"&storeid="+QString::number(get_store_id()));
 
     // Request url by GET
     QNetworkRequest request(url);
@@ -194,13 +194,59 @@ std::vector<drug_t> DataStorage::search_drugs(std::string name){
     // Search drugs by name for local store only
     return search_drugs_remotelly(get_store_id(), name);
 }
+std::vector<drug_t> DataStorage::search_drugs_in_all(std::string name){
+    std::vector<drug_t> result;
+    QString word_to_search = QString::fromStdString(name);
+    const QUrl url = QUrl(host_API+"/new_search_drugs.php?name="+word_to_search);
 
+    // Request url by GET
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // Convert to JSON
+    QString strReply = (QString)reply->readAll();
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+    QJsonArray jsonArray = jsonObject["results"].toArray();
+
+    foreach (const QJsonValue & value, jsonArray) {
+        drug_t drug;
+        QJsonObject obj = value.toObject();
+        drug.name = obj["name"].toString();
+        drug.brand = obj["brand"].toString();
+        drug.cost = obj["cost"].toString().toDouble();
+        drug.price = obj["price"].toString().toDouble();
+        drug.control_status = obj["control_status"].toString();
+        drug.picture_url = obj["picture_url"].toString();
+
+        drug.amount = obj["quantity"].toString().toInt();
+        drug.UPC = obj["UPC"].toString().toStdString();
+        drug.DEA = obj["DEA"].toString().toStdString();
+        drug.GPI = obj["GPI"].toString().toStdString();
+        drug.NDC = obj["NDC"].toString().toStdString();
+        drug.valid = true;
+        drug.amount = obj["quantity"].toString().toInt();
+        drug.id = obj["id"].toString().toInt();
+        // Add result to vector
+        result.push_back(drug);
+    }
+
+    if(0 == result.size())
+        qDebug() << "ERROR: No drugs found at database";
+
+    return result;
+}
 std::vector<drug_t> DataStorage::search_drugs_remotelly(int storeID, std::string name){
     // Search drugs by name in store with id storeID
 
     std::vector<drug_t> result;
     QString word_to_search = QString::fromStdString(name);
-    const QUrl url = QUrl(host_API+"/search_drug_in_store.php?name="+word_to_search+"&storeid="+QString::number(storeID));
+    const QUrl url = QUrl(host_API+"/new_search_drugs.php?name="+word_to_search+"&storeid="+QString::number(storeID));
 
     // Request url by GET
     QNetworkRequest request(url);
@@ -247,7 +293,7 @@ std::vector<drug_t> DataStorage::search_drugs_remotelly(int storeID, std::string
 
 drug_t DataStorage::search_drug_by_id(int id){
     drug_t drug;
-    const QUrl url = QUrl(host_API+"/search_drug_by_id.php?id="+QString::number(id));
+    const QUrl url = QUrl(host_API+"/new_search_drug_by_id.php?id="+QString::number(id)+"&storeid="+QString::number(get_store_id()));
 
     // Request url by GET
     QNetworkRequest request(url);
@@ -291,7 +337,7 @@ drug_t DataStorage::search_drug_by_id(int id){
 
 bool DataStorage::create_new_drug(drug_t drug, int quantity){
     // Save new drug in DB
-    const QUrl url = QUrl(host_API+"/create_new_drug.php?name="+drug.name+"&brand="+drug.brand
+    const QUrl url = QUrl(host_API+"/new_create_new_drug.php?name="+drug.name+"&brand="+drug.brand
                           +"&cost="+QString::number(drug.cost)
                           +"&price="+QString::number(drug.price)
                           +"&control_status="+drug.control_status
@@ -423,7 +469,8 @@ bool DataStorage::update_patient(patient_t patient){
 }
 
 bool DataStorage::update_drug(drug_t drug){
-    const QUrl url = QUrl(host_API+"/update_drug.php?name="+drug.name+"&brand="+drug.brand
+    const QUrl url = QUrl(host_API+"/new_update_drug.php?name="+drug.name+"&brand="+drug.brand
+                          +"&storeid="+QString::number(get_store_id())
                           +"&cost="+QString::number(drug.cost)
                           +"&price="+QString::number(drug.price)
                           +"&control_status="+drug.control_status
@@ -595,9 +642,14 @@ void DataStorage::load_local_info(){
     std::string line, colname;
     std::ifstream myFile(file);
     int i = 0;
+    bool remote=false;
     if(myFile.good()){
         // Read every line string
+        int id;
+        QString name;
+        address_t address;
         while(std::getline(myFile, line)){
+            if(!remote){
             switch(i){
             case 0:
                 store_name = QString::fromStdString(line);
@@ -616,16 +668,46 @@ void DataStorage::load_local_info(){
                 break;
             case 5:
                 store_id = std::stoi(line);
+                i=-1;
+                remote=true;
                 break;
             }
+            }
+            else{
+                switch(i){
+                case 0:
+                    name = QString::fromStdString(line);
+                    break;
+                case 1:
+                    address.street_number = line;
+                    break;
+                case 2:
+                    address.city = line;
+                    break;
+                case 3:
+                    address.state = line;
+                    break;
+                case 4:
+                    address.zip_code = line;
+                    break;
+                case 5:
+                    id = std::stoi(line);
+                    i=-1;
+                    near_by_store.push_back(std::make_tuple(id,address,name));
+                    break;
+
+            }
+            }
             i++;
-        }
+
+    }
+        //creat_store_table();
     } else {
         qDebug() << "Local settings file not available";
     }
 }
 
-bool DataStorage::save_local_address(address_t newAddress, std::string companyName){
+bool DataStorage::save_local_address(address_t newAddress, std::string companyName ,QString nearby){
 
     std::string settingsFile("assets/store_settings.txt");
     //std::ifstream myFile(settingsFile);
@@ -644,10 +726,32 @@ bool DataStorage::save_local_address(address_t newAddress, std::string companyNa
         file_out << std::endl;
         file_out << get_store_id();
         file_out << std::endl;
+        file_out << nearby.toStdString()<<std::endl;
         file_out.close();
         load_local_info();
         return true;
     //}
     qDebug() << "File store_settings.txt does not exist.";
     return false;
+}
+
+bool DataStorage::creat_store_table(){
+    const QUrl url = QUrl(host_API+"/creat_new_store.php?&storeid="+QString::number(get_store_id()));
+    QNetworkRequest request(url);
+    QNetworkReply *reply = manager->get(request);
+
+    // Wait until we received a response
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    QString strReply = (QString)reply->readAll();
+
+    if(strReply == "created" or strReply == "exist"){
+        return true;
+    }
+    qDebug() << "ERROR: "+strReply;
+    return false;
+}
+std::vector<std::tuple<int,address_t,QString>> DataStorage::get_near_by_store(){
+    return near_by_store;
 }
