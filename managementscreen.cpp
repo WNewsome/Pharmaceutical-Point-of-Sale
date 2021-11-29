@@ -1,7 +1,7 @@
 #include "managementscreen.h"
 #include "ui_managementscreen.h"
 
-//TODO: clear add drug window after window is closed
+//TODO:
 //Change size of columns
 
 Managementscreen::Managementscreen(QWidget *parent) :
@@ -22,7 +22,7 @@ Managementscreen::Managementscreen(QWidget *parent) :
     ui->editdrug_2->setEnabled(false);
     ui->editimage->setEnabled(false);
     ui->scrollArea_2->setEnabled(false);
-    ui->Error->setVisible(false);
+    ui->Message->setVisible(false);
 }
 
 Managementscreen::~Managementscreen()
@@ -32,9 +32,12 @@ Managementscreen::~Managementscreen()
 
 void Managementscreen::changedruginfoclicked()
 {
-    ui->Error->setVisible(false);
+    ui->scrollArea_2->setEnabled(false);
+    ui->Message->setVisible(false);
     ui->tableWidget->setRowCount(1);
     ui->addnewdrugclicked->setEnabled(true);
+    ui->editdrug_2->setEnabled(false);
+    ui->editimage->setEnabled(false);
     drugList.clear();
     std::string search_buffer=ui->editdrug->text().toStdString();
 
@@ -73,7 +76,7 @@ void Managementscreen::changedruginfoclicked()
 }
 
 void Managementscreen::on_tableWidget_cellClicked(int row,int column){
-    ui->Error->setVisible(false);
+    ui->Message->setVisible(false);
     if (row != 0){
         curDrug = drugList[row-1];
         ui->storesearch->setEnabled(true);
@@ -111,11 +114,6 @@ void Managementscreen::on_addnewdrugclicked_clicked()
 
 void Managementscreen::on_editdrug_2_clicked()
 {
-    //TODO - confirm all is filled in
-    //Display that drug has been updated
-    //clear the screen?
-    //update table
-
     if ((ui->drugnames->text() != "") && (ui->brands->text() != "")&& (ui->cost->text() != "") && (ui->prices->text() != "")
             && (ui->UPCs->text() != "") && (ui->DEAs->text() != "") && (ui->quantity->text() != "") && (ui->GPIs->text() != "")
             && (ui->NDCs->text() != "") && (ui->controls->text() != "")){
@@ -130,12 +128,15 @@ void Managementscreen::on_editdrug_2_clicked()
         curDrug.amount = ui->quantity->text().toInt();
         curDrug.control_status = ui->controls->text();
         API->update_drug(curDrug);
-        qDebug() << curDrug.picture_url;
         changedruginfoclicked();
+        ui->Message->setStyleSheet("QLabel { color : green; }");
+        ui->Message->setText("Drug Updated!");
+        ui->Message->setVisible(true);
     }
     else{
-        ui->Error->setStyleSheet("QLabel { color : red; }");
-        ui->Error->setVisible(true);
+        ui->Message->setStyleSheet("QLabel { color : red; }");
+        ui->Message->setText("ERROR: FIELDS CANNOT BE LEFT EMPTY");
+        ui->Message->setVisible(true);
     }
 
 }
@@ -157,6 +158,10 @@ void Managementscreen::on_editimage_clicked()
     drugimage->setSceneRect(image.rect());
     ui->Image->setScene(drugimage);
     curDrug.picture_url = "assets/" + im.baseName() + "." + im.completeSuffix();
+    API->update_drug(curDrug);
+    ui->Message->setStyleSheet("QLabel { color : green; }");
+    ui->Message->setText("Image Updated!");
+    ui->Message->setVisible(true);
 } 
 
 void Managementscreen::on_generatereports_clicked()
