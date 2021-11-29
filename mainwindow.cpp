@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
   //  drug_t new_drug;
    // new_drug.name = "this is a new drug";
 
-    drug_t new_drug;
+ /*   drug_t new_drug;
     new_drug.name = "Atorvastatin";
 
     new_drug.brand = "Lipitor";
@@ -206,7 +206,7 @@ MainWindow::MainWindow(QWidget *parent)
     new_drug.GPI = "123456777";
     new_drug.NDC = "12jj";
 
-    API->create_new_drug(new_drug, 10);
+    API->create_new_drug(new_drug, 10);*/
   /*  drug_t to_update = API->search_one_drug("Aspirin123");
     to_update.name = "UPDATEDNAMETEST";
     to_update.brand = "UPDATED_BRAND";
