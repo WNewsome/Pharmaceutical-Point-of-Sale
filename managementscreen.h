@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include "datastorage.h"
 #include "addgrug.h"
+#include "settingsscreen.h"
+#include "reports.h"
 
 namespace Ui {
 class Managementscreen;
@@ -19,7 +21,7 @@ public:
     ~Managementscreen();
 
 private slots:
-    void on_changedruginfoclick_clicked();
+    void changedruginfoclicked();
 
     void on_addnewdrugclicked_clicked();
 
@@ -28,6 +30,10 @@ private slots:
     void on_editdrug_2_clicked();
 
     void on_editimage_clicked();
+
+    void on_generatereports_clicked();
+
+    void on_updatesettigns_clicked();
 
 private:
     Ui::Managementscreen *ui;
@@ -40,6 +46,8 @@ private:
     QPixmap image;
     QImage* imageObject;
     QGraphicsScene* drugimage;
+    Settingsscreen* settings;
+    Reports* reports;
 };
 
 #endif // MANAGEMENTSCREEN_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>514</height>
+    <width>403</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>10</x>
       <y>10</y>
       <width>380</width>
-      <height>441</height>
+      <height>471</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -32,7 +32,7 @@
        <x>0</x>
        <y>0</y>
        <width>357</width>
-       <height>517</height>
+       <height>630</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
@@ -207,9 +207,6 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QGraphicsView" name="Image"/>
-      </item>
       <item row="0" column="0" alignment="Qt::AlignHCenter">
        <widget class="QLabel" name="Error">
         <property name="enabled">
@@ -217,6 +214,16 @@
         </property>
         <property name="text">
          <string>ERROR: FIELDS CANNOT BE LEFT EMPTY</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QGraphicsView" name="Image">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>200</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -247,7 +254,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>406</width>
+     <width>403</width>
      <height>26</height>
     </rect>
    </property>
