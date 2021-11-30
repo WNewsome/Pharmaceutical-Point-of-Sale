@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
 
 
-    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
+    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
 
     ui->tabWidget->setCurrentIndex(0);
 
@@ -67,20 +67,146 @@ MainWindow::MainWindow(QWidget *parent)
   //  drug_t new_drug;
    // new_drug.name = "this is a new drug";
 
-  /*  drug_t new_drug;
-    new_drug.name = "Aspirin123";
+   /* drug_t new_drug;
+    new_drug.name = "Atorvastatin";
 
-    new_drug.brand = "This is its brand";
-    new_drug.cost = 8;
-    new_drug.price = 12;
-    new_drug.control_status = "AWEF";
+    new_drug.brand = "Lipitor";
+    new_drug.cost = 3;
+    new_drug.price = 40.05;
+    new_drug.control_status = "N/a";
     new_drug.picture_url = "";
-    new_drug.UPC = "12345";
-    new_drug.DEA = "123444";
-    new_drug.GPI = "123456777";
-    new_drug.NDC = "12jj";*/
+    new_drug.UPC = "305913775190";
+    new_drug.DEA = "";
+    new_drug.GPI = "39400010100310";
+    new_drug.NDC = "0378451393";
 
-   // API->create_new_drug(new_drug, 10);
+    API->create_new_drug(new_drug, 50);
+
+    new_drug.name = "Levothyroxine";
+
+    new_drug.brand = "Levothroid";
+    new_drug.cost = 5;
+    new_drug.price = 15.42;
+    new_drug.control_status = "N/a";
+    new_drug.picture_url = "";
+    new_drug.UPC = "305271345011";
+    new_drug.DEA = "";
+    new_drug.GPI = "9664508400";
+    new_drug.NDC = "7133516371";
+
+    API->create_new_drug(new_drug, 30);
+
+    new_drug.name = "Lisinopril";
+
+    new_drug.brand = "Prinivil";
+    new_drug.cost = 3;
+    new_drug.price = 15;
+    new_drug.control_status = "N/a";
+    new_drug.picture_url = "";
+    new_drug.UPC = "368180519010";
+    new_drug.DEA = "";
+    new_drug.GPI = "3610003000";
+    new_drug.NDC = "68180051901";
+
+    API->create_new_drug(new_drug, 20);
+
+    new_drug.name = "Metformin";
+
+    new_drug.brand = "Fortamet";
+    new_drug.cost = 0.5;
+    new_drug.price = 7;
+    new_drug.control_status = "N/a";
+    new_drug.picture_url = "";
+    new_drug.UPC = "461555160005";
+    new_drug.DEA = "";
+    new_drug.GPI = "2725005000";
+    new_drug.NDC = "62037057110";
+
+    API->create_new_drug(new_drug, 30);
+
+    new_drug.name = "Dextroamphetamine";
+
+    new_drug.brand = "Adderall";
+    new_drug.cost = 10;
+    new_drug.price = 200;
+    new_drug.control_status = "II";
+    new_drug.picture_url = "";
+    new_drug.UPC = "354092381012";
+    new_drug.DEA = "1100";
+    new_drug.GPI = "611099021003";
+    new_drug.NDC = "5409238301";
+
+    API->create_new_drug(new_drug, 30);
+
+    new_drug.name = "Methylphenidate Hydrochloride";
+
+    new_drug.brand = "Concerta";
+    new_drug.cost = 15;
+    new_drug.price = 290;
+    new_drug.control_status = "II";
+    new_drug.picture_url = "";
+    new_drug.UPC = "350458587012";
+    new_drug.DEA = "1724";
+    new_drug.GPI = "614000201004";
+    new_drug.NDC = "5045858801";
+
+    API->create_new_drug(new_drug, 40);
+
+    new_drug.name = "Lisdexamfetamine";
+
+    new_drug.brand = "Vyvanse";
+    new_drug.cost = 20;
+    new_drug.price = 408;
+    new_drug.control_status = "II";
+    new_drug.picture_url = "";
+    new_drug.UPC = "359417106103";
+    new_drug.DEA = "1205";
+    new_drug.GPI = "611000251001";
+    new_drug.NDC = "5941710610";
+
+    API->create_new_drug(new_drug, 40);
+
+    new_drug.name = "Losartan";
+
+    new_drug.brand = "Cozaar";
+    new_drug.cost = 2;
+    new_drug.price = 12;
+    new_drug.control_status = "N/a";
+    new_drug.picture_url = "";
+    new_drug.UPC = "300060960314";
+    new_drug.DEA = "";
+    new_drug.GPI = "3615004020";
+    new_drug.NDC = "5486823350";
+
+    API->create_new_drug(new_drug, 20);
+
+    new_drug.name = "Sodium Oxybate";
+
+    new_drug.brand = "Xyrem";
+    new_drug.cost = 200;
+    new_drug.price = 5798;
+    new_drug.control_status = "III";
+    new_drug.picture_url = "";
+    new_drug.UPC = "362161008203";
+    new_drug.DEA = "2012";
+    new_drug.GPI = "6245006020";
+    new_drug.NDC = "6872710001";
+
+    API->create_new_drug(new_drug, 2);
+
+    new_drug.name = "Methylphenidate";
+
+    new_drug.brand = "Ritalin";
+    new_drug.cost = 8;
+    new_drug.price = 92;
+    new_drug.control_status = "II";
+    new_drug.picture_url = "";
+    new_drug.UPC = "300780371056";
+    new_drug.DEA = "1724";
+    new_drug.GPI = "614000201003";
+    new_drug.NDC = "0078037005";
+
+    API->create_new_drug(new_drug, 30);
   /*  drug_t to_update = API->search_one_drug("Aspirin123");
     to_update.name = "UPDATEDNAMETEST";
     to_update.brand = "UPDATED_BRAND";
@@ -131,10 +257,8 @@ MainWindow::MainWindow(QWidget *parent)
     API->get_top_drugs(nov21);
 
     */
-    if(!API->creat_store_table()){
-       qDebug()<<"unable to creat table";
-       close();
-    }
+
+
 }
 
 
