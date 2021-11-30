@@ -552,7 +552,8 @@ std::vector<drug_t> DataStorage::get_top_drugs(QDate monthYear){
 
     std::vector<drug_t> topDrugs;
     // monthYear is the corresponding month in which a report will be calculated
-    QString file = monthYear.toString("MMMM_yyyy");
+    QString file = "assets/";
+    file += monthYear.toString("MMMM_yyyy");
     file += ".txt";
     int i = 0;
     //   map<drug ID, quantity>
@@ -608,7 +609,8 @@ std::vector<drug_t> DataStorage::get_top_drugs(QDate monthYear){
 sales_report DataStorage::get_monthly_report(QDate monthYear){
     // monthYear is the corresponding month in which a report will be calculated
     sales_report report;
-    QString file = monthYear.toString("MMMM_yyyy");
+    QString file = "assets/";
+    file += monthYear.toString("MMMM_yyyy");
     file += ".txt";
     int i = 0;
     std::string line, colname;
