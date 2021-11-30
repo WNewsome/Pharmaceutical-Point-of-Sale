@@ -63,6 +63,11 @@ DISTFILES += \
     assets/.gitkeep \
     assets/icon.ico \
     assets/image.png \
+    assets/October_2021.txt\
+    assets/September_2021.txt\
+    assets/August_2021.txt\
+    assets/July_2021.txt\
+    assets/June_2021.txt\
     assets/leaf.png \
     assets/Albuterol.png \
     assets/zenzedi.png
