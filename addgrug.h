@@ -1,13 +1,15 @@
 #ifndef ADDGRUG_H
 #define ADDGRUG_H
 
+// addgrug.h	Jessica Orefice		VT	ECE4574 FA21	Nov 12, 2021
+// This class allows the user to interact with the GUI and add a drug to the datbase
+
 #include <QMainWindow>
 #include "datastorage.h"
 #include <QGraphicsScene>
 
 namespace Ui {
 class addgrug;
-
 }
 
 class addgrug : public QMainWindow
@@ -31,8 +33,8 @@ private:
     QImage* imageObject;
     QGraphicsScene* drugimage;
 
-    DataStorage *API;
-    drug_t newDrug;
+    DataStorage *API; //datastorage
+    drug_t newDrug;   //
 };
 
 #endif // ADDGRUG_H
