@@ -104,22 +104,12 @@ void Reports::createchart(){
         QBarSet *set2 = new QBarSet(topdrugList.at(2).brand);
         QBarSet *set3 = new QBarSet(topdrugList.at(3).brand);
         QBarSet *set4 = new QBarSet(topdrugList.at(4).brand);
-        QBarSet *set5 = new QBarSet(topdrugList.at(5).brand);
-        QBarSet *set6 = new QBarSet(topdrugList.at(6).brand);
-        QBarSet *set7 = new QBarSet(topdrugList.at(7).brand);
-        QBarSet *set8 = new QBarSet(topdrugList.at(8).brand);
-        QBarSet *set9 = new QBarSet(topdrugList.at(9).brand);
 
         *set0 << topdrugList.at(0).amount;
         *set1 << topdrugList.at(1).amount;
         *set2 << topdrugList.at(2).amount;
         *set3 << topdrugList.at(3).amount;
         *set4 << topdrugList.at(4).amount;
-        *set5 << topdrugList.at(5).amount;
-        *set6 << topdrugList.at(6).amount;
-        *set7 << topdrugList.at(7).amount;
-        *set8 << topdrugList.at(8).amount;
-        *set9 << topdrugList.at(9).amount;
 
         QBarSeries *barseries = new QBarSeries();
         barseries->append(set0);
@@ -127,11 +117,6 @@ void Reports::createchart(){
         barseries->append(set2);
         barseries->append(set3);
         barseries->append(set4);
-        barseries->append(set5);
-        barseries->append(set6);
-        barseries->append(set7);
-        barseries->append(set8);
-        barseries->append(set9);
 
         QChart *barchart = new QChart();
         barchart->addSeries(barseries);
@@ -139,7 +124,7 @@ void Reports::createchart(){
         barchart->setAnimationOptions(QChart::SeriesAnimations);
 
         QStringList categories;
-        categories << "1";
+        categories << "Drugs";
 
         QBarCategoryAxis *axisX = new QBarCategoryAxis();
         axisX->append(categories);

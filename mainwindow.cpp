@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
 
 
-    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));  
+    connect(ui->actionClear_cart,SIGNAL(triggered()), patientScreen, SLOT(on_clear_cart_action()));
 
     ui->tabWidget->setCurrentIndex(0);
 
@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
   //  drug_t new_drug;
    // new_drug.name = "this is a new drug";
 
-  /*  drug_t new_drug;
+   /* drug_t new_drug;
     new_drug.name = "Atorvastatin";
 
     new_drug.brand = "Lipitor";
@@ -206,7 +206,7 @@ MainWindow::MainWindow(QWidget *parent)
     new_drug.GPI = "614000201003";
     new_drug.NDC = "0078037005";
 
-    API->create_new_drug(new_drug, 30);*/
+    API->create_new_drug(new_drug, 30);
   /*  drug_t to_update = API->search_one_drug("Aspirin123");
     to_update.name = "UPDATEDNAMETEST";
     to_update.brand = "UPDATED_BRAND";
@@ -257,10 +257,8 @@ MainWindow::MainWindow(QWidget *parent)
     API->get_top_drugs(nov21);
 
     */
-    if(!API->creat_store_table()){
-       qDebug()<<"unable to creat table";
-       close();
-    }
+
+
 }
 
 
