@@ -24,12 +24,16 @@ public:
     ~Reports();
     void createchart();
 
+private slots:
+    void sliceclicked(int num);
+
 private:
     Ui::Reports *ui;
     DataStorage *API;
     sales_report newSalesReport;
     std::vector<drug_t> topdrugList;
     QDate date;
+    QPieSeries *series;
 };
 
 #endif // REPORTS_H

@@ -15,7 +15,11 @@ Reports::Reports(QWidget *parent) :
     ui->setupUi(this);
     API = DataStorage::getInstance();
     date = QDate(2021, 10, 1);
+    series = new QPieSeries();
     createchart();
+
+    connect(series->slices().at(1), SIGNAL(pressed()), this, SLOT(sliceclicked(1)));
+
 }
 
 Reports::~Reports()
@@ -23,9 +27,17 @@ Reports::~Reports()
     delete ui;
 }
 
+void Reports::sliceclicked(int num){
+    QPieSlice *slice = series->slices().at(num);
+    slice->setExploded();
+    slice->setLabelVisible();
+    slice->setPen(QPen(Qt::darkGreen, 2));
+    slice->setBrush(Qt::green);
+
+}
+
 void Reports::createchart(){
 
-        QPieSeries *series = new QPieSeries();
         QPieSeries *seriesprofit = new QPieSeries();
         newSalesReport = API->get_monthly_report(QDate(2021, 10, 1));
         topdrugList = API->get_top_drugs(QDate(2021, 10, 1));
@@ -45,10 +57,7 @@ void Reports::createchart(){
         seriesprofit->append("June 2021", newSalesReport.profit);
 
         QPieSlice *slice = series->slices().at(0);
-        //slice->setExploded();
         slice->setLabelVisible();
-       // slice->setPen(QPen(Qt::darkGreen, 2));
-        //slice->setBrush(Qt::green);
 
         slice = series->slices().at(1);
         slice->setLabelVisible();
@@ -62,11 +71,20 @@ void Reports::createchart(){
         slice = series->slices().at(4);
         slice->setLabelVisible();
 
-        QPieSlice *slice2 = seriesprofit->slices().at(1);
-        slice2->setExploded();
+        QPieSlice *slice2 = seriesprofit->slices().at(0);
         slice2->setLabelVisible();
-        slice2->setPen(QPen(Qt::darkGreen, 2));
-        slice2->setBrush(Qt::green);
+
+        slice2 = seriesprofit->slices().at(1);
+        slice2->setLabelVisible();
+
+        slice2 = seriesprofit->slices().at(2);
+        slice2->setLabelVisible();
+
+        slice2 = seriesprofit->slices().at(3);
+        slice2->setLabelVisible();
+
+        slice2 = seriesprofit->slices().at(4);
+        slice2->setLabelVisible();
 
         QChart *chart = new QChart();
         chart->addSeries(series);
