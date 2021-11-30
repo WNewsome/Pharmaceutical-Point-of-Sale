@@ -64,6 +64,7 @@ DISTFILES += \
     assets/icon.ico \
     assets/image.png \
     assets/leaf.png \
+    assets/Albuterol.png \
     assets/zenzedi.png
 
 RC_ICONS += assets/icon.ico
