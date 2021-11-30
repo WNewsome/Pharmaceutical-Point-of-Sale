@@ -1,12 +1,7 @@
 #include "reports.h"
 #include "ui_reports.h"
 
-//sales report struct
-//montly repot
-//profit report
 
-//get top drugs
-//QDate argument
 
 Reports::Reports(QWidget *parent) :
     QWidget(parent),
@@ -121,7 +116,7 @@ void Reports::createchart(){
 
         QChart *barchart = new QChart();
         barchart->addSeries(barseries);
-        barchart->setTitle("Top 10 drugs in October 2021");
+        barchart->setTitle("Top 5 drugs in October 2021");
         barchart->setAnimationOptions(QChart::SeriesAnimations);
 
         QStringList categories;
