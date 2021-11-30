@@ -93,6 +93,7 @@ public:
     drug_t search_one_drug(std::string name);                   // returns the first drug found by name
     std::vector<patient_t> search_patients(std::string name);   // returns a vector of patients of the resulting search by name
     std::vector<drug_t> search_drugs(std::string name);         // returns a vector of drugs of the resulting search by name
+    std::vector<drug_t> search_drugs_in_all(std::string name);
     drug_t search_drug_by_id(int id);                           // returns a drug by id
     std::vector<drug_t>search_drugs_remotelly(int storeID, std::string name); // returns a vectore of drugs not in local store
 
@@ -113,8 +114,9 @@ public:
     sales_report get_monthly_report(QDate);
     std::vector<drug_t> get_top_drugs(QDate monthYear);
     void load_local_info();
-    bool save_local_address(address_t newAddress, std::string companyName);
-
+    bool save_local_address(address_t newAddress, std::string companyName, QString);
+    bool creat_store_table();
+    std::vector<std::tuple<int,address_t,QString>> get_near_by_store();
     // TODO:
     //  1: sprint 3 method on return sales, profits, etc by date and store
 private:
@@ -125,6 +127,7 @@ private:
     QString store_name;
     address_t store_address;
     int store_id;
+    std::vector<std::tuple<int,address_t,QString>> near_by_store;
 };
 
 #endif // DATASTORAGE_H

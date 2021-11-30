@@ -7,6 +7,7 @@ Settingsscreen::Settingsscreen(QWidget *parent) :
     ui->setupUi(this);
     API = DataStorage::getInstance();
     loadSettings();
+    connect(ui->EdditSettings_3,SIGNAL(clicked()),this,SLOT(on_Edditnearby_clicked()));
 }
 
 Settingsscreen::~Settingsscreen(){
@@ -34,7 +35,7 @@ void Settingsscreen::on_EdditSettings_clicked(){
         newAddress.state = ui->storeState->text().toStdString();
         newAddress.zip_code = ui->storeZIP->text().toStdString();
         std::string newName = ui->Company_name_label->text().toStdString();
-        if(API->save_local_address(newAddress, newName)){
+        if(API->save_local_address(newAddress, newName, ui->plainTextEdit->toPlainText())){
             loadSettings();
             emit changed();
         }
@@ -52,4 +53,28 @@ void Settingsscreen::toggle_enable_settings(bool enabled){
     ui->storeState->setEnabled(enabled);
     ui->storeZIP->setEnabled(enabled);
     ui->Company_name_label->setEnabled(enabled);
+}
+
+void Settingsscreen::toggle_enable_nearby(bool enabled){
+    ui->plainTextEdit->setEnabled(enabled);
+}
+void Settingsscreen::on_Edditnearby_clicked(){
+    if(ui->plainTextEdit->isEnabled()){
+        toggle_enable_nearby(false);
+        // Save current info in dataStorage class
+        address_t newAddress;
+        newAddress.street_number = ui->storeStreet->text().toStdString();
+        newAddress.city = ui->storeCity->text().toStdString();
+        newAddress.state = ui->storeState->text().toStdString();
+        newAddress.zip_code = ui->storeZIP->text().toStdString();
+        std::string newName = ui->Company_name_label->text().toStdString();
+        if(API->save_local_address(newAddress, newName, ui->plainTextEdit->toPlainText())){
+            loadSettings();
+            emit changed();
+        }
+        ui->EdditSettings_3->setText("Edit Near by Store");
+    } else {
+        toggle_enable_nearby(true);
+        ui->EdditSettings_3->setText("Save Near by Store");
+    }
 }

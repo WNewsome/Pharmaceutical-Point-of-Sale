@@ -257,8 +257,10 @@ MainWindow::MainWindow(QWidget *parent)
     API->get_top_drugs(nov21);
 
     */
-
-
+    if(!API->creat_store_table()){
+       qDebug()<<"unable to creat table";
+       close();
+    }
 }
 
 
