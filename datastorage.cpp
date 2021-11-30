@@ -746,9 +746,10 @@ bool DataStorage::creat_store_table(){
     loop.exec();
     QString strReply = (QString)reply->readAll();
 
-    if(strReply == "created" or strReply == "exist"){
+    if((strReply == "created") || (strReply == "exist")){
         return true;
     }
+
     qDebug() << "ERROR: "+strReply;
     return false;
 }
