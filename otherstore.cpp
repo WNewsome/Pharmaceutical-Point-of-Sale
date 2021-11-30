@@ -18,7 +18,7 @@ OtherStore::OtherStore(std::vector<drug_t> &drugList, QWidget *parent):
     this->drugList=drugList;
     QString drugs="";
     for(drug_t drug:this->drugList){
-        drugs+=drug.name;
+        drugs+=drug.name+" ";
         QTreeWidgetItem* item0=new QTreeWidgetItem();
         item0->setText(0,drug.name);
         ui->treeWidget->addTopLevelItem(item0);
@@ -37,7 +37,7 @@ OtherStore::OtherStore(std::vector<drug_t> &drugList, QWidget *parent):
         }
 
     }
-    ui->label->setText(drugs+"are not avilable in this store, do you still want to continue to checkout?");
+    ui->label->setText(drugs+"are not avilable in this store,\n do you still want to continue to checkout?");
 }
 
 OtherStore::~OtherStore()
