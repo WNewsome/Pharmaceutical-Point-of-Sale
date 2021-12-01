@@ -107,7 +107,6 @@ void Managementscreen::on_tableWidget_cellClicked(int row, int column){
 
         ui->quantity->setText(QString::number(curDrug.amount));
         ui->prices->setText(QString::number(curDrug.price));
-        qDebug() << curDrug.id;
     }
 }
 
