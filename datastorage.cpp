@@ -532,7 +532,8 @@ void DataStorage::register_a_transaction(drug_t drug, int quantity){
 
     // Store transaction locally
     // Format: store id, drug id, cost, profit, quantity sold
-    QString today = QDateTime::currentDateTime().toString("MMMM_yyyy");
+    QString today = "assets/";
+    today += QDateTime::currentDateTime().toString("MMMM_yyyy");
     today += ".txt";
 
     std::string filename(today.toStdString());
