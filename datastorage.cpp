@@ -610,8 +610,9 @@ std::vector<drug_t> DataStorage::get_top_drugs(QDate monthYear){
 sales_report DataStorage::get_monthly_report(QDate monthYear){
     // monthYear is the corresponding month in which a report will be calculated
     sales_report report;
+    QLocale locale = QLocale::English;
     QString file = "assets/";
-    file += monthYear.toString("MMMM_yyyy");
+    file += locale.toString(monthYear,"MMMM_yyyy");
     file += ".txt";
     int i = 0;
     std::string line, colname;
@@ -739,7 +740,7 @@ bool DataStorage::save_local_address(address_t newAddress, std::string companyNa
 }
 
 bool DataStorage::creat_store_table(){
-    const QUrl url = QUrl(host_API+"/creat_new_store.php?&storeid="+QString::number(get_store_id()));
+    const QUrl url = QUrl(host_API+"/create_new_store.php?storeid="+QString::number(store_id));
     QNetworkRequest request(url);
     QNetworkReply *reply = manager->get(request);
 

@@ -22,6 +22,12 @@ void Settingsscreen::loadSettings(){
     ui->storeCity->setText(QString::fromStdString(thisStore.city));
     ui->storeState->setText(QString::fromStdString(thisStore.state));
     ui->storeZIP->setText(QString::fromStdString(thisStore.zip_code));
+    QString nearby="";
+    auto nearbyList=API->get_near_by_store();
+    for (auto store : nearbyList) {
+        nearby+=std::get<2>(store)+"\n"+QString::fromStdString(std::get<1>(store).toString())+"\n"+QString::number(std::get<0>(store));
+    }
+    ui->plainTextEdit->setPlainText(nearby);
     toggle_enable_settings(false);
 }
 
