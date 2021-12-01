@@ -5,6 +5,7 @@
 // addgrug.cpp	Jessica Orefice		VT	ECE4574 FA21	Nov 12, 2021
 // This class allows the user to interact with the GUI and add a drug to the datbase
 
+
 addgrug::addgrug(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::addgrug)
