@@ -2,6 +2,9 @@
 #include "ui_addgrug.h"
 #include <QFileDialog>
 
+// addgrug.cpp	Jessica Orefice		VT	ECE4574 FA21	Nov 12, 2021
+// This class allows the user to interact with the GUI and add a drug to the datbase
+
 addgrug::addgrug(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::addgrug)
@@ -38,9 +41,7 @@ void addgrug::closeEvent(QCloseEvent *event){
 
 void addgrug::on_confirm_clicked()
 {
-    //check if everything is filled in and display error??
-
-    //put drug stuff from lines in
+    //check if everything is filled in
     if ((ui->drugname->text() != "") && (ui->brandname->text() != "") && (ui->Cost->text() != "") && (ui->Price->text() != "")
             && (ui->upc->text() != "") && (ui->invintory->text() != "") && (ui->gpi->text() != "")
             && (ui->NDC->text() != "")){
@@ -56,6 +57,7 @@ void addgrug::on_confirm_clicked()
         newDrug.control_status = ui->control->text();
         int quaintity = newDrug.amount;
 
+        //adds drug to the database
         API->create_new_drug(newDrug,quaintity);
 
         ui->drugname->clear();
@@ -74,6 +76,7 @@ void addgrug::on_confirm_clicked()
         this->close();
     }
 
+    //if all required fieldas are not filled in an error shows up
     else{
         ui->frame->setStyleSheet("QFrame { border: 5px solid red } ");
         ui->Error->setStyleSheet("QLabel { color : red; }");
@@ -81,7 +84,7 @@ void addgrug::on_confirm_clicked()
     }
 }
 
-
+//allows the user to add an image
 void addgrug::on_openimage_clicked()
 {
     QString imagePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" ));

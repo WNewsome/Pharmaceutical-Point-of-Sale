@@ -1,6 +1,9 @@
 #ifndef REPORTS_H
 #define REPORTS_H
 
+// reports.h	Jessica Orefice		VT	ECE4574 FA21	Nov 20, 2021
+// This class allows the user to see the generated reports
+
 #include <QWidget>
 #include "datastorage.h"
 
@@ -23,9 +26,6 @@ public:
     explicit Reports(QWidget *parent = nullptr);
     ~Reports();
     void createchart();
-
-private slots:
-    void sliceclicked(int num);
 
 private:
     Ui::Reports *ui;

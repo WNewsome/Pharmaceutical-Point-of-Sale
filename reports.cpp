@@ -1,7 +1,8 @@
 #include "reports.h"
 #include "ui_reports.h"
 
-
+// reports.cpp	Jessica Orefice		VT	ECE4574 FA21	Nov 20, 2021
+// This class allows the user to see the generated reports
 
 Reports::Reports(QWidget *parent) :
     QWidget(parent),
@@ -13,8 +14,6 @@ Reports::Reports(QWidget *parent) :
     series = new QPieSeries();
     createchart();
 
-    connect(series->slices().at(1), SIGNAL(pressed()), this, SLOT(sliceclicked(1)));
-
 }
 
 Reports::~Reports()
@@ -22,17 +21,10 @@ Reports::~Reports()
     delete ui;
 }
 
-void Reports::sliceclicked(int num){
-    QPieSlice *slice = series->slices().at(num);
-    slice->setExploded();
-    slice->setLabelVisible();
-    slice->setPen(QPen(Qt::darkGreen, 2));
-    slice->setBrush(Qt::green);
-
-}
-
+//creates the three charts (cost, profit, and top 5 drugs
 void Reports::createchart(){
 
+        //creates the cost and profit pi charts
         QPieSeries *seriesprofit = new QPieSeries();
         newSalesReport = API->get_monthly_report(QDate(2021, 10, 1));
         topdrugList = API->get_top_drugs(QDate(2021, 10, 1));
@@ -51,6 +43,7 @@ void Reports::createchart(){
         series->append("June 2021", newSalesReport.cost);
         seriesprofit->append("June 2021", newSalesReport.profit);
 
+        //displays the labels for the pi charts
         QPieSlice *slice = series->slices().at(0);
         slice->setLabelVisible();
 
@@ -95,6 +88,7 @@ void Reports::createchart(){
         ui->profits->setChart(chartprofit);
 
 
+        //creates a bar graph for the top 5 drugs
         QBarSet *set0 = new QBarSet(topdrugList.at(0).brand);
         QBarSet *set1 = new QBarSet(topdrugList.at(1).brand);
         QBarSet *set2 = new QBarSet(topdrugList.at(2).brand);

@@ -1,6 +1,10 @@
 #include "managementscreen.h"
 #include "ui_managementscreen.h"
 
+// managmentscreen.cpp	Jessica Orefice		VT	ECE4574 FA21	Nov 12, 2021
+// This class allows the user to interact with the management screen tab. This allows them to edit/search/add drugs
+// as well as generate reports and edit settings.
+
 Managementscreen::Managementscreen(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Managementscreen)
@@ -27,6 +31,7 @@ Managementscreen::~Managementscreen()
     delete ui;
 }
 
+//search for a particular drug in the database
 void Managementscreen::changedruginfoclicked()
 {
     ui->scrollArea_2->setEnabled(false);
@@ -72,6 +77,7 @@ void Managementscreen::changedruginfoclicked()
 
 }
 
+//edit the cells on the table
 void Managementscreen::on_tableWidget_cellClicked(int row, int column){
     ui->Message->setVisible(false);
     if (row != 0){
@@ -101,17 +107,19 @@ void Managementscreen::on_tableWidget_cellClicked(int row, int column){
 
         ui->quantity->setText(QString::number(curDrug.amount));
         ui->prices->setText(QString::number(curDrug.price));
-        qDebug() << curDrug.id;
     }
 }
 
+//opens the add a new drug screen
 void Managementscreen::on_addnewdrugclicked_clicked()
 {
     addDrug->show();
 }
 
+//syncs drug edits with the database
 void Managementscreen::on_editdrug_2_clicked()
 {
+    //checks if all required lines are filled in
     if ((ui->drugnames->text() != "") && (ui->brands->text() != "")&& (ui->cost->text() != "") && (ui->prices->text() != "")
             && (ui->UPCs->text() != "") && (ui->quantity->text() != "") && (ui->GPIs->text() != "")
             && (ui->NDCs->text() != "")){
@@ -131,6 +139,8 @@ void Managementscreen::on_editdrug_2_clicked()
         ui->Message->setText("Drug Updated!");
         ui->Message->setVisible(true);
     }
+
+    //in they are not an error is displayed above the edits
     else{
         ui->Message->setStyleSheet("QLabel { color : red; }");
         ui->Message->setText("ERROR: FIELDS CANNOT BE LEFT EMPTY");
@@ -139,15 +149,19 @@ void Managementscreen::on_editdrug_2_clicked()
 
 }
 
+//updates the image corresponding to the drug
 void Managementscreen::on_editimage_clicked()
 {
+    //opens file manager to choose drug
     QString imagePath = QFileDialog::getOpenFileName(this, tr("Open File"), "assets/", tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" ));
     imageObject = new QImage();
     imageObject->load(imagePath);
     QFileInfo im(imagePath);
 
+    //moves the image to the assets folder
     QFile::rename(imagePath, "assets/" + im.completeBaseName() + "." + im.completeSuffix()); //move file??
 
+    //displays the image on the graphics screen
     image = QPixmap::fromImage(*imageObject);
 
     drugimage = new QGraphicsScene(this);
@@ -161,11 +175,13 @@ void Managementscreen::on_editimage_clicked()
     ui->Message->setVisible(true);
 } 
 
+//opens the reports screen
 void Managementscreen::on_generatereports_clicked()
 {
     reports->show();
 }
 
+//opens the settings screen
 void Managementscreen::on_updatesettigns_clicked()
 {
     settings->show();
