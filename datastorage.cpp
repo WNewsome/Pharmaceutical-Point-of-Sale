@@ -555,6 +555,7 @@ std::vector<drug_t> DataStorage::get_top_drugs(QDate monthYear){
     // monthYear is the corresponding month in which a report will be calculated
 
     QString file = "assets/";
+    QLocale locale=QLocale::English;
     file += locale.toString(monthYear,"MMMM_yyyy");
     file += ".txt";
     int i = 0;
