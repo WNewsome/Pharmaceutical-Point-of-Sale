@@ -1,6 +1,10 @@
 #ifndef MANAGEMENTSCREEN_H
 #define MANAGEMENTSCREEN_H
 
+// managmentscreen.h	Jessica Orefice		VT	ECE4574 FA21	Nov 12, 2021
+// This class allows the user to interact with the management screen tab. This allows them to edit/search/add drugs
+// as well as generate reports and edit settings.
+
 #include <QWidget>
 #include <QFileDialog>
 #include "datastorage.h"

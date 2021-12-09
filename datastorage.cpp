@@ -532,7 +532,8 @@ void DataStorage::register_a_transaction(drug_t drug, int quantity){
 
     // Store transaction locally
     // Format: store id, drug id, cost, profit, quantity sold
-    QString today = QDateTime::currentDateTime().toString("MMMM_yyyy");
+    QString today = "assets/";
+    today += QDateTime::currentDateTime().toString("MMMM_yyyy");
     today += ".txt";
 
     std::string filename(today.toStdString());
@@ -552,8 +553,9 @@ std::vector<drug_t> DataStorage::get_top_drugs(QDate monthYear){
 
     std::vector<drug_t> topDrugs;
     // monthYear is the corresponding month in which a report will be calculated
-    QLocale locale=QLocale::English;
-    QString file = locale.toString(monthYear,"MMMM_yyyy");
+
+    QString file = "assets/";
+    file += locale.toString(monthYear,"MMMM_yyyy");
     file += ".txt";
     int i = 0;
     //   map<drug ID, quantity>
@@ -609,8 +611,9 @@ std::vector<drug_t> DataStorage::get_top_drugs(QDate monthYear){
 sales_report DataStorage::get_monthly_report(QDate monthYear){
     // monthYear is the corresponding month in which a report will be calculated
     sales_report report;
-    QLocale locale=QLocale::English;
-    QString file = locale.toString(monthYear,"MMMM_yyyy");
+    QLocale locale = QLocale::English;
+    QString file = "assets/";
+    file += locale.toString(monthYear,"MMMM_yyyy");
     file += ".txt";
     int i = 0;
     std::string line, colname;
