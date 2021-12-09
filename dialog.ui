@@ -33,7 +33,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Varifacate SSN</string>
+    <string>Verificate SSN</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

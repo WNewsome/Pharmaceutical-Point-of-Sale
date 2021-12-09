@@ -99,7 +99,7 @@ void Reports::createchart(){
         ui->sales->setChart(chart);
         ui->profits->setChart(chartprofit);
 
-
+        if(topdrugList.size()>4){
         QBarSet *set0 = new QBarSet(topdrugList.at(0).brand);
         QBarSet *set1 = new QBarSet(topdrugList.at(1).brand);
         QBarSet *set2 = new QBarSet(topdrugList.at(2).brand);
@@ -137,5 +137,5 @@ void Reports::createchart(){
         barchart->addAxis(axisY, Qt::AlignLeft);
         barseries->attachAxis(axisY);
 
-        ui->top10->setChart(barchart);
+        ui->top10->setChart(barchart);}
 }
