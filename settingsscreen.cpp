@@ -25,7 +25,7 @@ void Settingsscreen::loadSettings(){
     QString nearby="";
     auto nearbyList=API->get_near_by_store();
     for (auto store : nearbyList) {
-        nearby+=std::get<2>(store)+"\n"+QString::fromStdString(std::get<1>(store).toString())+"\n"+QString::number(std::get<0>(store));
+        nearby+=std::get<2>(store)+"\n"+QString::fromStdString(std::get<1>(store).street_number)+"\n"+QString::fromStdString(std::get<1>(store).city)+"\n"+QString::fromStdString(std::get<1>(store).state)+"\n"+QString::fromStdString(std::get<1>(store).zip_code)+"\n"+QString::number(std::get<0>(store));
     }
     ui->plainTextEdit->setPlainText(nearby);
     toggle_enable_settings(false);
